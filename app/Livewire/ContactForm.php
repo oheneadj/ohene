@@ -83,14 +83,15 @@ class ContactForm extends Component
             return;
         }
 
-        if (RateLimiter::tooManyAttempts($this->throttleKey(), maxAttempts: 5)) {
-            $this->addError('message', 'Too many submissions. Please try again in a minute.');
+        if (RateLimiter::tooManyAttempts($this->throttleKey(), maxAttempts: 2)) {
+            $seconds = RateLimiter::availableIn($this->throttleKey());
+            $this->addError('message', 'Too many submissions. Please try again in ' . ceil($seconds / 60) . ' minutes.');
 
             return;
         }
 
         $validated = $this->validate();
-        RateLimiter::hit($this->throttleKey());
+        RateLimiter::hit($this->throttleKey(), 3600); // 1 hour decay
 
         $createLead->execute([
             ...$validated,

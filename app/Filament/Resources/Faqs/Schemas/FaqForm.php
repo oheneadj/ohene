@@ -19,10 +19,12 @@ class FaqForm
                             ->description('The question and answer pair displayed on the contact page.')
                             ->schema([
                                 TextInput::make('question')
+                                    ->placeholder('e.g. How much does a website cost?')
                                     ->required()
                                     ->maxLength(255)
                                     ->columnSpanFull(),
                                 Textarea::make('answer')
+                                    ->placeholder('e.g. It depends on the scope of the project...')
                                     ->required()
                                     ->rows(6)
                                     ->columnSpanFull(),

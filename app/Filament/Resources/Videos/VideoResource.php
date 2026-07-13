@@ -10,6 +10,7 @@ use App\Filament\Resources\Videos\Pages\ListVideos;
 use App\Models\Video;
 use BackedEnum;
 use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Forms\Components\DateTimePicker;
@@ -35,7 +36,9 @@ class VideoResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'title';
 
-    protected static string|UnitEnum|null $navigationGroup = 'Content';
+    protected static string|UnitEnum|null $navigationGroup = 'Blog & Media';
+
+    protected static ?int $navigationSort = 20;
 
     /**
      * The create/edit form schema.
@@ -44,12 +47,17 @@ class VideoResource extends Resource
     {
         return $schema
             ->components([
-                TextInput::make('title')->required(),
+                TextInput::make('title')
+                    ->placeholder('e.g. Building a Laravel App from Scratch')
+                    ->required(),
                 TextInput::make('youtube_video_id')
+                    ->placeholder('e.g. dQw4w9WgXcQ')
                     ->required()
                     ->label('YouTube video ID')
                     ->helperText('The 11-character ID from the video URL, e.g. dQw4w9WgXcQ.'),
-                Textarea::make('description')->columnSpanFull(),
+                Textarea::make('description')
+                    ->placeholder('e.g. In this video, we cover...')
+                    ->columnSpanFull(),
                 DateTimePicker::make('published_at'),
             ]);
     }
@@ -68,6 +76,7 @@ class VideoResource extends Resource
             ])
             ->recordActions([
                 EditAction::make(),
+                DeleteAction::make(),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([

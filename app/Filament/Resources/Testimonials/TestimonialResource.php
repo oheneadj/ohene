@@ -11,6 +11,7 @@ use App\Filament\Resources\Testimonials\Pages\ListTestimonials;
 use App\Models\Testimonial;
 use BackedEnum;
 use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Forms\Components\FileUpload;
@@ -19,6 +20,9 @@ use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Resources\Pages\PageRegistration;
 use Filament\Resources\Resource;
+use Filament\Schemas\Components\Grid;
+use Filament\Schemas\Components\Group;
+use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\TextColumn;
@@ -35,11 +39,13 @@ class TestimonialResource extends Resource
 {
     protected static ?string $model = Testimonial::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedChatBubbleLeftRight;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedChatBubbleBottomCenterText;
 
     protected static ?string $recordTitleAttribute = 'client_name';
 
-    protected static string|UnitEnum|null $navigationGroup = 'Content';
+    protected static string|UnitEnum|null $navigationGroup = 'Portfolio';
+
+    protected static ?int $navigationSort = 10;
 
     /**
      * The create/edit form schema.
@@ -48,28 +54,59 @@ class TestimonialResource extends Resource
     {
         return $schema
             ->components([
-                TextInput::make('client_name')->required(),
-                TextInput::make('role'),
-                TextInput::make('company'),
-                Select::make('project_id')
-                    ->relationship('project', 'title')
-                    ->searchable()
-                    ->preload()
-                    ->label('Linked project'),
-                Textarea::make('quote')->required()->columnSpanFull(),
-                FileUpload::make('avatar')
-                    ->image()
-                    ->avatar()
-                    ->imageResizeMode('cover')
-                    ->imageResizeTargetWidth('300')
-                    ->imageResizeTargetHeight('300')
-                    ->maxSize(2048)
-                    ->disk('public')
-                    ->directory('testimonials'),
-                Select::make('status')
-                    ->options(TestimonialStatus::class)
-                    ->default(TestimonialStatus::Pending)
-                    ->required(),
+                Grid::make(3)->schema([
+                    Group::make()->schema([
+                        Section::make('Client Details')
+                            ->schema([
+                                TextInput::make('client_name')
+                                    ->placeholder('e.g. Jane Doe')
+                                    ->required(),
+                                TextInput::make('role')
+                                    ->placeholder('e.g. Chief Marketing Officer'),
+                                TextInput::make('company')
+                                    ->placeholder('e.g. Acme Corp')
+                                    ->columnSpanFull(),
+                            ])->columns(2),
+
+                        Section::make('Content')
+                            ->schema([
+                                Textarea::make('quote')
+                                    ->placeholder('e.g. Ohene delivered an exceptional product...')
+                                    ->required()
+                                    ->rows(6)
+                                    ->columnSpanFull(),
+                            ]),
+                    ])->columnSpan(['sm' => 3, 'lg' => 2]),
+
+                    Group::make()->schema([
+                        Section::make('Status & Assignment')
+                            ->schema([
+                                Select::make('status')
+                                    ->options(TestimonialStatus::class)
+                                    ->default(TestimonialStatus::Pending)
+                                    ->required(),
+                                Select::make('project_id')
+                                    ->relationship('project', 'title')
+                                    ->searchable()
+                                    ->preload()
+                                    ->label('Linked project'),
+                            ]),
+
+                        Section::make('Avatar')
+                            ->schema([
+                                FileUpload::make('avatar')
+                                    ->image()
+                                    ->avatar()
+                                    ->imageResizeMode('cover')
+                                    ->imageResizeTargetWidth('300')
+                                    ->imageResizeTargetHeight('300')
+                                    ->maxSize(2048)
+                                    ->disk('public')
+                                    ->directory('testimonials')
+                                    ->columnSpanFull(),
+                            ]),
+                    ])->columnSpan(['sm' => 3, 'lg' => 1]),
+                ])->columnSpanFull(),
             ]);
     }
 
@@ -87,6 +124,7 @@ class TestimonialResource extends Resource
             ])
             ->recordActions([
                 EditAction::make(),
+                DeleteAction::make(),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([

@@ -33,11 +33,13 @@ class LeadResource extends Resource
 {
     protected static ?string $model = Lead::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedInbox;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedInboxArrowDown;
 
     protected static ?string $recordTitleAttribute = 'name';
 
-    protected static string|UnitEnum|null $navigationGroup = 'Leads';
+    protected static string|UnitEnum|null $navigationGroup = 'CRM';
+
+    protected static ?int $navigationSort = 30;
 
     /**
      * Surface the count of new (un-actioned) leads on the nav item (Section 18).

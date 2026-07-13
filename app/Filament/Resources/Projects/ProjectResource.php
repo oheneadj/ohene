@@ -11,6 +11,7 @@ use App\Filament\Resources\Projects\Pages\ViewProject;
 use App\Models\Project;
 use BackedEnum;
 use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
@@ -44,11 +45,13 @@ class ProjectResource extends Resource
 {
     protected static ?string $model = Project::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedBriefcase;
 
     protected static ?string $recordTitleAttribute = 'title';
 
-    protected static string|UnitEnum|null $navigationGroup = 'Content';
+    protected static string|UnitEnum|null $navigationGroup = 'Portfolio';
+
+    protected static ?int $navigationSort = 10;
 
     /**
      * The create/edit form schema.
@@ -60,6 +63,7 @@ class ProjectResource extends Resource
                 Section::make('Content')
                     ->schema([
                         TextInput::make('title')
+                            ->placeholder('e.g. Acme E-commerce Rebuild')
                             ->required()
                             ->live(onBlur: true)
                             ->afterStateUpdated(function ($state, callable $set): void {
@@ -67,15 +71,24 @@ class ProjectResource extends Resource
                                 $set('cover_image_alt', $state);
                             }),
                         TextInput::make('slug')
+                            ->placeholder('e.g. acme-ecommerce-rebuild')
                             ->required()
                             ->unique(ignoreRecord: true)
                             ->helperText('Locked after publish to protect indexed URLs.'),
                         TextInput::make('tagline')
+                            ->placeholder('e.g. A modern headless storefront')
                             ->required()
                             ->maxLength(255),
-                        Textarea::make('challenge')->required()->columnSpanFull(),
-                        Textarea::make('build')->required()->columnSpanFull(),
+                        Textarea::make('challenge')
+                            ->placeholder('e.g. The client was struggling with slow load times...')
+                            ->required()
+                            ->columnSpanFull(),
+                        Textarea::make('build')
+                            ->placeholder('e.g. We architected a Next.js frontend...')
+                            ->required()
+                            ->columnSpanFull(),
                         Textarea::make('impact')
+                            ->placeholder('e.g. 40% increase in conversion rate.')
                             ->required()
                             ->helperText('State a quantified outcome wherever real data exists.')
                             ->columnSpanFull(),
@@ -100,11 +113,12 @@ class ProjectResource extends Resource
                             ->directory('projects'),
                         TextInput::make('cover_image_alt')
                             ->label('Cover image alt text')
+                            ->placeholder('e.g. Screenshot of the Acme homepage')
                             ->maxLength(255)
                             ->requiredWith('cover_image')
                             ->helperText('Required whenever a cover image is set (accessibility, req 4.2).'),
-                        TextInput::make('live_url')->url(),
-                        TextInput::make('repo_url')->url(),
+                        TextInput::make('live_url')->placeholder('e.g. https://acme.com')->url(),
+                        TextInput::make('repo_url')->placeholder('e.g. https://github.com/oheneadj/acme')->url(),
                         FileUpload::make('gallery')
                             ->multiple()
                             ->reorderable()
@@ -130,8 +144,12 @@ class ProjectResource extends Resource
 
                 Section::make('SEO')
                     ->schema([
-                        TextInput::make('meta_title')->maxLength(255),
-                        TextInput::make('meta_description')->maxLength(255),
+                        TextInput::make('meta_title')
+                            ->placeholder('e.g. Acme E-commerce Case Study')
+                            ->maxLength(255),
+                        TextInput::make('meta_description')
+                            ->placeholder('e.g. Read how we rebuilt the Acme storefront...')
+                            ->maxLength(255),
                         FileUpload::make('og_image')
                             ->image()
                             ->imageResizeMode('cover')
@@ -184,6 +202,7 @@ class ProjectResource extends Resource
             ->recordActions([
                 ViewAction::make(),
                 EditAction::make(),
+                DeleteAction::make(),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([

@@ -24,7 +24,6 @@ class HomeController extends Controller
             'projects' => Project::query()->featured()->ordered()->take(3)->get(),
             'posts' => Post::query()->with('category')->published()->latest('published_at')->take(3)->get(),
             'videos' => \App\Models\Video::query()->latest('published_at')->take(3)->get(),
-            'testimonials' => Testimonial::query()->approved()->latest()->take(2)->get(),
             'available' => Setting::get('available_for_projects') === '1',
         ]);
     }

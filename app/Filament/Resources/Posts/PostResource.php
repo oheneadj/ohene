@@ -12,6 +12,7 @@ use App\Filament\Resources\Posts\Pages\ViewPost;
 use App\Models\Post;
 use BackedEnum;
 use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
@@ -44,11 +45,13 @@ class PostResource extends Resource
 {
     protected static ?string $model = Post::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedPencilSquare;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedDocumentText;
 
     protected static ?string $recordTitleAttribute = 'title';
 
-    protected static string|UnitEnum|null $navigationGroup = 'Content';
+    protected static string|UnitEnum|null $navigationGroup = 'Blog & Media';
+
+    protected static ?int $navigationSort = 20;
 
     /**
      * The create/edit form schema.
@@ -62,6 +65,7 @@ class PostResource extends Resource
                         Section::make('Content')
                             ->schema([
                                 TextInput::make('title')
+                                    ->placeholder('e.g. 10 Tips for Better Code')
                                     ->required()
                                     ->live(onBlur: true)
                                     ->afterStateUpdated(function ($state, callable $get, callable $set): void {
@@ -75,6 +79,7 @@ class PostResource extends Resource
                                         }
                                     }),
                                 TextInput::make('slug')
+                                    ->placeholder('e.g. 10-tips-for-better-code')
                                     ->required()
                                     ->unique(ignoreRecord: true)
                                     ->helperText('Locked after publish to protect indexed URLs.'),
@@ -84,6 +89,7 @@ class PostResource extends Resource
                                     ->preload()
                                     ->columnSpanFull(),
                                 Textarea::make('excerpt')
+                                    ->placeholder('A brief summary of the post...')
                                     ->maxLength(500)
                                     ->live(onBlur: true)
                                     ->afterStateUpdated(function ($state, callable $set): void {
@@ -110,6 +116,7 @@ class PostResource extends Resource
                                     })->columnSpanFull(),
                                 TextInput::make('cover_image_alt')
                                     ->label('Cover image alt text')
+                                    ->placeholder('e.g. A laptop showing code')
                                     ->maxLength(255)
                                     ->requiredWith('cover_image')
                                     ->helperText('Required whenever a cover image is set.'),
@@ -125,8 +132,11 @@ class PostResource extends Resource
                                     ->required(),
                                 DateTimePicker::make('published_at')
                                     ->helperText('When the post goes (or went) live.'),
-                                TextInput::make('meta_title')->maxLength(255),
+                                TextInput::make('meta_title')
+                                    ->placeholder('e.g. SEO Optimized Title')
+                                    ->maxLength(255),
                                 Textarea::make('meta_description')
+                                    ->placeholder('e.g. An engaging description for search results...')
                                     ->maxLength(255)
                                     ->requiredIf('status', PostStatus::Published->value)
                                     ->helperText('Required before a post can be published.'),
@@ -191,6 +201,7 @@ class PostResource extends Resource
             ->recordActions([
                 ViewAction::make(),
                 EditAction::make(),
+                DeleteAction::make(),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([

@@ -227,20 +227,7 @@
 
 
 
-    {{-- TESTIMONIALS --}}
-    @if ($testimonials->isNotEmpty())
-        <section class="max-w-4xl mx-auto px-7 pb-20">
-            <div class="grid md:grid-cols-2 gap-6">
-                @foreach ($testimonials as $testimonial)
-                    <div class="reveal">
-                        <x-testimonial-card :testimonial="$testimonial" />
-                    </div>
-                @endforeach
-            </div>
-        </section>
 
-
-    @endif
 
     {{-- BLOG PREVIEW --}}
     @if ($posts->isNotEmpty())

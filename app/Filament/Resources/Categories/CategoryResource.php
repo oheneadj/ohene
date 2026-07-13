@@ -10,6 +10,7 @@ use App\Filament\Resources\Categories\Pages\ListCategories;
 use App\Models\Category;
 use BackedEnum;
 use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Forms\Components\TextInput;
@@ -33,7 +34,9 @@ class CategoryResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'name';
 
-    protected static string|UnitEnum|null $navigationGroup = 'Content';
+    protected static string|UnitEnum|null $navigationGroup = 'Blog & Media';
+
+    protected static ?int $navigationSort = 20;
 
     /**
      * The create/edit form schema.
@@ -43,12 +46,14 @@ class CategoryResource extends Resource
         return $schema
             ->components([
                 TextInput::make('name')
+                    ->placeholder('e.g. Laravel Tutorials')
                     ->required()
                     ->live(onBlur: true)
                     ->afterStateUpdated(function ($state, callable $set): void {
                         $set('slug', Str::slug((string) $state));
                     }),
                 TextInput::make('slug')
+                    ->placeholder('e.g. laravel-tutorials')
                     ->required()
                     ->unique(ignoreRecord: true),
             ]);
@@ -67,6 +72,7 @@ class CategoryResource extends Resource
             ])
             ->recordActions([
                 EditAction::make(),
+                DeleteAction::make(),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
