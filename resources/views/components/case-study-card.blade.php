@@ -45,25 +45,29 @@
             <span>Case Study</span>
         </div>
         
-        {{-- Title & Arrow --}}
-        <div class="flex items-start justify-between gap-4 mb-3">
+        {{-- Title --}}
+        <div class="mb-3">
             <h3 class="font-display font-semibold text-xl md:text-2xl leading-snug text-black {{ $hoverTitle }} transition-colors line-clamp-2">{{ $project->title }}</h3>
-            <div class="mt-1 flex-shrink-0 text-slate-400 group-hover:text-black transition-colors transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5 duration-300">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H18V14M18 6L6 18"></path></svg>
-            </div>
         </div>
         
         {{-- Tagline --}}
         <p class="text-sm md:text-base text-slate-600 leading-relaxed mb-6 flex-grow line-clamp-2">{{ $project->tagline }}</p>
         
-        {{-- Footer: Pill --}}
-        <div class="flex items-center gap-3 mt-auto">
-            @if (!empty($project->tech_stack))
-                <span class="{{ $pillBg }} {{ $pillText }} px-4 py-1.5 rounded-full text-[11px] font-semibold tracking-wide">{{ $project->tech_stack[0] }}</span>
-            @endif
-            @if (count($project->tech_stack) > 1)
-                <span class="text-xs font-medium text-slate-500">+{{ count($project->tech_stack) - 1 }} more tools</span>
-            @endif
+        {{-- Footer: Pill & Button --}}
+        <div class="flex items-center justify-between gap-3 mt-auto">
+            <div class="flex items-center gap-3">
+                @if (!empty($project->tech_stack))
+                    <span class="{{ $pillBg }} {{ $pillText }} px-4 py-1.5 rounded-full text-[11px] font-semibold tracking-wide">{{ $project->tech_stack[0] }}</span>
+                @endif
+                @if (count($project->tech_stack) > 1)
+                    <span class="text-xs font-medium text-slate-500">+{{ count($project->tech_stack) - 1 }}</span>
+                @endif
+            </div>
+            
+            <span class="flex-shrink-0 text-[11px] font-semibold uppercase tracking-wider text-slate-500 bg-slate-100 group-hover:bg-amber-100 group-hover:text-amber-700 px-4 py-2 rounded-full transition-colors flex items-center gap-1.5">
+                View
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+            </span>
         </div>
     </div>
 </a>

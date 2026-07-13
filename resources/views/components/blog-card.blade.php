@@ -33,12 +33,9 @@
             <span>{{ $post->read_time }} min read</span>
         </div>
         
-        {{-- Title & Arrow --}}
-        <div class="flex items-start justify-between gap-4 mb-3">
+        {{-- Title --}}
+        <div class="mb-3">
             <h3 class="font-display font-semibold text-lg leading-snug text-black {{ $hoverTitle }} transition-colors line-clamp-2">{{ $post->title }}</h3>
-            <div class="mt-1 flex-shrink-0 text-slate-400 group-hover:text-black transition-colors transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5 duration-300">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H18V14M18 6L6 18"></path></svg>
-            </div>
         </div>
         
         {{-- Excerpt --}}
@@ -48,14 +45,21 @@
             <div class="flex-grow mb-6"></div>
         @endif
         
-        {{-- Footer: Category & Date --}}
-        <div class="flex items-center gap-3 mt-auto">
-            @if ($post->category)
-                <span class="{{ $pillBg }} {{ $pillText }} px-3 py-1.5 rounded-full text-[11px] font-semibold tracking-wide">{{ $post->category->name }}</span>
-            @endif
-            @if ($post->published_at)
-                <span class="text-xs font-medium text-slate-500 ml-1">{{ $post->published_at->format('M d, Y') }}</span>
-            @endif
+        {{-- Footer: Category & Date & Button --}}
+        <div class="flex items-center justify-between gap-3 mt-auto">
+            <div class="flex items-center gap-3">
+                @if ($post->category)
+                    <span class="{{ $pillBg }} {{ $pillText }} px-3 py-1.5 rounded-full text-[11px] font-semibold tracking-wide">{{ $post->category->name }}</span>
+                @endif
+                @if ($post->published_at)
+                    <span class="text-xs font-medium text-slate-500 ml-1">{{ $post->published_at->format('M d, Y') }}</span>
+                @endif
+            </div>
+            
+            <span class="flex-shrink-0 text-[11px] font-semibold uppercase tracking-wider text-slate-500 bg-slate-100 group-hover:bg-black group-hover:text-white px-4 py-2 rounded-full transition-colors flex items-center gap-1.5">
+                Read
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+            </span>
         </div>
     </div>
 </a>

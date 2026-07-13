@@ -68,18 +68,23 @@ class ManageSiteSettings extends Page
     {
         return $schema
             ->components([
-                Toggle::make('available_for_projects')
-                    ->label('Available for new projects')
-                    ->helperText('Controls the availability badge shown in the site hero.'),
-                
-                FileUpload::make('about_image')
-                    ->label('About Profile Image')
-                    ->image()
-                    ->imageEditor()
-                    ->maxSize(4096)
-                    ->disk('public')
-                    ->directory('settings')
-                    ->helperText('This image is displayed on the About page. Defaults to profile.png if not uploaded.'),
+                \Filament\Schemas\Components\Section::make('Global Configuration')
+                    ->description('Manage site-wide settings and general information.')
+                    ->schema([
+                        Toggle::make('available_for_projects')
+                            ->label('Available for new projects')
+                            ->helperText('Controls the availability badge shown in the site hero.'),
+                        
+                        FileUpload::make('about_image')
+                            ->label('About Profile Image')
+                            ->image()
+                            ->imageEditor()
+                            ->maxSize(4096)
+                            ->disk('public')
+                            ->directory('settings')
+                            ->helperText('This image is displayed on the About page. Defaults to profile.png if not uploaded.'),
+                    ])
+                    ->columns(1)
             ])
             ->statePath('data');
     }

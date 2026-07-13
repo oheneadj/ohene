@@ -35,7 +35,10 @@ class PageController extends Controller
      */
     public function contact(): View
     {
-        return view('pages.contact');
+        return view('pages.contact', [
+            'testimonials' => \App\Models\Testimonial::query()->with('project')->approved()->latest()->take(4)->get(),
+            'faqs' => \App\Models\Faq::query()->active()->orderBy('display_order')->get(),
+        ]);
     }
 
     /**

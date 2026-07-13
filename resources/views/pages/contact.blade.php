@@ -67,15 +67,43 @@
         </div>
     </section>
 
-    <section class="max-w-6xl mx-auto px-7 pb-16">
-        <div class="max-w-5xl">
-            <x-eyebrow>what happens next</x-eyebrow>
-            <h2 class="font-display text-2xl font-semibold mb-8">Three steps, no pressure</h2>
-            <div class="grid sm:grid-cols-3 gap-5">
-                <x-process-step number="01" title="You reach out">Send a quick note about what you need — no brief required.</x-process-step>
-                <x-process-step number="02" title="We talk it through">A short call or email exchange to understand scope and timeline.</x-process-step>
-                <x-process-step number="03" title="I send a plan">A clear proposal with cost and timeline before anything is committed.</x-process-step>
+    @if ($testimonials->isNotEmpty())
+        <section class="max-w-6xl mx-auto px-7 pb-20">
+            <div class="max-w-5xl">
+                <x-eyebrow>client feedback</x-eyebrow>
+                <h2 class="font-display text-2xl font-semibold mb-8">What people say</h2>
+                <div class="grid md:grid-cols-2 gap-6">
+                    @foreach ($testimonials as $testimonial)
+                        <x-testimonial-card :testimonial="$testimonial" />
+                    @endforeach
+                </div>
             </div>
-        </div>
-    </section>
+        </section>
+    @endif
+
+    @if ($faqs->isNotEmpty())
+        <section class="max-w-6xl mx-auto px-7 pb-20">
+            <div class="max-w-3xl">
+                <x-eyebrow>common questions</x-eyebrow>
+                <h2 class="font-display text-2xl font-semibold mb-8">FAQ</h2>
+                <div class="border-t border-black/10">
+                    @foreach ($faqs as $faq)
+                        <details class="group [&_summary::-webkit-details-marker]:hidden border-b border-black/10">
+                            <summary class="flex items-center justify-between gap-4 cursor-pointer py-6 font-display font-medium text-xl hover:text-slate-600 transition-colors">
+                                <span>{{ $faq->question }}</span>
+                                <span class="flex-shrink-0 transition-transform duration-300 group-open:rotate-180 text-slate-400 group-hover:text-black">
+                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                                </span>
+                            </summary>
+                            <div class="pb-8 text-slate-600 text-lg leading-relaxed max-w-2xl reveal">
+                                {!! nl2br(e($faq->answer)) !!}
+                            </div>
+                        </details>
+                    @endforeach
+                </div>
+            </div>
+        </section>
+    @endif
+
+
 </x-layouts.app>

@@ -15,10 +15,17 @@ class WorkController extends Controller
     /**
      * List all case studies, paginated once the count grows (FR2).
      */
-    public function index(): View
+    public function index(\Illuminate\Http\Request $request): View
     {
+        $query = Project::query()->ordered();
+
+        if ($request->has('filter')) {
+            $query->whereJsonContains('tech_stack', $request->query('filter'));
+        }
+
         return view('pages.work.index', [
-            'projects' => Project::query()->ordered()->paginate(9),
+            'projects' => $query->paginate(6)->withQueryString(),
+            'currentFilter' => $request->query('filter'),
         ]);
     }
 

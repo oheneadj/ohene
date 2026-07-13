@@ -1,9 +1,9 @@
 <footer class="bg-black pt-16 pb-8">
     <div class="max-w-6xl mx-auto px-7 flex flex-col md:flex-row justify-between items-center gap-8">
         <!-- Brand -->
-        <div class="text-white font-display font-bold text-xl tracking-tight">
-            Ohene Adjei Effah<span class="text-white">.</span>
-        </div>
+        <a href="{{ route('home') }}" class="text-white font-display font-bold text-xl tracking-tight hover:opacity-80 transition-opacity">
+            OA<span class="text-forest">.</span>
+        </a>
         
         <!-- Links -->
         <div class="flex flex-wrap justify-center gap-x-8 gap-y-4 font-mono text-sm text-slate-400">

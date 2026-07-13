@@ -47,16 +47,44 @@
                         opacity: 0;
                         transform: translateY(16px);
                     }
-                    .hero-word-rotate:nth-child(1) { animation-delay: 0s; }
-                    .hero-word-rotate:nth-child(2) { animation-delay: 2.5s; }
-                    .hero-word-rotate:nth-child(3) { animation-delay: 5s; }
+
+                    .hero-word-rotate:nth-child(1) {
+                        animation-delay: 0s;
+                    }
+
+                    .hero-word-rotate:nth-child(2) {
+                        animation-delay: 2.5s;
+                    }
+
+                    .hero-word-rotate:nth-child(3) {
+                        animation-delay: 5s;
+                    }
 
                     @keyframes heroWordRotate {
-                        0% { opacity: 0; transform: translateY(16px); }
-                        5% { opacity: 1; transform: translateY(0); }
-                        28% { opacity: 1; transform: translateY(0); }
-                        33% { opacity: 0; transform: translateY(-16px); }
-                        100% { opacity: 0; transform: translateY(-16px); }
+                        0% {
+                            opacity: 0;
+                            transform: translateY(16px);
+                        }
+
+                        5% {
+                            opacity: 1;
+                            transform: translateY(0);
+                        }
+
+                        28% {
+                            opacity: 1;
+                            transform: translateY(0);
+                        }
+
+                        33% {
+                            opacity: 0;
+                            transform: translateY(-16px);
+                        }
+
+                        100% {
+                            opacity: 0;
+                            transform: translateY(-16px);
+                        }
                     }
                 </style>
                 <h1 class="reveal font-display text-4xl md:text-5xl font-semibold leading-tight mb-5">
@@ -69,14 +97,16 @@
                     </span><br>
                     <span class="text-gray-400">software that works.</span>
                 </h1>
-                <p class="reveal text-slate-300 max-w-lg mb-6">Full-stack development from first line of code to long-term support. Laravel, React and WordPress products built for businesses anywhere — from Accra, Ghana.</p>
+                <p class="reveal text-slate-300 max-w-lg mb-6">Full-stack development from first line of code to
+                    long-term support. Laravel, React and WordPress products built for businesses anywhere — from Accra,
+                    Ghana.</p>
 
                 <div class="reveal flex flex-wrap items-center gap-3 text-slate-400 text-sm font-mono mb-10">
                     <span class="text-white font-semibold">{{ config('site.stats.years_experience') }} Years Exp</span>
                     <span class="text-white/20">&middot;</span>
                     <span class="text-white font-semibold">{{ config('site.stats.end_users') }} End Users</span>
                     <span class="text-white/20">&middot;</span>
-                    <span>{{ config('site.stats.wp_builds') }} WP Builds</span>
+                    <span>{{ config('site.stats.wp_builds') }} Apps & Sites</span>
                     <span class="text-white/20">&middot;</span>
                     <span>{{ config('site.stats.traffic_lift') }} Traffic Lift</span>
                 </div>
@@ -92,16 +122,30 @@
             </div>
             <div class="reveal">
                 <x-browser-mock>
-                    <div><span class="text-emerald-400">$</span> whoami --for-clients</div>
-                    <div class="text-slate-400">&gt; Full-stack developer, <span
-                            class="text-gray-400">{{ config('site.stats.years_experience') }}</span> years in production
+                    <div><span class="text-emerald-400">$</span> dev --status</div>
+                    <div class="text-slate-400 mt-1">
+                        <span class="text-white">Ohene Adjei Effah</span> · Full-Stack Developer
                     </div>
-                    <div class="text-slate-400">&gt; Shipped to <span
-                            class="text-gray-400">{{ config('site.stats.end_users') }}</span> end users</div>
-                    <div class="text-slate-400">&gt; <span
-                            class="text-gray-400">{{ config('site.stats.wp_builds') }}</span> WordPress builds launched
+                    <div class="text-slate-400">
+                        📍 Accra, Ghana · <span class="text-emerald-400">● available</span>
                     </div>
-                    <div class="text-slate-400">&gt; Stack: PHP/Laravel · React/Vue · MySQL · AWS</div>
+                    <div class="text-slate-400 mt-1">
+                        &gt; {{ config('site.stats.years_experience') }} years · {{ config('site.stats.end_users') }}
+                        users · {{ config('site.stats.wp_builds') }} apps & sites
+                    </div>
+
+                    <div class="mt-3"><span class="text-emerald-400">$</span> cat stack.yml</div>
+                    <div class="text-slate-400 mt-1">
+                        <span class="text-gold">backend:</span> &nbsp;Laravel · Node.js · MySQL
+                    </div>
+                    <div class="text-slate-400">
+                        <span class="text-gold">frontend:</span> React · Livewire · Tailwind
+                    </div>
+                    <div class="text-slate-400">
+                        <span class="text-gold">cms:</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;WordPress · WooCommerce
+                    </div>
+
+                    <div class="mt-3"><span class="text-emerald-400">$</span> <span class="animate-pulse">▌</span></div>
                 </x-browser-mock>
             </div>
         </div>
