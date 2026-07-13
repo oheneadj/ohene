@@ -1,0 +1,128 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-07-09T00:00:00Z",
+  "title": "Design System: Ohene Adjei Effah — Portfolio",
+  "extensions": {
+    "colorMeta": {
+      "signal-gold": { "role": "primary", "displayName": "Signal Gold", "canonical": "#d9a441", "tonalRamp": ["#4a3308", "#6b4a10", "#8f6518", "#b4832e", "#d9a441", "#e4bd6e", "#eed3a0", "#f7ead0"] },
+      "kiln-gold": { "role": "primary", "displayName": "Kiln Gold", "canonical": "#b4832e", "tonalRamp": ["#3a2906", "#55400d", "#785915", "#96701f", "#b4832e", "#cda24f", "#e0c589", "#f0e2c4"] },
+      "circuit-forest": { "role": "secondary", "displayName": "Circuit Forest", "canonical": "#2f6f4e", "tonalRamp": ["#0f2418", "#163a26", "#204f35", "#2f6f4e", "#3f8a63", "#63a582", "#97c4ac", "#cfe3d8"] },
+      "ember-rust": { "role": "tertiary", "displayName": "Ember Rust", "canonical": "#b0472e", "tonalRamp": ["#3a170f", "#5c2418", "#843523", "#b0472e", "#c76349", "#d98a76", "#e8b4a7", "#f4dcd4"] },
+      "terminal-ink": { "role": "neutral", "displayName": "Terminal Ink", "canonical": "#0d1420", "tonalRamp": ["#05080d", "#0d1420", "#161f2e", "#24314a", "#3a4a68", "#5a6c8c", "#8f9db5", "#c9d1de"] },
+      "softened-ink": { "role": "neutral", "displayName": "Softened Ink", "canonical": "#161f2e", "tonalRamp": ["#080c13", "#0d1420", "#161f2e", "#212d42", "#33425f", "#516184", "#8593b0", "#c4cdda"] },
+      "warm-linen": { "role": "neutral", "displayName": "Warm Linen", "canonical": "#eef1ef", "tonalRamp": ["#4a4d4a", "#6b6f6b", "#909490", "#b9bdb9", "#d6dad6", "#e3e7e2", "#eef1ef", "#f7f9f6"] },
+      "deep-linen": { "role": "neutral", "displayName": "Deep Linen", "canonical": "#e3e7e2", "tonalRamp": ["#454845", "#646864", "#888c88", "#adb1ad", "#cdd0cc", "#e3e7e2", "#eef1ec", "#f6f8f5"] }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display", "purpose": "Hero and page H1s in Space Grotesk; one gold accent word permitted." },
+      "label": { "displayName": "Label / Mono", "purpose": "IBM Plex Mono for every fact, prompt, tag, date — the terminal signal." }
+    },
+    "shadows": [
+      { "name": "premium-lift", "value": "0 20px 40px -15px rgba(13,20,32,0.05), 0 0 10px rgba(13,20,32,0.02)", "purpose": "Wide, low-opacity ambient lift applied on hover/focus of cards and the primary CTA. Never a resting state." }
+    ],
+    "motion": [
+      { "name": "premium-ease", "value": "cubic-bezier(0.16, 1, 0.3, 1)", "purpose": "Ease-out-expo curve (~0.4s) for hover lifts and state transitions. Crisp, no bounce." },
+      { "name": "reveal", "value": "opacity 0.6s ease, transform 0.6s ease", "purpose": "Scroll-reveal fade-up via IntersectionObserver; disabled under prefers-reduced-motion." }
+    ],
+    "breakpoints": [
+      { "name": "sm", "value": "640px" },
+      { "name": "md", "value": "768px" },
+      { "name": "lg", "value": "1024px" },
+      { "name": "xl", "value": "1280px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The single primary CTA per page ('Start a project'). Gold pill, tactile lift on hover.",
+      "html": "<button class=\"ds-btn-primary\">Start a project</button>",
+      "css": ".ds-btn-primary { display: inline-flex; align-items: center; gap: 8px; background: var(--color-gold, #d9a441); color: var(--color-ink, #0d1420); font-family: 'IBM Plex Sans', sans-serif; font-weight: 600; padding: 12px 24px; border: none; border-radius: 9999px; cursor: pointer; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); } .ds-btn-primary:hover { background: var(--color-golddeep, #b4832e); transform: translateY(-2px); box-shadow: 0 20px 40px -15px rgba(13,20,32,0.05), 0 0 10px rgba(13,20,32,0.02); } .ds-btn-primary:focus-visible { outline: 2px solid var(--color-gold, #d9a441); outline-offset: 2px; }"
+    },
+    {
+      "name": "Ghost Button (on dark)",
+      "kind": "button",
+      "refersTo": "button-ghost",
+      "description": "Secondary action on dark hero surfaces ('See the work').",
+      "html": "<button class=\"ds-btn-ghost\">See the work</button>",
+      "css": ".ds-btn-ghost { display: inline-flex; align-items: center; gap: 8px; background: transparent; color: #eef1ef; font-family: 'IBM Plex Sans', sans-serif; font-weight: 600; padding: 12px 24px; border: 1px solid rgba(255,255,255,0.4); border-radius: 9999px; cursor: pointer; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); } .ds-btn-ghost:hover { background: rgba(255,255,255,0.1); }"
+    },
+    {
+      "name": "Case-Study Card",
+      "kind": "card",
+      "refersTo": "card",
+      "description": "Work/blog card: flat + bordered at rest, soft lift on hover. Mono eyebrow, title, tagline.",
+      "html": "<a href=\"#\" class=\"ds-card\"><div class=\"ds-card-cover\"></div><div class=\"ds-card-body\"><span class=\"ds-card-eyebrow\">Laravel</span><h3 class=\"ds-card-title\">InkBulkSMS</h3><p class=\"ds-card-text\">Contact management and bulk SMS dispatch with a real-time tracking dashboard.</p></div></a>",
+      "css": ".ds-card { display: block; background: #ffffff; border: 1px solid rgba(13,20,32,0.1); border-radius: 16px; overflow: hidden; text-decoration: none; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); } .ds-card:hover { transform: translateY(-4px); box-shadow: 0 20px 40px -15px rgba(13,20,32,0.05), 0 0 10px rgba(13,20,32,0.02); } .ds-card-cover { height: 128px; background: linear-gradient(to bottom right, rgba(217,164,65,0.25), rgba(47,111,78,0.15)); } .ds-card-body { padding: 24px; } .ds-card-eyebrow { font-family: 'IBM Plex Mono', monospace; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; color: #b4832e; } .ds-card-title { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 1.25rem; color: #0d1420; margin: 8px 0; } .ds-card-text { font-family: 'IBM Plex Sans', sans-serif; font-size: 0.875rem; color: #475569; margin: 0; }"
+    },
+    {
+      "name": "Text Input",
+      "kind": "input",
+      "refersTo": "input",
+      "description": "Contact-form field with a mono uppercase label and a gold focus ring.",
+      "html": "<div class=\"ds-field\"><label class=\"ds-label\" for=\"name\">Name</label><input id=\"name\" type=\"text\" class=\"ds-input\"></div>",
+      "css": ".ds-field { display: flex; flex-direction: column; } .ds-label { font-family: 'IBM Plex Mono', monospace; font-size: 0.75rem; text-transform: uppercase; color: #64748b; margin-bottom: 6px; letter-spacing: 0.03em; } .ds-input { font-family: 'IBM Plex Sans', sans-serif; background: #ffffff; border: 1px solid rgba(13,20,32,0.15); border-radius: 8px; padding: 10px 12px; color: #0d1420; outline: none; transition: all 0.2s ease; } .ds-input:focus { border-color: #d9a441; box-shadow: 0 0 0 1px #d9a441; }"
+    },
+    {
+      "name": "Section Eyebrow (terminal prompt)",
+      "kind": "custom",
+      "refersTo": null,
+      "description": "The signature mono file-path kicker that leads every section — the sanctioned eyebrow.",
+      "html": "<p class=\"ds-eyebrow\">&rsaquo; ~/work</p>",
+      "css": ".ds-eyebrow { font-family: 'IBM Plex Mono', monospace; font-size: 0.875rem; color: #b4832e; margin: 0 0 12px; }"
+    },
+    {
+      "name": "Tech Tag Chip",
+      "kind": "chip",
+      "refersTo": "chip",
+      "description": "Static stack tag on case studies. Mono, deep-linen fill, no interactive state.",
+      "html": "<span class=\"ds-chip\">Laravel</span>",
+      "css": ".ds-chip { display: inline-block; font-family: 'IBM Plex Mono', monospace; font-size: 0.75rem; background: #e3e7e2; color: #0d1420; padding: 4px 10px; border-radius: 8px; }"
+    },
+    {
+      "name": "Terminal Mock (signature)",
+      "kind": "custom",
+      "refersTo": null,
+      "description": "The hero centerpiece — a fake shell session that demonstrates the pitch instead of claiming it.",
+      "html": "<div class=\"ds-terminal\"><div class=\"ds-terminal-bar\"><span class=\"ds-dot\" style=\"background:#E4644B\"></span><span class=\"ds-dot\" style=\"background:#E8B84B\"></span><span class=\"ds-dot\" style=\"background:#4BAE7A\"></span><span class=\"ds-terminal-title\">ohene@dev — zsh</span></div><div class=\"ds-terminal-body\"><div><span style=\"color:#34d399\">$</span> whoami --for-clients</div><div style=\"color:#94a3b8\">&gt; Full-stack developer, <span style=\"color:#d9a441\">7+</span> years in production</div></div></div>",
+      "css": ".ds-terminal { background: #161f2e; border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; overflow: hidden; } .ds-terminal-bar { display: flex; align-items: center; gap: 8px; padding: 12px 16px; border-bottom: 1px solid rgba(255,255,255,0.1); } .ds-dot { width: 10px; height: 10px; border-radius: 9999px; } .ds-terminal-title { font-family: 'IBM Plex Mono', monospace; font-size: 0.75rem; color: #94a3b8; margin-left: 8px; } .ds-terminal-body { padding: 24px; font-family: 'IBM Plex Mono', monospace; font-size: 0.875rem; line-height: 2; color: #e2e8f0; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Developer's Workbench",
+    "overview": "This is the bench of someone who builds production software and stands behind it. Every surface reads like a well-kept workspace: honest materials, tools left where a maker can reach them, nothing decorative that doesn't earn its place. The terminal prompt eyebrows, circuit-trace dividers, and monospaced statistics are the tools of the trade made visible. Warmth comes from the linen paper ground and the gold-forest-rust weave (a Kente nod), not from softness or gloss. The system is confident through restraint — it states facts in a plain, well-set voice and lets whitespace and typography carry the authority. Depth is mostly flat; motion and shadow are held back until an element is touched, at which point it lifts with a crisp, tactile confidence.",
+    "keyCharacteristics": [
+      "Warm linen paper ground with deep terminal-ink for hero/CTA anchors",
+      "A three-thread accent weave: Signal Gold (action), Circuit Forest (links), Ember Rust (punctuation)",
+      "Space Grotesk display + IBM Plex Sans body + IBM Plex Mono for every label, prompt, and stat",
+      "Flat, bordered surfaces at rest; a single soft shadow-lift on interaction",
+      "Signature motifs: terminal file-path eyebrows and the Kente/circuit-trace divider"
+    ],
+    "rules": [
+      { "name": "The One-Thread Rule", "body": "Signal Gold is the only color that means 'act.' It never decorates — if gold appears, it's a CTA, a live prompt, or the one word carrying the claim.", "section": "colors" },
+      { "name": "The Weave Rule", "body": "Gold, forest, and rust are a set, not a rainbow. They rotate in that order to echo a woven pattern; a fourth accent hue is prohibited.", "section": "colors" },
+      { "name": "The Prompt Rule", "body": "Every section eyebrow is a mono file-path prompt (› ~/section). It is the only sanctioned eyebrow form — a deliberate system, not the generic all-caps kicker.", "section": "typography" },
+      { "name": "The Mono-for-Data Rule", "body": "Anything that is a fact — a number, date, stack tag, URL, read-time — is set in IBM Plex Mono. Prose is never mono; data is never prose-set.", "section": "typography" },
+      { "name": "The Workbench Rule", "body": "Surfaces lie flat and bordered at rest. The premium shadow and any lift appear only on hover/focus. The aurora and glass are reserved for at most one dark-hero moment per page — never the default card material.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do ground pages in Warm Linen (#eef1ef) and anchor hero/CTA/footer in Terminal Ink (#0d1420).",
+      "Do keep Signal Gold to the one-thread role — CTAs, one accent word, live prompts.",
+      "Do set every fact (numbers, dates, tags, URLs) in IBM Plex Mono; keep prose in Plex Sans.",
+      "Do lead sections with the mono terminal prompt eyebrow (› ~/section).",
+      "Do keep surfaces flat and bordered at rest; reserve the premium shadow for hover/focus.",
+      "Do rotate accents gold → forest → rust to echo the weave.",
+      "Do hold body text at slate-700 on linen for ≥4.5:1 contrast; don't drop to light gray."
+    ],
+    "donts": [
+      "Don't ship the generic template portfolio look — interchangeable ThemeForest card grids.",
+      "Don't drift into the corporate/agency stock aesthetic — stock-photo teams, buzzword soup, faceless polish.",
+      "Don't assemble cliché SaaS-landing scaffolding: gradient hero + identical feature-card wall + a big-number metric row as the whole argument.",
+      "Don't use gradient text (background-clip: text) or a fourth accent hue — both break the weave.",
+      "Don't let glass (backdrop-blur) or the animated aurora become default card material.",
+      "Don't put facts in prose type or prose in mono — the Mono-for-Data line is fixed.",
+      "Don't add resting drop-shadows to flat content; borders and tone convey separation."
+    ]
+  }
+}

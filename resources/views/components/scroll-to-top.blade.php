@@ -1,0 +1,3 @@
+<button id="scrollToTop" aria-label="Scroll to top" class="fixed bottom-6 right-6 md:bottom-8 md:right-8 w-14 h-14 bg-black text-white border border-white/10 rounded-full shadow-[0_8px_30px_rgba(0,0,0,0.12)] flex items-center justify-center opacity-0 pointer-events-none transition-all duration-500 z-50 hover:bg-gold hover:text-black hover:-translate-y-1 hover:border-gold group translate-y-4">
+    <svg class="w-6 h-6 transition-transform duration-300 group-hover:-translate-y-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 10l7-7m0 0l7 7m-7-7v18"></path></svg>
+</button>

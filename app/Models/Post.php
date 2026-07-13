@@ -1,0 +1,189 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Models;
+
+use App\Concerns\HasPublicUlid;
+use App\Concerns\RecordsSlugRedirects;
+use App\Contracts\RedirectsOnSlugChange;
+use App\Enums\PostStatus;
+use App\Exceptions\PostNotPublishableException;
+use Carbon\CarbonImmutable;
+use Database\Factories\PostFactory;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+
+/**
+ * A blog post. Public visibility depends on both the status and a past
+ * `published_at`, so scheduled posts don't leak early.
+ *
+ * @property PostStatus $status
+ * @property CarbonImmutable|null $published_at
+ */
+class Post extends Model implements RedirectsOnSlugChange
+{
+    /** @use HasFactory<PostFactory> */
+    use HasFactory;
+
+    use HasPublicUlid;
+    use RecordsSlugRedirects;
+
+    /**
+     * @var list<string>
+     */
+    protected $fillable = [
+        'category_id',
+        'title',
+        'slug',
+        'excerpt',
+        'body',
+        'cover_image',
+        'cover_image_alt',
+        'read_time',
+        'status',
+        'published_at',
+        'meta_title',
+        'meta_description',
+        'og_image',
+    ];
+
+    /**
+     * @return array<string, string>
+     */
+    protected function casts(): array
+    {
+        return [
+            'status' => PostStatus::class,
+            'published_at' => 'immutable_datetime',
+            'read_time' => 'integer',
+        ];
+    }
+
+    /**
+     * Public URLs bind by slug for SEO and 1:1 parity with the old static site
+     * (requirements Section 3, MG2) — the ULID still identifies the record in
+     * the admin. Overrides the ULID key from HasPublicUlid for this model.
+     */
+    public function getRouteKeyName(): string
+    {
+        return 'slug';
+    }
+
+    /**
+     * Public posts live under /blog/{slug}.
+     */
+    public function publicPathPrefix(): string
+    {
+        return 'blog';
+    }
+
+    /**
+     * Only redirect a changed slug once the post has actually been published —
+     * a draft's URL isn't indexed yet, so there's nothing to preserve (FR18).
+     */
+    public function slugRedirectsEnabled(): bool
+    {
+        return $this->getOriginal('status') === PostStatus::Published;
+    }
+
+    /**
+     * On save: keep read time derived from the body, and enforce the
+     * content-quality gate before a post is allowed to go public.
+     */
+    protected static function booted(): void
+    {
+        static::saving(function (Post $post): void {
+            if ($post->isDirty('body')) {
+                $post->read_time = $post->estimatedReadTime();
+            }
+
+            if ($post->status === PostStatus::Published) {
+                $post->assertPublishable();
+            }
+        });
+    }
+
+    /**
+     * Guard the publish gate (requirements FR17): a published post needs a
+     * slug, a meta description, and alt text for any cover image it carries.
+     *
+     * @throws PostNotPublishableException
+     */
+    public function assertPublishable(): void
+    {
+        $missing = [];
+
+        if (blank($this->slug)) {
+            $missing[] = 'a slug';
+        }
+
+        if (blank($this->meta_description)) {
+            $missing[] = 'a meta description';
+        }
+
+        if (filled($this->cover_image) && blank($this->cover_image_alt)) {
+            $missing[] = 'cover image alt text';
+        }
+
+        if ($missing !== []) {
+            throw PostNotPublishableException::missing($missing);
+        }
+    }
+
+    /**
+     * Estimate reading time in whole minutes from the body word count,
+     * assuming ~200 words per minute (floor of one minute).
+     *
+     * @return positive-int
+     */
+    public function estimatedReadTime(): int
+    {
+        $words = str_word_count(strip_tags((string) $this->body));
+
+        return max(1, (int) ceil($words / 200));
+    }
+
+    /**
+     * The category this post belongs to.
+     *
+     * @return BelongsTo<Category, $this>
+     */
+    public function category(): BelongsTo
+    {
+        return $this->belongsTo(Category::class);
+    }
+
+    /**
+     * Limit to posts that are actually live: published status and a due date.
+     *
+     * @param  Builder<Post>  $query
+     */
+    public function scopePublished(Builder $query): void
+    {
+        $query->where('status', PostStatus::Published)
+            ->whereNotNull('published_at')
+            ->where('published_at', '<=', now());
+    }
+
+    /**
+     * Is this specific post live to the public right now? Mirrors the
+     * `published` scope for a single loaded model (e.g. route-bound posts).
+     */
+    public function isPublic(): bool
+    {
+        return $this->status === PostStatus::Published
+            && $this->published_at !== null
+            && $this->published_at->isPast();
+    }
+
+    /**
+     * OG image for social sharing, falling back to the cover image (requirements 5.1).
+     */
+    public function ogImage(): ?string
+    {
+        return $this->og_image ?? $this->cover_image;
+    }
+}

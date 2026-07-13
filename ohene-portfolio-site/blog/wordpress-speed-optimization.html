@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Why Your WordPress Site Is Slow (And How I'd Fix It) | Ohene Adjei Effah</title>
+<meta name="description" content="The most common causes of slow WordPress sites — from bloated plugins to unoptimized images — and the fixes that make the biggest difference.">
+<link rel="canonical" href="https://ohene.dev/blog/wordpress-speed-optimization.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Why Your WordPress Site Is Slow (And How I'd Fix It)">
+<meta property="og:description" content="The performance and SEO issues I see most often on client sites, and how to resolve them.">
+<meta property="og:url" content="https://ohene.dev/blog/wordpress-speed-optimization.html">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Why Your WordPress Site Is Slow (And How I'd Fix It)",
+  "author": { "@type": "Person", "name": "Ohene Adjei Effah" },
+  "datePublished": "2026-07-05",
+  "mainEntityOfPage": "https://ohene.dev/blog/wordpress-speed-optimization.html"
+}
+</script>
+
+<script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          ink: '#0D1420', inksoft: '#161F2E', linen: '#EEF1EF', linendeep: '#E3E7E2',
+          gold: '#D9A441', golddeep: '#B4832E', forest: '#2F6F4E', rust: '#B0472E'
+        },
+        fontFamily: {
+          display: ['Space Grotesk','sans-serif'],
+          body: ['IBM Plex Sans','sans-serif'],
+          mono: ['IBM Plex Mono','monospace']
+        }
+      }
+    }
+  }
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body class="bg-linen text-ink">
+
+<header class="sticky top-0 z-50 bg-linen/90 backdrop-blur border-b border-black/10">
+  <div class="max-w-6xl mx-auto px-7 py-4 flex items-center justify-between gap-5">
+    <a href="../index.html" class="font-display font-bold text-xl">OA<span class="text-rust">.</span></a>
+    <nav class="hidden md:flex gap-7 text-sm font-medium text-slate-600">
+      <a href="../index.html#services" class="hover:text-ink">Services</a>
+      <a href="../work/index.html" class="hover:text-ink">Work</a>
+      <a href="../about/index.html" class="hover:text-ink">About</a>
+      <a href="index.html" class="text-ink font-semibold">Blog</a>
+      <a href="../videos/index.html" class="hover:text-ink">Videos</a>
+      <a href="../contact/index.html" class="hover:text-ink">Contact</a>
+    </nav>
+    <a href="../contact/index.html" class="hidden md:inline-flex font-mono text-sm border border-ink rounded-full px-4 py-2 hover:bg-ink hover:text-linen transition">Start a project</a>
+    <button id="navToggle" class="md:hidden text-2xl leading-none" aria-label="Toggle menu" aria-expanded="false">☰</button>
+  </div>
+  <div id="mobileMenu" class="hidden md:hidden flex-col gap-1 bg-linen border-b border-black/10 px-7 pb-4">
+    <a href="../index.html#services" class="block py-3 border-b border-black/5">Services</a>
+    <a href="../work/index.html" class="block py-3 border-b border-black/5">Work</a>
+    <a href="../about/index.html" class="block py-3 border-b border-black/5">About</a>
+    <a href="index.html" class="block py-3 border-b border-black/5">Blog</a>
+    <a href="../videos/index.html" class="block py-3 border-b border-black/5">Videos</a>
+    <a href="../contact/index.html" class="block py-3">Contact</a>
+  </div>
+</header>
+
+<section class="bg-ink text-linen py-16">
+  <div class="max-w-3xl mx-auto px-7">
+    <p class="font-mono text-xs text-slate-400 mb-5">
+      <a href="../index.html" class="hover:text-gold">Home</a> / <a href="index.html" class="hover:text-gold">Blog</a> / Performance
+    </p>
+    <p class="font-mono text-sm text-gold mb-3">› Performance</p>
+    <h1 class="font-display text-3xl md:text-4xl font-semibold mb-4 leading-tight">Why Your WordPress Site Is Slow (And How I'd Fix It)</h1>
+    <p class="text-slate-300 text-sm">By Ohene Adjei Effah · 5 min read</p>
+  </div>
+</section>
+
+<main>
+  <article class="max-w-3xl mx-auto px-7 py-14 prose prose-slate prose-headings:font-display prose-headings:text-ink prose-a:text-forest prose-strong:text-ink">
+
+    <p>Most WordPress speed problems I run into on client audits come down to the same three or four causes. Here's the order I check them in, and what usually fixes each one.</p>
+
+    <h2>1. Plugin bloat</h2>
+    <p>Every active plugin adds its own scripts, styles and (often) database queries — whether or not the page actually needs them. I start by auditing which plugins run on every page versus which only need to load on specific ones, and disable or replace anything doing more than it should.</p>
+
+    <h2>2. Unoptimized images</h2>
+    <p>Full-resolution images uploaded straight from a phone or camera are one of the single biggest drags on load time. Serving properly sized, compressed images in modern formats (WebP where supported) with lazy loading for anything below the fold usually delivers the most visible improvement for the least effort.</p>
+
+    <h2>3. No caching layer</h2>
+    <p>WordPress generates pages dynamically by default, which means PHP and database work on every single visit unless something caches the output. A page-caching plugin, combined with server-level caching where possible, can cut load times dramatically without touching a single line of theme code.</p>
+
+    <h2>4. Unoptimized database queries</h2>
+    <p>Years of revisions, spam comments and transient options can bloat the database and slow every query down. A periodic cleanup, plus object caching with something like Redis for high-traffic sites, keeps things responsive as content grows.</p>
+
+    <h2>5. Render-blocking scripts</h2>
+    <p>Scripts and stylesheets loaded in the wrong order can delay the browser from painting anything at all. Deferring non-critical JavaScript and inlining critical CSS are small changes that measurably improve perceived load speed.</p>
+
+    <h2>What this bought one client</h2>
+    <p>On one e-learning platform I worked on, addressing these areas — alongside broader SEO work — contributed to a <strong>40% increase in organic traffic</strong>, largely because faster pages and better technical SEO gave search engines less reason to rank the site lower.</p>
+
+    <hr>
+
+    <p>If your WordPress site feels sluggish and you're not sure why, I'm happy to take a look and tell you honestly what's worth fixing first.</p>
+
+    <p><a href="../contact/index.html">Get in touch about a performance audit →</a></p>
+
+  </article>
+</main>
+
+<footer class="py-10 text-center text-sm text-slate-500">
+  <p>© <span id="year"></span> Ohene Adjei Effah. <a href="index.html" class="text-forest font-semibold">Back to blog ↑</a></p>
+</footer>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+  const navToggle = document.getElementById('navToggle');
+  const mobileMenu = document.getElementById('mobileMenu');
+  navToggle.addEventListener('click', () => {
+    const isOpen = mobileMenu.classList.toggle('flex');
+    mobileMenu.classList.toggle('hidden');
+    navToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+  });
+</script>
+
+</body>
+</html>

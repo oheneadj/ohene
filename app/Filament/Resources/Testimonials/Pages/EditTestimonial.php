@@ -1,0 +1,29 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Filament\Resources\Testimonials\Pages;
+
+use App\Filament\Resources\Testimonials\TestimonialResource;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\ViewAction;
+use Filament\Resources\Pages\EditRecord;
+
+/**
+ * Admin edit page for a testimonial record.
+ */
+class EditTestimonial extends EditRecord
+{
+    protected static string $resource = TestimonialResource::class;
+
+    /**
+     * Header actions available on this page.
+     */
+    protected function getHeaderActions(): array
+    {
+        return [
+            ViewAction::make(),
+            DeleteAction::make(),
+        ];
+    }
+}
