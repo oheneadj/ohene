@@ -1,0 +1,133 @@
+{
+  "source": "GitHub repositories, scraped 2026-07-13",
+  "projects": [
+    {
+      "slug": "lautos",
+      "repo_url": "https://github.com/oheneadj/lautos",
+      "title": "LAutos — Vehicle Shipping Platform",
+      "description": "The application enables customers to browse available vehicles, place orders, upload payment proof, and track their shipment — with payments handled offline via bank transfer or Mobile Money. A full import duty and cost calculator will be delivered in Phase 2 as a standalone value-add tool to drive traffic and convert visitors into buyers.",
+      "readme_present": false,
+      "tech_stack_detected": ["PHP", "Blade"],
+      "language_breakdown": { "PHP": "59.9%", "Blade": "39.1%", "Other": "1.0%" },
+      "stars": 0,
+      "forks": 0,
+      "commits": 54,
+      "notes_from_cv": "CV describes this project in more detail than the repo's About text: Laravel, Blade, Livewire, Alpine.js, Filament, Spatie Permissions, MySQL. Replaced a manual order process with a fully automated shipping platform featuring Google OAuth login, role-based access control, real-time tracking, Brevo email notifications, GiantSMS alerts, Sentry error monitoring, and automated deployments.",
+      "data_quality_flags": [
+        "No README.md in the repo — only the GitHub 'About' description is available, so the tech-stack detail (Livewire, Filament, Spatie Permissions, Google OAuth, Brevo, GiantSMS, Sentry) comes from the CV, not the repo itself. Verify these are still accurate before publishing as case-study copy.",
+        "This is the same project flagged in the earlier /projects page scrape as mismatched under the 'koinonia-initiative' slug on the live WordPress site — use this GitHub data as the authoritative source instead."
+      ]
+    },
+    {
+      "slug": "subtrack",
+      "repo_url": "https://github.com/oheneadj/SubTrack",
+      "title": "SubTrack — Client Subscription & Asset Manager",
+      "description": "SubTrack is a private internal tool for web agencies to track client subscriptions (domains, hosting, SSL, maintenance), automate renewal reminders, and generate professional USD invoices.",
+      "readme_present": true,
+      "features": [
+        "Dashboard: high-level overview of critical and warning expiries",
+        "Client & Project Management: organize assets by client",
+        "Subscription Tracking: monitor domains, hosting, and SSL with traffic-light status",
+        "Renewal Tracker: track provider vs. client costs and payment status",
+        "Invoicing: generate professional PDF invoices and send via email",
+        "Settings: configure agency details, logos, and invoice numbering",
+        "Automated daily expiry checks and email notifications via a scheduled artisan command (subtrack:check-expiries)"
+      ],
+      "tech_stack_detected": ["Laravel 13", "Livewire 4", "FlyonUI (Tailwind CSS v4)", "DomPDF"],
+      "language_breakdown": { "Blade": "57.7%", "PHP": "42.0%", "Other": "0.3%" },
+      "stars": 0,
+      "forks": 0,
+      "commits": 17,
+      "screenshot": "https://github.com/oheneadj/SubTrack/raw/main/subtrack.png",
+      "notes_from_cv": "Matches the CV's 'Subtrack — Subscription Tracker for Web Agencies' project: Laravel, Blade, Livewire, Alpine.js, DomPDF, MySQL. CV specifically credits it with eliminating missed renewal deadlines via Laravel scheduled jobs and generating professional USD-denominated PDF invoices — consistent with the README.",
+      "data_quality_flags": [
+        "None significant — this repo has a clean, complete, and consistent README. Good candidate to lead with as a case study."
+      ]
+    },
+    {
+      "slug": "openstores",
+      "repo_url": "https://github.com/oheneadj/openstorev2",
+      "title": "OpenStores — The Operating System for Modern Retail",
+      "description": "OpenStores is a comprehensive, multi-tenant SaaS solution designed to streamline retail operations. From a lightning-fast Point of Sale (POS) to advanced inventory management and real-time analytics, OpenStores empowers independent retailers to compete with big-box giants.",
+      "readme_present": true,
+      "features": [
+        "Modern Point of Sale (POS): high-speed checkout, offline capable, device-agnostic (iPad/Android/Desktop), smart split/partial payments, USB and Bluetooth barcode scanner support",
+        "Advanced Inventory Management: real-time tracking across registers, low-stock alerts, product variants (size/color/material), real-time stock valuation",
+        "Analytics & Reporting: live dashboard for sales/profit/top products, daily/weekly/monthly reports, employee performance tracking",
+        "Multi-Business Architecture: SaaS-ready multi-tenancy, business switching for users managing multiple businesses, role-based access (Owners, Managers, Cashiers)"
+      ],
+      "tech_stack_detected": ["Laravel 12.x", "Blade Components", "Livewire 3", "Alpine.js v3", "Tailwind CSS", "FlyonUI", "MySQL", "Pest/PHPUnit"],
+      "language_breakdown": { "Blade": "57.5%", "PHP": "41.8%", "Other": "0.7%" },
+      "stars": 1,
+      "forks": 0,
+      "commits": 4,
+      "open_issues": 1,
+      "license": "MIT",
+      "topics": ["laravel", "livewire", "tailwindcss-v4", "flyonui"],
+      "screenshots": [
+        "https://github.com/oheneadj/openstorev2/raw/main/public/business.png",
+        "https://github.com/oheneadj/openstorev2/raw/main/public/admin.png"
+      ],
+      "notes_from_cv": "Not explicitly named in the CV under 'Key Projects,' but the CV's Additional Projects line references 'OpenStore' among the list — this GitHub repo (openstorev2) appears to be a rebuilt/second version.",
+      "data_quality_flags": [
+        "Repo name is 'openstorev2' but the product is branded 'OpenStores' (plural) in the README — decide which name to use consistently on the new site.",
+        "Only 4 commits despite a fairly comprehensive feature set described — worth confirming this reflects the actual current state of the app (e.g., is it functional/deployed anywhere, or mostly scaffolding/planning at this point) before writing case-study copy that implies a finished, in-production product.",
+        "No live URL found — the README links its own logo image to 'https://openstores.com' but this wasn't verified as a live, working site during this scrape."
+      ]
+    },
+    {
+      "slug": "podlist",
+      "repo_url": "https://github.com/oheneadj/podlist",
+      "title": "PodList — WordPress Podcast Playlist Plugin",
+      "description": "A modern WordPress plugin that makes it easy to embed podcast playlists from Spotify with customizable display options. Supports caching, pagination, load more/infinite scroll, and custom styling.",
+      "readme_present": true,
+      "features": [
+        "Embed Spotify podcast playlists via a simple shortcode: [podlist]",
+        "Built-in caching for performance",
+        "Load More button or Infinite Scroll pagination",
+        "Compact or Full iframe appearance",
+        "Customizable iframe color theme/gradient options",
+        "Admin settings panel in the WordPress dashboard for Spotify Show URL, caching, limits, pagination, and appearance"
+      ],
+      "tech_stack_detected": ["PHP", "JavaScript", "CSS", "WordPress Plugin API"],
+      "language_breakdown": { "PHP": "82.5%", "JavaScript": "15.5%", "CSS": "2.0%" },
+      "stars": 0,
+      "forks": 0,
+      "commits": 5,
+      "license": "MIT",
+      "author_credit_in_readme": "Ohene Adjei — ohene.dev",
+      "notes_from_cv": "Matches the 'PodList' mention in the CV's Additional Projects line. This is a WordPress plugin, not a full-stack app — different category from the others, worth tagging separately (e.g. 'WordPress Plugin' vs 'Web Application') on the new site.",
+      "data_quality_flags": [
+        "Clean, complete README — safe to seed largely as-is.",
+        "No screenshots included in the README — worth adding at least one showing the embedded playlist in action before publishing."
+      ]
+    },
+    {
+      "slug": "sikadaka",
+      "repo_url": "https://github.com/oheneadj/sikadaka",
+      "title": "Sikadaka — Financial Management Application",
+      "description": "A financial management application (per GitHub's 'About' field).",
+      "readme_present": true,
+      "tech_stack_detected": ["Laravel", "Blade", "Tailwind CSS"],
+      "language_breakdown": { "Blade": "70.6%", "PHP": "29.1%", "Other": "0.3%" },
+      "stars": 0,
+      "forks": 0,
+      "watchers": 2,
+      "commits": 63,
+      "notes_from_cv": "Matches the /projects page case study already scraped: a Laravel-based financial management system for community savings groups, engineered to scale to 1,000+ members.",
+      "data_quality_flags": [
+        "CRITICAL — the README.md in this repo is NOT about Sikadaka at all. It's a generic local-setup guide titled 'How To Setup Project on Locally' that repeatedly refers to a 'Funeral App' and instructs cloning 'git@github.com:oheneadj/funeralapp.git'. This looks like a README copy-pasted from an entirely different, unrelated project and never updated. Do not seed any of this README's content as Sikadaka's description — use the case-study copy already scraped from ohene.dev/projects (Challenge/Build/Impact) and the CV instead, and fix the README in the actual repo separately so anyone who visits it on GitHub isn't confused."
+      ]
+    }
+  ],
+  "cross_reference_summary": {
+    "already_have_case_study_copy": ["sikadaka (from ohene.dev/projects scrape)"],
+    "need_new_case_study_copy_written": ["lautos", "subtrack", "openstorev2", "podlist"],
+    "recommended_priority_for_new_case_studies": [
+      "subtrack — cleanest data, clear features, matches CV exactly",
+      "podlist — clean data, but different category (WordPress plugin) so frame accordingly",
+      "lautos — good CV detail available despite no README, and it fixes the broken koinonia-initiative page",
+      "openstorev2 — verify current live/deployment status before writing case-study language that implies a finished product"
+    ]
+  }
+}

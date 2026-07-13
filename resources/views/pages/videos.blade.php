@@ -42,7 +42,7 @@
         <div class="max-w-6xl mx-auto px-7 relative z-10 flex flex-col md:flex-row md:items-end justify-between gap-10">
             <div class="max-w-2xl">
                 <p class="font-mono text-xs uppercase tracking-widest text-forest mb-4">&rsaquo; ~/videos</p>
-                <h1 class="font-display text-4xl md:text-5xl lg:text-6xl font-semibold mb-5">Dev videos</h1>
+                <h1 class="font-display text-4xl md:text-5xl font-semibold mb-5">Dev videos</h1>
                 <p class="text-slate-300 text-lg leading-relaxed">Short walkthroughs, coding sessions, and build notes. All content is hosted directly on YouTube for the best playback experience.</p>
             </div>
             

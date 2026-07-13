@@ -1,52 +1,78 @@
-<x-layouts.app
-    title="Ohene Adjei Effah — Full-Stack Developer for Hire | Laravel, React, WordPress"
-    description="Hire Ohene Adjei Effah, a full-stack web developer in Accra, Ghana. {{ date('Y') - config('site.stats.career_start_year') }}+ years building Laravel, React and WordPress solutions.">
+<x-layouts.app title="Ohene Adjei Effah — Full-Stack Developer for Hire | Laravel, React, WordPress"
+    description="Hire Ohene Adjei Effah, a full-stack web developer in Cape Coast, Ghana. 7+ years building Laravel, React and WordPress solutions used by 20,000+ people.">
 
     <x-slot:head>
         <x-json-ld :data="[
-            '@context' => 'https://schema.org',
-            '@graph' => [
-                [
-                    '@type' => 'Person',
-                    'name' => config('site.name'),
-                    'jobTitle' => config('site.job_title'),
-                    'url' => route('home'),
-                    'email' => 'mailto:' . config('site.email'),
-                    'telephone' => config('site.phone'),
-                    'address' => ['@type' => 'PostalAddress', 'addressLocality' => config('site.locality'), 'addressCountry' => config('site.country')],
-                    'sameAs' => config('site.same_as'),
-                    'knowsAbout' => config('site.knows_about'),
-                ],
-                [
-                    '@type' => 'ProfessionalService',
-                    'name' => config('site.name') . ' — Web Development Services',
-                    'url' => route('home'),
-                    'areaServed' => 'Worldwide',
-                    'provider' => ['@type' => 'Person', 'name' => config('site.name')],
-                ],
+        '@context' => 'https://schema.org',
+        '@graph' => [
+            [
+                '@type' => 'Person',
+                'name' => config('site.name'),
+                'jobTitle' => config('site.job_title'),
+                'url' => route('home'),
+                'email' => 'mailto:' . config('site.email'),
+                'telephone' => config('site.phone'),
+                'address' => ['@type' => 'PostalAddress', 'addressLocality' => config('site.locality'), 'addressCountry' => config('site.country')],
+                'sameAs' => config('site.same_as'),
+                'knowsAbout' => config('site.knows_about'),
             ],
-        ]" />
+            [
+                '@type' => 'ProfessionalService',
+                'name' => config('site.name') . ' — Web Development Services',
+                'url' => route('home'),
+                'areaServed' => 'Worldwide',
+                'provider' => ['@type' => 'Person', 'name' => config('site.name')],
+            ],
+        ],
+    ]" />
     </x-slot:head>
 
     {{-- HERO --}}
     <section class="bg-black text-white relative overflow-hidden pb-12">
         <div class="bg-aurora-animated pointer-events-none" aria-hidden="true"></div>
-        <div class="max-w-6xl mx-auto px-7 pt-20 pb-16 grid md:grid-cols-[1.1fr_0.9fr] gap-14 items-center relative z-10">
+        <div
+            class="max-w-6xl mx-auto px-7 pt-20 pb-16 grid md:grid-cols-[1.1fr_0.9fr] gap-14 items-center relative z-10">
             <div>
                 @if ($available)
                     <div class="reveal">
-                        <span class="inline-flex items-center gap-2 font-mono text-xs text-slate-300 border border-white/15 rounded-full px-3 py-1.5 mb-6">
+                        <span
+                            class="inline-flex items-center gap-2 font-mono text-xs text-slate-300 border border-white/15 rounded-full px-3 py-1.5 mb-6">
                             <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> Available for new projects
                         </span>
                     </div>
                 @endif
-                <h1 class="reveal font-display text-5xl md:text-6xl font-semibold leading-tight mb-5">
-                    Web solutions built to launch, scale, and get <span class="text-gray-400">actually used.</span>
+                <style>
+                    .hero-word-rotate {
+                        animation: heroWordRotate 7.5s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+                        opacity: 0;
+                        transform: translateY(16px);
+                    }
+                    .hero-word-rotate:nth-child(1) { animation-delay: 0s; }
+                    .hero-word-rotate:nth-child(2) { animation-delay: 2.5s; }
+                    .hero-word-rotate:nth-child(3) { animation-delay: 5s; }
+
+                    @keyframes heroWordRotate {
+                        0% { opacity: 0; transform: translateY(16px); }
+                        5% { opacity: 1; transform: translateY(0); }
+                        28% { opacity: 1; transform: translateY(0); }
+                        33% { opacity: 0; transform: translateY(-16px); }
+                        100% { opacity: 0; transform: translateY(-16px); }
+                    }
+                </style>
+                <h1 class="reveal font-display text-4xl md:text-5xl font-semibold leading-tight mb-5">
+                    I
+                    <span class="inline-grid align-baseline">
+                        <span class="col-start-1 row-start-1 text-forest hero-word-rotate">design,</span>
+                        <span class="col-start-1 row-start-1 text-forest hero-word-rotate">develop,</span>
+                        <span class="col-start-1 row-start-1 text-forest hero-word-rotate">deploy</span>
+                        <span class="col-start-1 row-start-1 invisible" aria-hidden="true">develop,</span>
+                    </span><br>
+                    <span class="text-gray-400">software that works.</span>
                 </h1>
-                <p class="reveal text-slate-300 max-w-lg mb-6">I'm a full-stack developer partnering with businesses to design, build and maintain Laravel, React and WordPress products — from first line of code to long-term support. Based in Accra, Ghana, working with clients anywhere.</p>
-                
+                <p class="reveal text-slate-300 max-w-lg mb-6">Full-stack development from first line of code to long-term support. Laravel, React and WordPress products built for businesses anywhere — from Accra, Ghana.</p>
+
                 <div class="reveal flex flex-wrap items-center gap-3 text-slate-400 text-sm font-mono mb-10">
-                    <span class="text-white font-semibold">{{ date('Y') - config('site.stats.career_start_year') }}+ Years Exp</span>
+                    <span class="text-white font-semibold">{{ config('site.stats.years_experience') }} Years Exp</span>
                     <span class="text-white/20">&middot;</span>
                     <span class="text-white font-semibold">{{ config('site.stats.end_users') }} End Users</span>
                     <span class="text-white/20">&middot;</span>
@@ -56,16 +82,25 @@
                 </div>
 
                 <div class="reveal flex flex-wrap gap-4">
-                    <a href="{{ route('contact') }}" class="inline-flex items-center gap-2 bg-gold text-black font-bold rounded-full px-6 py-3 hover:bg-golddeep hover:-translate-y-1 transition-premium">Start a project</a>
-                    <a href="{{ route('work.index') }}" class="inline-flex items-center gap-2 border-2 border-rust text-rust font-bold rounded-full px-6 py-3 hover:bg-rust hover:text-black hover:-translate-y-1 transition-premium">See the work</a>
+                    <a href="{{ route('contact') }}"
+                        class="inline-flex items-center gap-2 bg-gold text-black font-bold rounded-full px-6 py-3 hover:bg-golddeep hover:-translate-y-1 transition-premium">Start
+                        a project</a>
+                    <a href="{{ route('work.index') }}"
+                        class="inline-flex items-center gap-2 border-2 border-rust text-rust font-bold rounded-full px-6 py-3 hover:bg-rust hover:text-black hover:-translate-y-1 transition-premium">See
+                        the work</a>
                 </div>
             </div>
             <div class="reveal">
                 <x-browser-mock>
                     <div><span class="text-emerald-400">$</span> whoami --for-clients</div>
-                    <div class="text-slate-400">&gt; Full-stack developer, <span class="text-gray-400">{{ date('Y') - config('site.stats.career_start_year') }}+</span> years in production</div>
-                    <div class="text-slate-400">&gt; Shipped to <span class="text-gray-400">{{ config('site.stats.end_users') }}</span> end users</div>
-                    <div class="text-slate-400">&gt; <span class="text-gray-400">{{ config('site.stats.wp_builds') }}</span> WordPress builds launched</div>
+                    <div class="text-slate-400">&gt; Full-stack developer, <span
+                            class="text-gray-400">{{ config('site.stats.years_experience') }}</span> years in production
+                    </div>
+                    <div class="text-slate-400">&gt; Shipped to <span
+                            class="text-gray-400">{{ config('site.stats.end_users') }}</span> end users</div>
+                    <div class="text-slate-400">&gt; <span
+                            class="text-gray-400">{{ config('site.stats.wp_builds') }}</span> WordPress builds launched
+                    </div>
                     <div class="text-slate-400">&gt; Stack: PHP/Laravel · React/Vue · MySQL · AWS</div>
                 </x-browser-mock>
             </div>
@@ -80,29 +115,44 @@
     <section id="services" class="max-w-6xl mx-auto px-7 py-20 border-b border-black/5">
         <x-eyebrow>~/services</x-eyebrow>
         <h2 class="font-display text-3xl font-semibold mb-12 max-w-sm text-black">How I can help</h2>
-        
+
         <div class="grid md:grid-cols-3 gap-14 md:gap-10">
             <div class="reveal flex gap-6 group cursor-default">
-                <div class="font-display text-5xl md:text-6xl font-bold mt-1 group-hover:-translate-y-1 transition-transform duration-500" style="-webkit-text-stroke: 1.5px #cbd5e1; color: transparent;">01</div>
+                <div class="font-display text-5xl md:text-6xl font-bold mt-1 group-hover:-translate-y-1 transition-transform duration-500"
+                    style="-webkit-text-stroke: 1.5px #cbd5e1; color: transparent;">01</div>
                 <div>
-                    <h3 class="font-display text-2xl font-semibold mb-4 text-black group-hover:text-golddeep transition-colors">Full-Stack Dev</h3>
-                    <p class="text-slate-600 text-sm leading-relaxed">Designing intuitive and engaging user experiences with React and Vue that seamlessly blend form and function, powered by robust backend architectures in Laravel and Node.js.</p>
-                </div>
-            </div>
-            
-            <div class="reveal flex gap-6 group cursor-default">
-                <div class="font-display text-5xl md:text-6xl font-bold mt-1 group-hover:-translate-y-1 transition-transform duration-500" style="-webkit-text-stroke: 1.5px #cbd5e1; color: transparent;">02</div>
-                <div>
-                    <h3 class="font-display text-2xl font-semibold mb-4 text-black group-hover:text-forest transition-colors">Cloud & DevOps</h3>
-                    <p class="text-slate-600 text-sm leading-relaxed">Transforming local code into highly available digital realities. I build and manage scalable infrastructure on AWS with automated CI/CD pipelines to ensure 99.9% uptime.</p>
+                    <h3
+                        class="font-display text-2xl font-semibold mb-4 text-black group-hover:text-golddeep transition-colors">
+                        Full-Stack Dev</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed">Designing intuitive and engaging user experiences
+                        with React and Vue that seamlessly blend form and function, powered by robust backend
+                        architectures in Laravel and Node.js.</p>
                 </div>
             </div>
 
             <div class="reveal flex gap-6 group cursor-default">
-                <div class="font-display text-5xl md:text-6xl font-bold mt-1 group-hover:-translate-y-1 transition-transform duration-500" style="-webkit-text-stroke: 1.5px #cbd5e1; color: transparent;">03</div>
+                <div class="font-display text-5xl md:text-6xl font-bold mt-1 group-hover:-translate-y-1 transition-transform duration-500"
+                    style="-webkit-text-stroke: 1.5px #cbd5e1; color: transparent;">02</div>
                 <div>
-                    <h3 class="font-display text-2xl font-semibold mb-4 text-black group-hover:text-rust transition-colors">CMS & Commerce</h3>
-                    <p class="text-slate-600 text-sm leading-relaxed">Crafting custom WordPress and WooCommerce solutions for businesses that need fast, reliable, and easily manageable digital storefronts with deep technical optimization.</p>
+                    <h3
+                        class="font-display text-2xl font-semibold mb-4 text-black group-hover:text-forest transition-colors">
+                        Cloud & DevOps</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed">Transforming local code into highly available
+                        digital realities. I build and manage scalable infrastructure on AWS with automated CI/CD
+                        pipelines to ensure 99.9% uptime.</p>
+                </div>
+            </div>
+
+            <div class="reveal flex gap-6 group cursor-default">
+                <div class="font-display text-5xl md:text-6xl font-bold mt-1 group-hover:-translate-y-1 transition-transform duration-500"
+                    style="-webkit-text-stroke: 1.5px #cbd5e1; color: transparent;">03</div>
+                <div>
+                    <h3
+                        class="font-display text-2xl font-semibold mb-4 text-black group-hover:text-rust transition-colors">
+                        CMS & Commerce</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed">Crafting custom WordPress and WooCommerce
+                        solutions for businesses that need fast, reliable, and easily manageable digital storefronts
+                        with deep technical optimization.</p>
                 </div>
             </div>
         </div>
@@ -116,7 +166,8 @@
                     <x-eyebrow>~/work</x-eyebrow>
                     <h2 class="font-display text-3xl font-semibold text-black">Selected work</h2>
                 </div>
-                <a href="{{ route('work.index') }}" class="font-semibold text-black hover:text-rust transition-colors">View all work &rarr;</a>
+                <a href="{{ route('work.index') }}" class="font-semibold text-black hover:text-rust transition-colors">View
+                    all work &rarr;</a>
             </div>
             <div class="flex flex-col gap-10">
                 @foreach ($projects as $project)
@@ -155,7 +206,8 @@
                     <x-eyebrow>~/blog</x-eyebrow>
                     <h2 class="font-display text-3xl font-semibold text-black">Notes &amp; insights</h2>
                 </div>
-                <a href="{{ route('blog.index') }}" class="font-semibold text-black hover:text-forest transition-colors">Read the blog &rarr;</a>
+                <a href="{{ route('blog.index') }}"
+                    class="font-semibold text-black hover:text-forest transition-colors">Read the blog &rarr;</a>
             </div>
             <div class="grid md:grid-cols-3 gap-6">
                 @foreach ($posts as $post)
@@ -175,7 +227,8 @@
                     <x-eyebrow>~/videos</x-eyebrow>
                     <h2 class="font-display text-3xl font-semibold text-black">Dev videos</h2>
                 </div>
-                <a href="{{ route('videos') }}" class="font-semibold text-black hover:text-forest transition-colors">Watch all &rarr;</a>
+                <a href="{{ route('videos') }}" class="font-semibold text-black hover:text-forest transition-colors">Watch
+                    all &rarr;</a>
             </div>
             <div class="grid md:grid-cols-3 gap-6">
                 @foreach ($videos as $video)

@@ -30,7 +30,7 @@
         <div class="bg-aurora-animated pointer-events-none opacity-40" aria-hidden="true"></div>
         <div class="max-w-6xl mx-auto px-7 relative z-10">
             <p class="font-mono text-xs uppercase tracking-widest text-forest mb-4">&rsaquo; ~/contact</p>
-            <h1 class="font-display text-4xl md:text-5xl lg:text-6xl font-semibold mb-5">Let's build something.</h1>
+            <h1 class="font-display text-4xl md:text-5xl font-semibold mb-5">Let's build something.</h1>
             <p class="text-slate-300 max-w-xl mb-10 text-lg">Tell me what you're trying to build. I'll get back to you within a day with thoughts on scope, timeline and next steps.</p>
             <div class="flex flex-wrap gap-4 mt-6">
                 <a href="mailto:oheneadjei.dev@gmail.com?subject=Project%20inquiry" class="flex items-center gap-2.5 bg-white/5 border border-white/10 backdrop-blur-md rounded-full px-5 py-3 text-sm font-medium hover:bg-white/10 hover:border-white/20 hover:-translate-y-0.5 transition-premium text-slate-200 hover:text-white group">

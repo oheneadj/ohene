@@ -39,7 +39,7 @@
             </p>
             <p class="font-mono text-xs uppercase tracking-widest text-forest mb-4">&rsaquo; ~/work/{{ $project->slug }}
             </p>
-            <h1 class="font-display text-4xl md:text-6xl font-bold mb-6 leading-tight max-w-4xl">{{ $project->title }}
+            <h1 class="font-display text-4xl md:text-5xl font-semibold mb-6 leading-tight max-w-4xl">{{ $project->title }}
             </h1>
             <p class="text-slate-300 text-lg md:text-xl max-w-2xl">{{ $project->tagline }}</p>
         </div>

@@ -1,0 +1,132 @@
+{
+  "source": "https://ohene.dev/projects/",
+  "scraped_at": "2026-07-13",
+  "projects": [
+    {
+      "slug": "emerging-english-coaching",
+      "title_raw_on_site": "Energing English Coaching",
+      "title_corrected": "Emerging English Coaching",
+      "client_name": "Emerging English Coaching (EEC)",
+      "summary": "Emerging English Coaching (EEC) is an online coaching service dedicated to helping English learners improve their communication skills and English teachers enhance their teaching strategies.",
+      "objectives": "Establish a strong online presence to connect with a global audience of English learners and teachers. Core goals: accessible, quality online training for English communication skills and TEFL/TESOL certification; help individuals improve their English for better career and school opportunities; facilitate the sale of related educational resources (books, courses). Measurable goals: a responsive website, increased website signups, higher rankings for specific keywords on Google, more course signups, larger student base.",
+      "strategy": "Built a website designed to maximize course signups, including dedicated landing pages tailored to specific student demographics. Developed interactive tools to enhance learning engagement and created free resources to build an email list of potential students.",
+      "results": "Website traffic increased 200%. Gained more signups from students in Asia and Europe. Recognized as the best online English school in West Africa and Africa in both 2022 and 2023. Enhanced brand reputation, continental recognition and awards, and collaborations from Europe and Asia. Founder offered a full-time work opportunity as a result.",
+      "tools_used": [
+        "Elementor",
+        "WordPress",
+        "TalentLMS",
+        "HTML",
+        "CSS",
+        "JavaScript",
+        "Canva",
+        "WooCommerce",
+        "Omnisend Email Marketing",
+        "Google Analytics",
+        "Ahrefs"
+      ],
+      "live_url": "https://emergingenglishcoaching.com/",
+      "live_url_confidence": "high — matches client name and appears consistently",
+      "images_raw": [
+        "https://ohene.dev/wp-content/uploads/2025/07/emergingenglishcoaching-contact-2025-07-30-22_38_26-1-scaled.webp",
+        "https://ohene.dev/wp-content/uploads/2025/07/emergingenglishcoaching-product-the-language-teachers-golden-companion-digital-copy-2025-07-30-22_40_34-scaled.webp",
+        "https://ohene.dev/wp-content/uploads/2025/05/emergingenglishcoaching-2-scaled.webp",
+        "https://ohene.dev/wp-content/uploads/2025/07/emergingenglishcoaching-tefl-tesol-180-2025-07-30-22_37_52-scaled.webp",
+        "https://ohene.dev/wp-content/uploads/2025/07/emergingenglishcoaching-work-abroad-2025-07-30-22_45_27-scaled.webp",
+        "https://ohene.dev/wp-content/uploads/2025/07/emergingenglishcoaching-tools-2025-07-30-22_41_07.webp",
+        "https://ohene.dev/wp-content/uploads/2025/07/emergingenglishcoaching-2024-04-02-cultivating-inclusive-classrooms-dr-gloria-bouttes-trailblazing-impact-on-tefl-tesol-education-2025-07-30-22_39_18-scaled.webp",
+        "https://ohene.dev/wp-content/uploads/2025/07/emergingenglishcoaching-blog-2025-07-30-22_38_49-scaled.webp"
+      ],
+      "data_quality_flags": [
+        "Title had a typo on the live site: 'Energing' -> corrected to 'Emerging' in title_corrected.",
+        "Two identical 'View Website' links both pointed to emergingenglishcoaching.com — fine here, but confirm this wasn't accidental duplication of markup."
+      ]
+    },
+    {
+      "slug": "ldsgh-delivery-services",
+      "title_raw_on_site": "Livingstone Delivery Sevices",
+      "title_corrected": "Livingston Delivery Services (LDSGH)",
+      "client_name": "LDSGH",
+      "summary": "Livingston Delivery Services is a ride and parcel delivery service in Accra, Ghana, aiming to provide affordable services at reasonable prices.",
+      "objectives": "Build a website with booking functionality so clients could book easily and the company could track and manage bookings. Measurable goals: significantly increase website traffic, achieve higher rankings for specific keywords, reach over 5,000 people, and provide a booking page where users could estimate cost before paying.",
+      "strategy": "Blog/marketing site built with WordPress and Elementor for content management and design flexibility. Booking app built with Laravel and Livewire, with FilamentPHP for the admin dashboard. Focused on on-page and technical SEO, responsive design, Google My Business integration, and OpenStreetMap integration for geo-location-based ride/delivery cost estimation.",
+      "results": "Website reached approximately 200 visitors per day. Improved company reputation. Booking estimator gave users up-front cost details before booking, improving customer experience and retention.",
+      "tools_used": [
+        "WordPress",
+        "Omnisend Email",
+        "Moolre Payment API",
+        "Laravel",
+        "Livewire",
+        "FilamentPHP",
+        "OpenStreetMap API"
+      ],
+      "live_url": "http://ldsgh.com",
+      "live_url_confidence": "LOW — see data_quality_flags, this needs manual verification",
+      "images_raw": [
+        "https://ohene.dev/wp-content/uploads/2025/12/2-16-Contact-LDSGH.png",
+        "https://ohene.dev/wp-content/uploads/2025/12/1-46-Latest-News-LDSGH.png",
+        "https://ohene.dev/wp-content/uploads/2025/12/0-55-About-LDSGH-scaled.png",
+        "https://ohene.dev/wp-content/uploads/2025/12/2-00-Ullamcorper-Sitamet-Risusnullam-LDSGH-scaled.png",
+        "https://ohene.dev/wp-content/uploads/2025/12/3-03-LDSGH-Delivery-Ride-Booking.png",
+        "https://ohene.dev/wp-content/uploads/2025/12/3-43-LDSGH-Delivery-Ride-Booking.png",
+        "https://ohene.dev/wp-content/uploads/2025/12/3-31-LDSGH-Delivery-Ride-Booking.png",
+        "https://ohene.dev/wp-content/uploads/2025/12/3-17-LDSGH-Delivery-Ride-Booking.png",
+        "https://ohene.dev/wp-content/uploads/2025/12/4-49-LDSGH-Delivery-Ride-Booking.png",
+        "https://ohene.dev/wp-content/uploads/2025/12/4-39-LDSGH-Delivery-Ride-Booking.png",
+        "https://ohene.dev/wp-content/uploads/2025/12/2-43-LDSGH.png"
+      ],
+      "data_quality_flags": [
+        "Title had a typo on the live site: 'Sevices' -> corrected to 'Services'.",
+        "CRITICAL: the two 'View Website' links under this section actually point to thecomfortersroom.com and emergingenglishcoaching.com — NOT ldsgh.com. This matches an issue already flagged in the earlier technical audit (wrong URLs on the Projects page). Do not seed emergingenglishcoaching.com/thecomfortersroom.com as this project's live_url. Verify the real LDSGH URL — the homepage separately lists it as http://ldsgh.com (note: HTTP not HTTPS, also worth fixing).",
+        "The images filenames (e.g. 'Ullamcorper-Sitamet-Risusnullam') contain Lorem-Ipsum-style placeholder text baked into the filename itself — worth checking these are the correct final images and not leftover draft/placeholder screenshots."
+      ]
+    },
+    {
+      "slug": "the-comforters-room",
+      "title_raw_on_site": "The Comforters Room",
+      "title_corrected": "The Comforters Room",
+      "client_name": "The Comforters Room",
+      "summary": "The Comforters Room is an online Christian group focused on providing comfort and support to those who are hurting. The group runs a blog, a Facebook group, and a podcast.",
+      "objectives": "Establish a robust blog website to migrate existing blog content and publish new articles. Measurable goals: reach over 5,000 people with the blog, significantly increase website traffic, and achieve higher rankings for specific keywords.",
+      "strategy": "Built on WordPress with Elementor for content management and flexible design. Comprehensive on-page and technical SEO, responsive design, and integrations with Facebook and Spotify to broaden reach and engagement.",
+      "results": "200% traffic increase compared to the old blog, significantly exceeding initial objectives. Enhanced brand reputation and improved blog management, streamlining content delivery and audience interaction.",
+      "tools_used": [
+        "WordPress",
+        "Omnisend Email",
+        "Spotify API",
+        "Canva"
+      ],
+      "live_url": "https://thecomfortersroom.com/",
+      "live_url_confidence": "high — matches client name and homepage listing",
+      "images_raw": [
+        "https://ohene.dev/wp-content/uploads/2025/07/thecomfortersroom-gods-character-2025-07-30-22_00_29-scaled.webp",
+        "https://ohene.dev/wp-content/uploads/2025/07/thecomfortersroom-devotionals-2025-07-30-21_59_07-scaled.webp",
+        "https://ohene.dev/wp-content/uploads/2025/07/thecomfortersroom-2025-07-30-21_57_49-scaled.webp"
+      ],
+      "data_quality_flags": [
+        "Body copy on the live site contains a stray markdown/formatting artifact: '==focused on providing comfort and support to those who are hurting.==' — the double-equals signs look like an unclosed highlight/markup syntax that leaked into the rendered text. Cleaned in the summary field above; verify against the CMS source before seeding.",
+        "The second 'View Website' link on this section incorrectly points to emergingenglishcoaching.com instead of thecomfortersroom.com — same cross-linking bug as LDSGH above."
+      ]
+    },
+    {
+      "slug": "zelosworks",
+      "title_raw_on_site": "ZelosWorks",
+      "title_corrected": "ZelosWorks",
+      "client_name": "ZelosWorks",
+      "summary": "ZelosWorks is a software development agency that develops custom software for businesses in Ghana.",
+      "objectives": "A dedicated, responsive one-page landing page to simplify client engagement, enable direct booking, and highlight ZelosWorks' capabilities.",
+      "strategy": "Built a fully responsive one-page site highlighting essential information, with prominent CTAs to guide visitors and boost engagement. Integrated Google Calendar so clients could book meetings directly.",
+      "results": "200% increase in qualified leads. Simple design and seamless booking integration improved accessibility for scheduling meetings via Google Calendar.",
+      "tools_used": [
+        "WordPress",
+        "Elementor",
+        "Google Calendar"
+      ],
+      "live_url": "https://zelosworks.com/",
+      "live_url_confidence": "high — both links point here consistently, and this matches the ZelosWorks testimonial elsewhere on the site (Samuel Cudjoe, Co-Founder)",
+      "images_raw": [],
+      "data_quality_flags": [
+        "No project screenshots were included on the live page for this case study, unlike the other three — worth adding before publishing on the new site."
+      ]
+    }
+  ]
+}

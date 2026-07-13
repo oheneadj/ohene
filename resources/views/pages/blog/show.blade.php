@@ -29,6 +29,72 @@
                 ]
             ]
         ]" />
+        
+        {{-- JetBrains Mono Font for Code Blocks --}}
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+        
+        {{-- Prism.js Theme for Code Highlighting (Monokai Pro Base) --}}
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-okaidia.min.css" rel="stylesheet" />
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.css" rel="stylesheet" />
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/toolbar/prism-toolbar.min.css" rel="stylesheet" />
+        <style>
+            /* Monokai Pro Custom Theme Overrides */
+            code[class*="language-"], pre[class*="language-"] {
+                color: #FCFCFA !important;
+                background: #2D2A2E !important;
+                text-shadow: none !important;
+                font-family: 'JetBrains Mono', Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace !important;
+                font-variant-ligatures: contextual;
+                font-size: 0.875rem !important;
+                line-height: 1.5 !important;
+            }
+            .token.comment, .token.prolog, .token.doctype, .token.cdata { color: #727072 !important; font-style: italic !important; }
+            .token.punctuation { color: #939293 !important; }
+            .token.namespace { opacity: .7 !important; }
+            .token.property, .token.tag, .token.constant, .token.symbol, .token.deleted { color: #FF6188 !important; }
+            .token.boolean, .token.number { color: #AB9DF2 !important; }
+            .token.selector, .token.attr-name, .token.char, .token.builtin, .token.inserted { color: #A9DC76 !important; }
+            .token.string { color: #FFD866 !important; }
+            .token.operator, .token.entity, .token.url, .language-css .token.string, .style .token.string { color: #FF6188 !important; }
+            .token.atrule, .token.attr-value, .token.keyword { color: #FF6188 !important; font-style: italic !important; }
+            .token.function, .token.class-name { color: #A9DC76 !important; }
+            .token.regex, .token.important, .token.variable { color: #FC9867 !important; }
+
+            /* Enforce text wrapping to prevent horizontal scrolling in code blocks */
+            pre[class*="language-"] {
+                white-space: pre-wrap !important;
+                word-wrap: break-word !important;
+                overflow-x: hidden !important;
+            }
+            code[class*="language-"] {
+                white-space: pre-wrap !important;
+                word-wrap: break-word !important;
+            }
+            /* Make toolbar copy button look sleek */
+            div.code-toolbar > .toolbar {
+                opacity: 1;
+                right: .5em;
+                top: .5em;
+            }
+            div.code-toolbar > .toolbar a,
+            div.code-toolbar > .toolbar button {
+                border-radius: .3em;
+                padding: .2em .5em;
+                background: rgba(255, 255, 255, 0.1);
+                color: #ccc;
+                box-shadow: none;
+                font-family: ui-sans-serif, system-ui, sans-serif;
+                font-size: 0.8rem;
+                transition: all 0.2s ease;
+            }
+            div.code-toolbar > .toolbar a:hover,
+            div.code-toolbar > .toolbar button:hover {
+                background: rgba(255, 255, 255, 0.2);
+                color: #fff;
+            }
+        </style>
     </x-slot:head>
 
     @if ($preview ?? false)
@@ -48,7 +114,7 @@
             @if ($post->category)
                 <p class="font-mono text-xs uppercase tracking-widest text-forest mb-4">&rsaquo; {{ $post->category->name }}</p>
             @endif
-            <h1 class="font-display text-3xl md:text-5xl font-semibold mb-6 leading-tight">{{ $post->title }}</h1>
+            <h1 class="font-display text-4xl md:text-5xl font-semibold mb-6 leading-tight">{{ $post->title }}</h1>
             <div class="flex flex-wrap items-center justify-between gap-6">
                 <p class="text-slate-400 text-sm font-mono">By Ohene Adjei Effah &middot; {{ $post->read_time }} min read</p>
                 
@@ -311,4 +377,18 @@
             });
         }
     </script>
+    
+    {{-- Add line-numbers class to all pre blocks before Prism highlights them --}}
+    <script>
+        document.querySelectorAll('article pre').forEach(pre => {
+            pre.classList.add('line-numbers');
+        });
+    </script>
+    
+    {{-- Prism.js for syntax highlighting --}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/toolbar/prism-toolbar.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/copy-to-clipboard/prism-copy-to-clipboard.min.js"></script>
 </x-layouts.app>

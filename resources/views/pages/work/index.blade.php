@@ -30,7 +30,7 @@
         <div class="bg-aurora-animated pointer-events-none opacity-40" aria-hidden="true"></div>
         <div class="max-w-6xl mx-auto px-7 relative z-10">
             <p class="font-mono text-xs uppercase tracking-widest text-forest mb-4">&rsaquo; ~/work</p>
-            <h1 class="font-display text-4xl md:text-5xl lg:text-6xl font-semibold mb-5">Selected work</h1>
+            <h1 class="font-display text-4xl md:text-5xl font-semibold mb-5">Selected work</h1>
             <p class="text-slate-300 max-w-xl text-lg">A few projects that show how I approach a problem, from first requirement to what it delivered.</p>
         </div>
     </section>

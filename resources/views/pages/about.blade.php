@@ -31,7 +31,7 @@
         <div class="bg-aurora-animated pointer-events-none opacity-40" aria-hidden="true"></div>
         <div class="max-w-6xl mx-auto px-7 relative z-10">
             <p class="font-mono text-xs uppercase tracking-widest text-forest mb-4">&rsaquo; ~/about</p>
-            <h1 class="font-display text-3xl md:text-5xl font-semibold mb-6 leading-tight">The developer behind the work
+            <h1 class="font-display text-4xl md:text-5xl font-semibold mb-6 leading-tight">The developer behind the work
             </h1>
 
             <div class="flex flex-wrap items-center justify-between gap-6">

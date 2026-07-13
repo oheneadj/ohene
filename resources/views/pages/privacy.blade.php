@@ -25,7 +25,7 @@
         <div class="bg-aurora-animated pointer-events-none opacity-40" aria-hidden="true"></div>
         <div class="max-w-6xl mx-auto px-7 relative z-10">
             <p class="font-mono text-xs uppercase tracking-widest text-forest mb-4">&rsaquo; ~/privacy</p>
-            <h1 class="font-display text-4xl md:text-5xl lg:text-6xl font-semibold mb-4">Privacy policy</h1>
+            <h1 class="font-display text-4xl md:text-5xl font-semibold mb-4">Privacy policy</h1>
             <p class="text-slate-300 max-w-xl text-lg">Plain-language, no surprises. Here's exactly what this site collects, why, and what you can control.</p>
         </div>
     </section>
