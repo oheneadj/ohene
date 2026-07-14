@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Concerns\GeneratesCoverThumbnail;
 use App\Concerns\HasPublicUlid;
 use App\Concerns\RecordsSlugRedirects;
 use App\Contracts\RedirectsOnSlugChange;
@@ -12,6 +13,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Facades\Cache;
 
 /**
  * A case study / portfolio project. `featured` surfaces it on the Home page;
@@ -19,11 +21,33 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  */
 class Project extends Model implements RedirectsOnSlugChange
 {
+    use GeneratesCoverThumbnail;
+
     /** @use HasFactory<ProjectFactory> */
     use HasFactory;
 
     use HasPublicUlid;
     use RecordsSlugRedirects;
+
+    /**
+     * Clear home page project cache on save or delete.
+     */
+    protected static function booted(): void
+    {
+        static::saved(function (): void {
+            Cache::forget('home.featured_projects');
+            Project::query()->pluck('slug')->each(function (string $slug): void {
+                Cache::forget("work.show.{$slug}");
+            });
+        });
+
+        static::deleted(function (): void {
+            Cache::forget('home.featured_projects');
+            Project::query()->pluck('slug')->each(function (string $slug): void {
+                Cache::forget("work.show.{$slug}");
+            });
+        });
+    }
 
     /**
      * @var list<string>
@@ -37,6 +61,7 @@ class Project extends Model implements RedirectsOnSlugChange
         'impact',
         'tech_stack',
         'cover_image',
+        'cover_image_thumbnail',
         'cover_image_alt',
         'live_url',
         'repo_url',

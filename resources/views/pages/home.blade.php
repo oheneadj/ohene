@@ -102,7 +102,6 @@
                     Ghana.</p>
 
                 <div class="reveal flex flex-wrap items-center gap-3 text-slate-400 text-sm font-mono mb-10">
-                    <span class="text-white font-semibold">{{ config('site.stats.years_experience') }} Years Exp</span>
                     <span class="text-white/20">&middot;</span>
                     <span class="text-white font-semibold">{{ config('site.stats.end_users') }} End Users</span>
                     <span class="text-white/20">&middot;</span>
@@ -120,7 +119,7 @@
                         the work</a>
                 </div>
             </div>
-            <div class="reveal">
+            <div class="reveal hidden md:block">
                 <x-browser-mock>
                     <div><span class="text-emerald-400">$</span> dev --status</div>
                     <div class="text-slate-400 mt-1">
@@ -168,9 +167,8 @@
                     <h3
                         class="font-display text-2xl font-semibold mb-4 text-black group-hover:text-golddeep transition-colors">
                         Full-Stack Dev</h3>
-                    <p class="text-slate-600 text-sm leading-relaxed">Designing intuitive and engaging user experiences
-                        with React and Vue that seamlessly blend form and function, powered by robust backend
-                        architectures in Laravel and Node.js.</p>
+                    <p class="text-slate-600 text-sm leading-relaxed">Designing fast, and scalable web
+                        applications, powered by robust backend architectures.</p>
                 </div>
             </div>
 
@@ -181,8 +179,8 @@
                     <h3
                         class="font-display text-2xl font-semibold mb-4 text-black group-hover:text-forest transition-colors">
                         Cloud & DevOps</h3>
-                    <p class="text-slate-600 text-sm leading-relaxed">Transforming local code into highly available
-                        digital realities. I build and manage scalable infrastructure on AWS with automated CI/CD
+                    <p class="text-slate-600 text-sm leading-relaxed">Build and manage scalable infrastructure with
+                        automated CI/CD
                         pipelines to ensure 99.9% uptime.</p>
                 </div>
             </div>
@@ -194,9 +192,8 @@
                     <h3
                         class="font-display text-2xl font-semibold mb-4 text-black group-hover:text-rust transition-colors">
                         CMS & Commerce</h3>
-                    <p class="text-slate-600 text-sm leading-relaxed">Crafting custom WordPress and WooCommerce
-                        solutions for businesses that need fast, reliable, and easily manageable digital storefronts
-                        with deep technical optimization.</p>
+                    <p class="text-slate-600 text-sm leading-relaxed">Fast, reliable, and easily manageable web
+                        solutions for business, with WordPress and WooCommerce.</p>
                 </div>
             </div>
         </div>
@@ -235,7 +232,7 @@
             <div class="reveal flex items-end justify-between flex-wrap gap-4 mb-10">
                 <div>
                     <x-eyebrow>~/blog</x-eyebrow>
-                    <h2 class="font-display text-3xl font-semibold text-black">Notes &amp; insights</h2>
+                    <h2 class="font-display text-3xl font-semibold text-black">Notes & insights</h2>
                 </div>
                 <a href="{{ route('blog.index') }}"
                     class="font-semibold text-black hover:text-forest transition-colors">Read the blog &rarr;</a>

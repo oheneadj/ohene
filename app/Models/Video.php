@@ -8,6 +8,7 @@ use App\Concerns\HasPublicUlid;
 use Database\Factories\VideoFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Cache;
 
 /**
  * A YouTube video embed. We keep only the video ID and derive the thumbnail
@@ -19,6 +20,15 @@ class Video extends Model
     use HasFactory;
 
     use HasPublicUlid;
+
+    /**
+     * Clear home page video cache on save or delete.
+     */
+    protected static function booted(): void
+    {
+        static::saved(fn () => Cache::forget('home.latest_videos'));
+        static::deleted(fn () => Cache::forget('home.latest_videos'));
+    }
 
     /**
      * @var list<string>

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use App\Concerns\HasPublicUlid;
@@ -27,6 +29,8 @@ class Faq extends Model
 
     /**
      * Scope a query to only include active FAQs.
+     *
+     * @param  Builder<self>  $query
      */
     public function scopeActive(Builder $query): void
     {

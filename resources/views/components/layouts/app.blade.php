@@ -8,7 +8,7 @@
 ])
 
 @php
-    $ogImage = $image ? \Illuminate\Support\Facades\Storage::disk('public')->url($image) : asset('og-default.webp');
+    $ogImage = \App\Helpers\AssetHelper::url($image) ?? asset('og-default.webp');
 @endphp
 
 <!DOCTYPE html>

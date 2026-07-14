@@ -25,7 +25,8 @@
             <div class="flex-grow relative bg-slate-100 p-1.5">
                 <div class="w-full h-full relative overflow-hidden rounded-sm bg-white shadow-[0_2px_8px_rgba(0,0,0,0.04)] border border-black/5">
                     @if ($project->cover_image)
-                        <img src="{{ \Illuminate\Support\Facades\Storage::disk('public')->url($project->cover_image) }}" alt="{{ $project->cover_image_alt ?? $project->title }}" loading="lazy" decoding="async" class="absolute inset-0 w-full h-full object-cover">
+                        @php $cardImage = $project->cover_image_thumbnail ?? $project->cover_image; @endphp
+                        <img src="{{ \App\Helpers\AssetHelper::url($cardImage) }}" alt="{{ $project->cover_image_alt ?? $project->title }}" loading="lazy" decoding="async" class="absolute inset-0 w-full h-full object-cover">
                     @else
                         <div class="w-full h-full bg-gradient-to-br from-slate-100 to-slate-50 flex items-center justify-center">
                              <span class="font-display font-bold text-3xl md:text-5xl text-slate-300">{{ substr($project->title, 0, 1) }}</span>

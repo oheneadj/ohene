@@ -77,7 +77,7 @@ it('silently drops honeypot submissions without creating a lead', function () {
 it('rate limits repeated submissions from the same visitor', function () {
     Mail::fake();
 
-    foreach (range(1, 5) as $i) {
+    foreach (range(1, 2) as $i) {
         Livewire::test(ContactForm::class)
             ->set('name', "Client {$i}")
             ->set('email', "client{$i}@example.com")
@@ -93,7 +93,7 @@ it('rate limits repeated submissions from the same visitor', function () {
         ->call('submit')
         ->assertHasErrors('message');
 
-    expect(Lead::count())->toBe(5);
+    expect(Lead::count())->toBe(2);
 });
 
 it('captures utm parameters onto the lead', function () {

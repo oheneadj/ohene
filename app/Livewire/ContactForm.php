@@ -85,7 +85,7 @@ class ContactForm extends Component
 
         if (RateLimiter::tooManyAttempts($this->throttleKey(), maxAttempts: 2)) {
             $seconds = RateLimiter::availableIn($this->throttleKey());
-            $this->addError('message', 'Too many submissions. Please try again in ' . ceil($seconds / 60) . ' minutes.');
+            $this->addError('message', 'Too many submissions. Please try again in '.ceil($seconds / 60).' minutes.');
 
             return;
         }

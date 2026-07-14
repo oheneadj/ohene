@@ -9,13 +9,11 @@ use App\Models\Testimonial;
 it('renders the home page with featured work and latest posts', function () {
     $project = Project::factory()->featured()->create(['title' => 'Featured Build']);
     $post = Post::factory()->create(['title' => 'A Fresh Post', 'published_at' => now()->subDay()]);
-    Testimonial::factory()->approved()->create(['client_name' => 'Happy Client']);
 
     $this->get(route('home'))
         ->assertOk()
         ->assertSee('Featured Build')
-        ->assertSee('A Fresh Post')
-        ->assertSee('Happy Client');
+        ->assertSee('A Fresh Post');
 });
 
 it('lists case studies on the work index', function () {

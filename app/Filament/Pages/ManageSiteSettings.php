@@ -7,10 +7,11 @@ namespace App\Filament\Pages;
 use App\Models\Setting;
 use BackedEnum;
 use Filament\Actions\Action;
-use Filament\Forms\Components\Toggle;
 use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Toggle;
 use Filament\Notifications\Notification;
 use Filament\Pages\Page;
+use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use UnitEnum;
@@ -70,13 +71,13 @@ class ManageSiteSettings extends Page
     {
         return $schema
             ->components([
-                \Filament\Schemas\Components\Section::make('Global Configuration')
+                Section::make('Global Configuration')
                     ->description('Manage site-wide settings and general information.')
                     ->schema([
                         Toggle::make('available_for_projects')
                             ->label('Available for new projects')
                             ->helperText('Controls the availability badge shown in the site hero.'),
-                        
+
                         FileUpload::make('about_image')
                             ->label('About Profile Image')
                             ->image()
@@ -86,7 +87,7 @@ class ManageSiteSettings extends Page
                             ->directory('settings')
                             ->helperText('This image is displayed on the About page. Defaults to profile.png if not uploaded.'),
                     ])
-                    ->columns(1)
+                    ->columns(1),
             ])
             ->statePath('data');
     }

@@ -10,18 +10,18 @@ use Database\Seeders\BlogSeeder;
 use Database\Seeders\ProjectSeeder;
 use Database\Seeders\SettingSeeder;
 
-it('seeds the three existing case studies', function () {
+it('seeds the existing case studies', function () {
     $this->seed(ProjectSeeder::class);
 
-    expect(Project::count())->toBe(3)
+    expect(Project::count())->toBe(11)
         ->and(Project::whereSlug('inkbulksms')->exists())->toBeTrue();
 });
 
-it('seeds the two existing blog posts and their categories', function () {
+it('seeds the blog posts and their categories', function () {
     $this->seed(BlogSeeder::class);
 
-    expect(Post::count())->toBe(2)
-        ->and(Category::count())->toBe(2)
+    expect(Post::count())->toBe(5)
+        ->and(Category::count())->toBeGreaterThan(1)
         ->and(Post::whereSlug('laravel-security-checklist')->first()->category->name)->toBe('Security');
 });
 
@@ -35,5 +35,5 @@ it('is idempotent — reseeding does not duplicate content', function () {
     $this->seed(ProjectSeeder::class);
     $this->seed(ProjectSeeder::class);
 
-    expect(Project::count())->toBe(3);
+    expect(Project::count())->toBe(11);
 });

@@ -17,7 +17,10 @@
     {{-- Inset Image --}}
     @if ($post->cover_image)
         <div class="w-full aspect-[4/3] relative overflow-hidden rounded-[1.5rem] bg-slate-50 mb-5">
-            <img src="{{ \Illuminate\Support\Facades\Storage::disk('public')->url($post->cover_image) }}" alt="{{ $post->cover_image_alt ?? $post->title }}" loading="lazy" decoding="async" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+            @php
+                $cardImage = $post->cover_image_thumbnail ?? $post->cover_image;
+            @endphp
+            <img src="{{ \App\Helpers\AssetHelper::url($cardImage) }}" alt="{{ $post->cover_image_alt ?? $post->title }}" loading="lazy" decoding="async" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
         </div>
     @else
         <div class="w-full aspect-[4/3] bg-gradient-to-br from-slate-100 to-slate-50 rounded-[1.5rem] flex items-center justify-center relative overflow-hidden mb-5 border border-black/5">

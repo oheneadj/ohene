@@ -1,7 +1,7 @@
 <x-layouts.app
     :title="$post->meta_title ?? $post->title . ' | Ohene Adjei Effah'"
     :description="$post->meta_description ?? $post->excerpt"
-    :image="$post->cover_image"
+    :image="$post->ogImage()"
     type="article"
     :published_time="$post->published_at?->toIso8601String()"
     :modified_time="$post->updated_at?->toIso8601String()">
@@ -16,7 +16,7 @@
                 'url' => route('blog.show', $post),
                 'datePublished' => $post->published_at?->toAtomString(),
                 'dateModified' => $post->updated_at?->toAtomString(),
-                'image' => $post->cover_image ? \Illuminate\Support\Facades\Storage::disk('public')->url($post->cover_image) : null,
+                'image' => \App\Helpers\AssetHelper::url($post->ogImage()),
                 'author' => ['@type' => 'Person', 'name' => config('site.name')],
             ],
             [
@@ -148,7 +148,7 @@
 
     @if ($post->cover_image)
         <div class="max-w-5xl mx-auto px-7 -mt-16 md:-mt-32 relative z-20">
-            <img src="{{ \Illuminate\Support\Facades\Storage::disk('public')->url($post->cover_image) }}" alt="{{ $post->cover_image_alt ?? $post->title }}" class="w-full aspect-video md:aspect-[21/9] object-cover rounded-2xl border border-black/10 shadow-lg">
+            <img src="{{ \App\Helpers\AssetHelper::url($post->cover_image) }}" alt="{{ $post->cover_image_alt ?? $post->title }}" class="w-full aspect-video md:aspect-[21/9] object-cover rounded-2xl border border-black/10 shadow-lg">
         </div>
     @endif
 

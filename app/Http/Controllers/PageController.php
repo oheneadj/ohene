@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Models\Faq;
+use App\Models\Testimonial;
 use App\Models\Video;
 use Illuminate\Contracts\View\View;
 
@@ -36,8 +38,8 @@ class PageController extends Controller
     public function contact(): View
     {
         return view('pages.contact', [
-            'testimonials' => \App\Models\Testimonial::query()->with('project')->approved()->latest()->take(4)->get(),
-            'faqs' => \App\Models\Faq::query()->active()->orderBy('display_order')->get(),
+            'testimonials' => Testimonial::query()->with('project')->approved()->latest()->take(4)->get(),
+            'faqs' => Faq::query()->active()->orderBy('display_order')->get(),
         ]);
     }
 

@@ -121,9 +121,7 @@
                 </div>
                 @php
                     $aboutImagePath = \App\Models\Setting::get('about_image');
-                    $aboutImageUrl = $aboutImagePath
-                        ? \Illuminate\Support\Facades\Storage::disk('public')->url($aboutImagePath)
-                        : asset('images/profile.png');
+                    $aboutImageUrl = \App\Helpers\AssetHelper::url($aboutImagePath) ?? asset('images/profile.png');
                 @endphp
                 <img src="{{ $aboutImageUrl }}" alt="Ohene Adjei Effah"
                     class="relative z-10 w-full h-[400px] md:h-[500px] object-cover rounded-[2rem] shadow-xl grayscale group-hover:grayscale-0 transition-all duration-700">

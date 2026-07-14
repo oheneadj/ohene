@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Filament\Widgets;
 
+use Carbon\Carbon;
 use Filament\Widgets\ChartWidget;
 use Illuminate\Support\Facades\Cache;
 use Spatie\Analytics\Analytics;
@@ -12,8 +13,10 @@ use Spatie\Analytics\Period;
 class AnalyticsPageViewsWidget extends ChartWidget
 {
     protected ?string $heading = 'Page Views — Last 30 Days';
+
     protected static ?int $sort = 2;
-    protected int | string | array $columnSpan = 'full';
+
+    protected int|string|array $columnSpan = 'full';
 
     protected function getData(): array
     {
@@ -28,21 +31,21 @@ class AnalyticsPageViewsWidget extends ChartWidget
             });
 
             $labels = [];
-            $data   = [];
+            $data = [];
             foreach ($rows as $row) {
-                $date     = $row['date'] ?? '';
-                $labels[] = \Carbon\Carbon::createFromFormat('Ymd', $date)?->format('M j') ?? $date;
-                $data[]   = (int) ($row['screenPageViews'] ?? 0);
+                $date = $row['date'] ?? '';
+                $labels[] = Carbon::createFromFormat('Ymd', $date)?->format('M j') ?? $date;
+                $data[] = (int) ($row['screenPageViews'] ?? 0);
             }
 
             return [
                 'datasets' => [[
-                    'label'           => 'Page Views',
-                    'data'            => $data,
-                    'borderColor'     => '#22c55e',
+                    'label' => 'Page Views',
+                    'data' => $data,
+                    'borderColor' => '#22c55e',
                     'backgroundColor' => 'rgba(34,197,94,0.1)',
-                    'fill'            => true,
-                    'tension'         => 0.4,
+                    'fill' => true,
+                    'tension' => 0.4,
                 ]],
                 'labels' => $labels,
             ];

@@ -6,6 +6,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Project;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 /**
  * Renders the public work / case-study pages.
@@ -15,7 +17,7 @@ class WorkController extends Controller
     /**
      * List all case studies, paginated once the count grows (FR2).
      */
-    public function index(\Illuminate\Http\Request $request): View
+    public function index(Request $request): View
     {
         $query = Project::query()->ordered();
 
@@ -34,17 +36,21 @@ class WorkController extends Controller
      */
     public function show(Project $project): View
     {
-        $ordered = Project::query()->ordered()->get();
-        $index = $ordered->search(fn (Project $item): bool => $item->is($project));
+        $data = Cache::remember("work.show.{$project->slug}", now()->addDay(), function () use ($project) {
+            $ordered = Project::query()->ordered()->get();
+            $index = $ordered->search(fn (Project $item): bool => $item->is($project));
 
-        // Surface any approved testimonials tied to this project (MR4).
-        $project->load(['testimonials' => fn ($query) => $query->approved()->latest()]);
+            // Surface any approved testimonials tied to this project (MR4).
+            $project->load(['testimonials' => fn ($query) => $query->approved()->latest()]);
 
-        return view('pages.work.show', [
-            'project' => $project,
-            'testimonials' => $project->testimonials,
-            'previous' => $index > 0 ? $ordered->get($index - 1) : null,
-            'next' => $ordered->get($index + 1),
-        ]);
+            return [
+                'project' => $project,
+                'testimonials' => $project->testimonials,
+                'previous' => $index > 0 ? $ordered->get($index - 1) : null,
+                'next' => $ordered->get($index + 1),
+            ];
+        });
+
+        return view('pages.work.show', $data);
     }
 }

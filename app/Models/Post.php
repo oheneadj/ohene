@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Concerns\GeneratesCoverThumbnail;
 use App\Concerns\HasPublicUlid;
 use App\Concerns\RecordsSlugRedirects;
 use App\Contracts\RedirectsOnSlugChange;
@@ -15,6 +16,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Facades\Cache;
 
 /**
  * A blog post. Public visibility depends on both the status and a past
@@ -25,6 +27,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  */
 class Post extends Model implements RedirectsOnSlugChange
 {
+    use GeneratesCoverThumbnail;
+
     /** @use HasFactory<PostFactory> */
     use HasFactory;
 
@@ -41,6 +45,7 @@ class Post extends Model implements RedirectsOnSlugChange
         'excerpt',
         'body',
         'cover_image',
+        'cover_image_thumbnail',
         'cover_image_alt',
         'read_time',
         'status',
@@ -103,6 +108,20 @@ class Post extends Model implements RedirectsOnSlugChange
             if ($post->status === PostStatus::Published) {
                 $post->assertPublishable();
             }
+        });
+
+        static::saved(function (): void {
+            Cache::forget('home.latest_posts');
+            Post::query()->pluck('slug')->each(function (string $slug): void {
+                Cache::forget("blog.show.{$slug}");
+            });
+        });
+
+        static::deleted(function (): void {
+            Cache::forget('home.latest_posts');
+            Post::query()->pluck('slug')->each(function (string $slug): void {
+                Cache::forget("blog.show.{$slug}");
+            });
         });
     }
 

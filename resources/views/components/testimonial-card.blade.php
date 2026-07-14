@@ -7,7 +7,7 @@
     <div class="mt-8 flex flex-wrap items-center justify-between gap-4 pt-6 border-t border-black/5">
         <figcaption class="flex items-center gap-3">
             @if ($testimonial->avatar)
-                <img src="{{ \Illuminate\Support\Facades\Storage::disk('public')->url($testimonial->avatar) }}" alt="{{ $testimonial->client_name }}" width="40" height="40" loading="lazy" decoding="async" class="w-10 h-10 rounded-full object-cover border border-black/5">
+                <img src="{{ \App\Helpers\AssetHelper::url($testimonial->avatar) }}" alt="{{ $testimonial->client_name }}" width="40" height="40" loading="lazy" decoding="async" class="w-10 h-10 rounded-full object-cover border border-black/5">
             @endif
             <div>
                 <div class="font-semibold text-sm text-black">{{ $testimonial->client_name }}</div>

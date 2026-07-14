@@ -8,6 +8,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- `app/Helpers/AssetHelper.php` to resolve local public storage paths and external URLs for images.
+- Social media sharing preview optimization using `$post->ogImage()` and `$project->ogImage()` on show pages instead of raw cover images.
 - `CHANGELOG.md` following the Keep a Changelog format (per CLAUDE.md Section 1).
 - Filament v5.6.8 admin panel (`filament/filament`), installed via `filament:install --panels`.
   Registers `App\Providers\Filament\AdminPanelProvider` (admin at `/admin`). Filament v5 is
@@ -15,6 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `spatie/laravel-sitemap` v8.2.0 for auto-regenerating `sitemap.xml` (requirement FR11).
 - `intervention/image` v4.1.5 for on-upload image resize/compression (requirement FR10),
   paired with Filament's file uploads.
+- `ThumbnailService` to automatically generate 600×450 thumbnail copies for fast loading, wired via the `GeneratesCoverThumbnail` Eloquent `saving` event hook. Thumbnails are automatically generated during database seeding (per CLAUDE.md architecture rules).
 
 ### Added — Phase 1 Foundation (data model, admin, seed data)
 - **Domain models** with public ULIDs (bigint PK stays internal, per CLAUDE.md Section 5

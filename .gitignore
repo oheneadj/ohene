@@ -16,8 +16,15 @@ Homestead.yaml
 npm-debug.log
 yarn-error.log
 /auth.json
+/storage/framework/cache/data
+.DS_Store
 /.fleet
 /.idea
 /.nova
 /.vscode
 /.zed
+copy-audit.md
+requirements.md
+projects_scrape.json
+github_projects_scrape.json
+CLAUDE.md

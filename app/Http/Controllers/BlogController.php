@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Post;
 use Illuminate\Contracts\View\View;
+use Illuminate\Support\Facades\Cache;
 
 /**
  * Renders the public blog listing and individual posts.
@@ -48,40 +50,89 @@ class BlogController extends Controller
      */
     private function renderPost(Post $post, bool $preview): View
     {
-        $post->loadMissing('category');
+        if ($preview) {
+            $post->loadMissing('category');
 
-        $related = Post::query()
-            ->published()
-            ->with('category')
-            ->where('category_id', $post->category_id)
-            ->whereKeyNot($post->getKey())
-            ->latest('published_at')
-            ->take(3)
-            ->get();
-
-        $previous = null;
-        $next = null;
-
-        if ($post->published_at) {
-            $previous = Post::query()
+            $related = Post::query()
                 ->published()
-                ->where('published_at', '<', $post->published_at)
+                ->where('category_id', $post->category_id)
+                ->whereKeyNot($post->getKey())
                 ->latest('published_at')
-                ->first();
+                ->take(3)
+                ->get();
 
-            $next = Post::query()
-                ->published()
-                ->where('published_at', '>', $post->published_at)
-                ->oldest('published_at')
-                ->first();
+            $related->each(function (Post $item) use ($post) {
+                $item->setRelation('category', $post->category);
+            });
+
+            $previous = null;
+            $next = null;
+
+            if ($post->published_at) {
+                $previous = Post::query()
+                    ->published()
+                    ->where('published_at', '<', $post->published_at)
+                    ->latest('published_at')
+                    ->first();
+
+                $next = Post::query()
+                    ->published()
+                    ->where('published_at', '>', $post->published_at)
+                    ->oldest('published_at')
+                    ->first();
+            }
+
+            return view('pages.blog.show', [
+                'post' => $post,
+                'related' => $related,
+                'previous' => $previous,
+                'next' => $next,
+                'preview' => $preview,
+            ]);
         }
 
-        return view('pages.blog.show', [
-            'post' => $post,
-            'related' => $related,
-            'previous' => $previous,
-            'next' => $next,
+        $data = Cache::remember("blog.show.{$post->slug}", now()->addDay(), function () use ($post) {
+            $post->loadMissing('category');
+
+            $related = Post::query()
+                ->published()
+                ->where('category_id', $post->category_id)
+                ->whereKeyNot($post->getKey())
+                ->latest('published_at')
+                ->take(3)
+                ->get();
+
+            $related->each(function (Post $item) use ($post) {
+                $item->setRelation('category', $post->category);
+            });
+
+            $previous = null;
+            $next = null;
+
+            if ($post->published_at) {
+                $previous = Post::query()
+                    ->published()
+                    ->where('published_at', '<', $post->published_at)
+                    ->latest('published_at')
+                    ->first();
+
+                $next = Post::query()
+                    ->published()
+                    ->where('published_at', '>', $post->published_at)
+                    ->oldest('published_at')
+                    ->first();
+            }
+
+            return [
+                'post' => $post,
+                'related' => $related,
+                'previous' => $previous,
+                'next' => $next,
+            ];
+        });
+
+        return view('pages.blog.show', array_merge($data, [
             'preview' => $preview,
-        ]);
+        ]));
     }
 }

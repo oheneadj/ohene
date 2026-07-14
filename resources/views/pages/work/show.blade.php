@@ -4,7 +4,7 @@
 
 <x-layouts.app :title="$project->meta_title ?? $project->title . ' — Case Study | Ohene Adjei Effah'"
     :description="$project->meta_description ?? $project->tagline"
-    :image="$project->cover_image">
+    :image="$project->ogImage()">
 
     <x-slot:head>
         <x-json-ld :data="[
@@ -13,6 +13,7 @@
                 '@type' => 'CreativeWork',
                 'name' => $project->title,
                 'description' => $project->tagline,
+                'image' => \App\Helpers\AssetHelper::url($project->ogImage()),
                 'url' => route('work.show', $project),
                 'creator' => ['@type' => 'Person', 'name' => config('site.name')],
             ],
@@ -59,7 +60,7 @@
                 @endif
             </div>
             @if ($project->cover_image)
-                <img src="{{ \Illuminate\Support\Facades\Storage::disk('public')->url($project->cover_image) }}"
+                <img src="{{ \App\Helpers\AssetHelper::url($project->cover_image) }}"
                     alt="{{ $project->cover_image_alt ?? $project->title }}" class="w-full">
             @else
                 <div class="p-6 bg-white flex flex-col gap-3">
@@ -104,9 +105,9 @@
                         <button
                             type="button"
                             data-gallery-index="{{ $i }}"
-                            data-gallery-trigger="{{ \Illuminate\Support\Facades\Storage::disk('public')->url($image) }}"
+                            data-gallery-trigger="{{ \App\Helpers\AssetHelper::url($image) }}"
                             class="relative aspect-video rounded-xl overflow-hidden bg-slate-50 border border-black/5 hover:border-black/20 hover:shadow-md group transition-all duration-300">
-                            <img src="{{ \Illuminate\Support\Facades\Storage::disk('public')->url($image) }}"
+                            <img src="{{ \App\Helpers\AssetHelper::url($image) }}"
                                  alt="Gallery thumbnail {{ $i + 1 }}"
                                  class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                             <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300"></div>

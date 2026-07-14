@@ -26,6 +26,8 @@ use Filament\Infolists\Components\ImageEntry;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Resources\Pages\PageRegistration;
 use Filament\Resources\Resource;
+use Filament\Schemas\Components\Grid;
+use Filament\Schemas\Components\Group;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
@@ -60,8 +62,8 @@ class PostResource extends Resource
     {
         return $schema
             ->components([
-                \Filament\Schemas\Components\Grid::make(3)->schema([
-                    \Filament\Schemas\Components\Group::make()->schema([
+                Grid::make(3)->schema([
+                    Group::make()->schema([
                         Section::make('Content')
                             ->schema([
                                 TextInput::make('title')
@@ -123,7 +125,7 @@ class PostResource extends Resource
                             ])->columns(2),
                     ])->columnSpan(['sm' => 3, 'lg' => 2]),
 
-                    \Filament\Schemas\Components\Group::make()->schema([
+                    Group::make()->schema([
                         Section::make('Publishing & SEO')
                             ->schema([
                                 Select::make('status')
