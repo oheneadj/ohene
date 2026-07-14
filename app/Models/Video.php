@@ -36,6 +36,7 @@ class Video extends Model
     protected $fillable = [
         'title',
         'youtube_video_id',
+        'is_featured',
         'description',
         'published_at',
     ];
@@ -46,8 +47,19 @@ class Video extends Model
     protected function casts(): array
     {
         return [
+            'is_featured' => 'boolean',
             'published_at' => 'immutable_datetime',
         ];
+    }
+
+    /**
+     * Scope a query to only include featured videos.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder<Video> $query
+     */
+    public function scopeFeatured($query): void
+    {
+        $query->where('is_featured', true);
     }
 
     /**

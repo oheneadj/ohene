@@ -9,6 +9,8 @@ use App\Filament\Resources\Videos\Pages\EditVideo;
 use App\Filament\Resources\Videos\Pages\ListVideos;
 use App\Models\Video;
 use BackedEnum;
+use Closure;
+use Illuminate\Database\Eloquent\Model;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
@@ -16,6 +18,8 @@ use Filament\Actions\EditAction;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
+use Filament\Tables\Columns\IconColumn;
 use Filament\Resources\Pages\PageRegistration;
 use Filament\Resources\Resource;
 use Filament\Schemas\Components\Grid;
@@ -68,6 +72,22 @@ class VideoResource extends Resource
                     Group::make()->schema([
                         Section::make('Settings')
                             ->schema([
+                                Toggle::make('is_featured')
+                                    ->label('Featured on Home Page')
+                                    ->helperText('If checked, this video will appear in the home page videos section.')
+                                    ->rule(static function (?Model $record) {
+                                        return static function (string $attribute, mixed $value, Closure $fail) use ($record) {
+                                            if ($value) {
+                                                $query = Video::where('is_featured', true);
+                                                if ($record) {
+                                                    $query->where('id', '!=', $record->id);
+                                                }
+                                                if ($query->count() >= 3) {
+                                                    $fail('You can only feature up to 3 videos. Please unfeature an existing one first.');
+                                                }
+                                            }
+                                        };
+                                    }),
                                 TextInput::make('youtube_video_id')
                                     ->placeholder('e.g. dQw4w9WgXcQ')
                                     ->required()
@@ -91,6 +111,7 @@ class VideoResource extends Resource
             ->defaultSort('published_at', 'desc')
             ->columns([
                 TextColumn::make('title')->searchable()->sortable(),
+                IconColumn::make('is_featured')->boolean()->label('Featured')->sortable(),
                 TextColumn::make('youtube_video_id')->label('Video ID')->searchable(),
                 TextColumn::make('published_at')->dateTime()->sortable(),
             ])

@@ -22,6 +22,7 @@ class VideoFactory extends Factory
         return [
             'title' => fake()->sentence(4),
             'youtube_video_id' => fake()->regexify('[A-Za-z0-9_-]{11}'),
+            'is_featured' => fake()->boolean(20),
             'description' => fake()->paragraph(),
             'published_at' => fake()->dateTimeBetween('-1 year'),
         ];

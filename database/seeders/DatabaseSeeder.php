@@ -33,5 +33,11 @@ class DatabaseSeeder extends Seeder
             SettingSeeder::class,
             LegacyRedirectSeeder::class,
         ]);
+
+        if (! app()->environment('production')) {
+            $this->call([
+                VideoSeeder::class,
+            ]);
+        }
     }
 }

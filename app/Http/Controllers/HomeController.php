@@ -30,7 +30,7 @@ class HomeController extends Controller
         });
 
         $videos = Cache::remember('home.latest_videos', now()->addDay(), function () {
-            return Video::query()->latest('published_at')->take(3)->get();
+            return Video::query()->featured()->latest('published_at')->take(3)->get();
         });
 
         return view('pages.home', [
