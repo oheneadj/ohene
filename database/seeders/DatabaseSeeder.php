@@ -8,9 +8,7 @@ use Illuminate\Database\Seeder;
 
 /**
  * Seeds the initial content set carried over from the static site so there's
- * no content regression at launch (requirements MG1). The admin user is created
- * separately via `php artisan make:filament-user`, not seeded, to avoid shipping
- * known credentials.
+ * no content regression at launch (requirements MG1).
  */
 class DatabaseSeeder extends Seeder
 {
@@ -19,6 +17,15 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        \App\Models\User::firstOrCreate(
+            ['email' => 'oheneadjei.dev@gmail.com'],
+            [
+                'name' => 'Ohene Adjei',
+                'password' => 'password',
+                'email_verified_at' => now(),
+            ]
+        );
+
         $this->call([
             ProjectSeeder::class,
             BlogSeeder::class,
