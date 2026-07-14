@@ -188,7 +188,7 @@
 
     {{-- Body is sanitized rich text from the restricted CMS editor (req 4.3),
          so it's rendered unescaped by design (CLAUDE.md Section 12). --}}
-    <article class="max-w-3xl mx-auto px-7 py-10 prose prose-slate prose-headings:font-display prose-headings:text-black prose-a:text-black hover:prose-a:text-forest prose-strong:text-black">
+    <article class="max-w-3xl mx-auto px-7 py-10 prose prose-slate prose-headings:font-display prose-headings:text-black prose-a:font-medium prose-a:text-black prose-a:underline prose-a:decoration-forest prose-a:decoration-2 prose-a:underline-offset-2 hover:prose-a:bg-forest/10 prose-a:transition-colors prose-strong:text-black">
         {!! $post->body !!}
     </article>
 
@@ -201,9 +201,9 @@
             @endif
 
             @if ($next)
-                <a href="{{ route('blog.show', $next) }}" class="text-sm font-semibold text-black hover:text-forest transition-colors"><span class="hidden sm:inline">Next: {{ $next->title }}</span><span class="sm:hidden">Next</span> &rarr;</a>
+                <a href="{{ route('blog.show', $next) }}" class="text-sm font-semibold text-black hover:text-slate-600 transition-colors"><span class="hidden sm:inline">Next: {{ $next->title }}</span><span class="sm:hidden">Next</span> &rarr;</a>
             @else
-                <a href="{{ route('blog.index') }}" class="text-sm font-semibold text-black hover:text-forest transition-colors">Back to blog &rarr;</a>
+                <a href="{{ route('blog.index') }}" class="text-sm font-semibold text-black hover:text-slate-600 transition-colors">Back to blog &rarr;</a>
             @endif
         </div>
     </div>

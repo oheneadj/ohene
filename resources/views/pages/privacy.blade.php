@@ -38,7 +38,7 @@
                 <section>
                     <h2 class="font-display text-xl font-semibold text-ink mb-3">What I collect</h2>
                     <p>The only information I actively collect is what you choose to send through the
-                        <a href="{{ route('contact') }}" class="text-forest underline">contact form</a>:
+                        <a href="{{ route('contact') }}" class="text-black font-medium underline decoration-forest decoration-2 underline-offset-2 hover:bg-forest/10 transition-colors">contact form</a>:
                         your name, email address, your message, and optionally the project type and budget
                         range you select. The form also records where the enquiry came from (the page or
                         campaign that referred you) so I can understand what's actually useful to visitors.
@@ -80,7 +80,7 @@
                     <h2 class="font-display text-xl font-semibold text-ink mb-3">Get in touch</h2>
                     <p>Questions about any of this, or a request about your data? Email me at
                         <a href="mailto:{{ config('site.email') }}"
-                            class="text-forest underline">{{ config('site.email') }}</a>
+                            class="text-black font-medium underline decoration-forest decoration-2 underline-offset-2 hover:bg-forest/10 transition-colors">{{ config('site.email') }}</a>
                         and I'll sort it out.
                     </p>
                 </section>
