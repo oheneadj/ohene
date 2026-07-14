@@ -24,8 +24,8 @@
         ]
     ]" />
     </x-slot:head>
-
-    <section class="bg-black text-white relative overflow-hidden min-h-[40vh] flex flex-col justify-center py-20 border-b border-white/10">
+    <section
+        class="bg-black text-white relative overflow-hidden min-h-[40vh] flex flex-col justify-center py-20 border-b border-white/10">
         <div class="bg-aurora-animated pointer-events-none opacity-40" aria-hidden="true"></div>
         <div class="max-w-6xl mx-auto px-7 relative z-10 w-full">
             <p class="font-mono text-xs uppercase tracking-widest text-forest mb-4">&rsaquo; ~/contact</p>
@@ -33,7 +33,8 @@
             <p class="text-slate-300 max-w-xl mb-10 text-lg">Tell me what you're trying to build. I'll get back to you
                 within a day with thoughts on scope, timeline and next steps.</p>
             <div class="flex flex-wrap gap-4 mt-6">
-                <x-social-pill href="mailto:{{ config('site.email') ?? 'hello@oheneadjei.com' }}?subject=Project%20inquiry">
+                <x-social-pill
+                    href="mailto:{{ config('site.email') ?? 'hello@oheneadjei.com' }}?subject=Project%20inquiry">
                     <x-slot:icon>
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -43,7 +44,7 @@
                     </x-slot:icon>
                     {{ config('site.email') ?? 'hello@oheneadjei.com' }}
                 </x-social-pill>
-                
+
                 @if (config('site.phone'))
                     <x-social-pill href="tel:{{ str_replace(' ', '', config('site.phone')) }}">
                         <x-slot:icon>
@@ -56,7 +57,7 @@
                         {{ config('site.phone') }}
                     </x-social-pill>
                 @endif
-                
+
                 <x-social-pill :href="config('site.social.linkedin')">
                     <x-slot:icon>
                         <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
@@ -67,7 +68,7 @@
                     </x-slot:icon>
                     LinkedIn
                 </x-social-pill>
-                
+
                 <x-social-pill :href="config('site.social.github')">
                     <x-slot:icon>
                         <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
