@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * File: AdminStatsOverview.php
+ * Description: Widget displaying key metrics for the admin dashboard.
+ */
+
 declare(strict_types=1);
 
 namespace App\Filament\Widgets;
@@ -14,14 +19,27 @@ use Filament\Widgets\StatsOverviewWidget;
 use Filament\Widgets\StatsOverviewWidget\Stat;
 
 /**
- * Dashboard summary of the counts Ohene acts on day to day — new leads and
- * pending testimonials up front, content totals alongside (Section 18).
+ * Dashboard summary of the counts Ohene acts on day to day.
+ * Displays new leads and pending testimonials, plus content totals.
  */
 class AdminStatsOverview extends StatsOverviewWidget
 {
     // Four cheap COUNT queries — render inline rather than lazy-loading, so the
     // numbers are there on first paint (and testable).
     protected static bool $isLazy = false;
+
+    /**
+     * Column span of the widget.
+     */
+    protected int|string|array $columnSpan = 'full';
+
+    /**
+     * Get the number of columns to display the stats in.
+     */
+    protected function getColumns(): int
+    {
+        return 4;
+    }
 
     /**
      * The stat cards shown at the top of the admin dashboard.

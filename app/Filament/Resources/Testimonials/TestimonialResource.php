@@ -130,7 +130,10 @@ class TestimonialResource extends Resource
                 BulkActionGroup::make([
                     DeleteBulkAction::make(),
                 ]),
-            ]);
+            ])
+            ->emptyStateHeading('No testimonials yet')
+            ->emptyStateDescription('Add a testimonial to showcase client feedback.')
+            ->emptyStateIcon(Heroicon::OutlinedChatBubbleBottomCenterText);
     }
 
     /**

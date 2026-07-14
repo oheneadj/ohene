@@ -20,9 +20,9 @@
     ]" />
     </x-slot:head>
 
-    <section class="bg-black text-white relative overflow-hidden py-24 md:py-32 border-b border-white/10">
+    <section class="bg-black text-white relative overflow-hidden min-h-[40vh] flex flex-col justify-center py-20 border-b border-white/10">
         <div class="bg-aurora-animated pointer-events-none opacity-40" aria-hidden="true"></div>
-        <div class="max-w-6xl mx-auto px-7 relative z-10">
+        <div class="max-w-6xl mx-auto px-7 relative z-10 w-full">
             <p class="font-mono text-xs uppercase tracking-widest text-forest mb-4">&rsaquo; ~/privacy</p>
             <h1 class="font-display text-4xl md:text-5xl font-semibold mb-4">Privacy policy</h1>
             <p class="text-slate-300 max-w-xl text-lg">Plain-language, no surprises. Here's exactly what this site

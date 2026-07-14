@@ -82,7 +82,10 @@ class CategoryResource extends Resource
                 BulkActionGroup::make([
                     DeleteBulkAction::make(),
                 ]),
-            ]);
+            ])
+            ->emptyStateHeading('No categories yet')
+            ->emptyStateDescription('Get started by creating a category for your blog posts.')
+            ->emptyStateIcon(Heroicon::OutlinedTag);
     }
 
     /**

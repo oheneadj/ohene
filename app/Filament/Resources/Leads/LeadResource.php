@@ -114,7 +114,10 @@ class LeadResource extends Resource
             ->recordActions([
                 ViewAction::make(),
                 EditAction::make()->label('Update status'),
-            ]);
+            ])
+            ->emptyStateHeading('No leads yet')
+            ->emptyStateDescription('When a potential client fills out the contact form, their lead will appear here.')
+            ->emptyStateIcon(Heroicon::OutlinedInbox);
     }
 
     /**

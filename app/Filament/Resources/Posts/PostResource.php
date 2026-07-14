@@ -32,6 +32,7 @@ use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Support\Str;
 use UnitEnum;
@@ -64,6 +65,28 @@ class PostResource extends Resource
             ->components([
                 Grid::make(3)->schema([
                     Group::make()->schema([
+                        Section::make(' SEO')
+                            ->schema([
+
+                                TextInput::make('meta_title')
+                                    ->placeholder('e.g. SEO Optimized Title')
+                                    ->maxLength(255)
+                                    ->columnspanfull(),
+                                Textarea::make('meta_description')
+                                    ->placeholder('e.g. An engaging description for search results...')
+                                    ->maxLength(255)
+                                    ->requiredIf('status', PostStatus::Published->value)
+                                    ->helperText('Required before a post can be published.'),
+                                FileUpload::make('og_image')
+                                    ->image()
+                                    ->imageResizeMode('cover')
+                                    ->imageResizeTargetWidth('1200')
+                                    ->imageResizeTargetHeight('630')
+                                    ->maxSize(4096)
+                                    ->disk('public')
+                                    ->directory('posts/og')
+                                    ->helperText('Falls back to the cover image when left blank. Resized to 1200×630.'),
+                            ])->columns(2)->collapsed(),
                         Section::make('Content')
                             ->schema([
                                 TextInput::make('title')
@@ -79,7 +102,7 @@ class PostResource extends Resource
                                             $set('excerpt', $state);
                                             $set('meta_description', Str::limit((string) $state, 160));
                                         }
-                                    }),
+                                    })->columnSpanFull(),
                                 TextInput::make('slug')
                                     ->placeholder('e.g. 10-tips-for-better-code')
                                     ->required()
@@ -89,15 +112,21 @@ class PostResource extends Resource
                                     ->relationship('category', 'name')
                                     ->searchable()
                                     ->preload()
-                                    ->columnSpanFull(),
-                                Textarea::make('excerpt')
-                                    ->placeholder('A brief summary of the post...')
-                                    ->maxLength(500)
-                                    ->live(onBlur: true)
-                                    ->afterStateUpdated(function ($state, callable $set): void {
-                                        $set('meta_description', Str::limit((string) $state, 160));
-                                    })
-                                    ->columnSpanFull(),
+                                    ->createOptionForm([
+                                        TextInput::make('name')
+                                            ->placeholder('e.g. Laravel Tutorials')
+                                            ->required()
+                                            ->live(onBlur: true)
+                                            ->afterStateUpdated(function ($state, callable $set): void {
+                                                $set('slug', Str::slug((string) $state));
+                                            }),
+                                        TextInput::make('slug')
+                                            ->placeholder('e.g. laravel-tutorials')
+                                            ->required()
+                                            ->unique('categories', 'slug'),
+                                    ])
+                                    ->createOptionAction(fn ($action) => $action->modalWidth('sm')),
+
                             ])->columns(2),
 
                         Section::make('Media')
@@ -123,6 +152,16 @@ class PostResource extends Resource
                                     ->requiredWith('cover_image')
                                     ->helperText('Required whenever a cover image is set.'),
                             ])->columns(2),
+                        Section::make('Post Body')
+                            ->schema([
+                                RichEditor::make('body')
+                                    ->required()
+                                    ->toolbarButtons([
+                                        'bold', 'italic', 'h2', 'h3', 'bulletList',
+                                        'orderedList', 'link', 'blockquote', 'codeBlock',
+                                    ])
+                                    ->columnSpanFull(),
+                            ]),
                     ])->columnSpan(['sm' => 3, 'lg' => 2]),
 
                     Group::make()->schema([
@@ -134,37 +173,19 @@ class PostResource extends Resource
                                     ->required(),
                                 DateTimePicker::make('published_at')
                                     ->helperText('When the post goes (or went) live.'),
-                                TextInput::make('meta_title')
-                                    ->placeholder('e.g. SEO Optimized Title')
-                                    ->maxLength(255),
-                                Textarea::make('meta_description')
-                                    ->placeholder('e.g. An engaging description for search results...')
-                                    ->maxLength(255)
-                                    ->requiredIf('status', PostStatus::Published->value)
-                                    ->helperText('Required before a post can be published.'),
-                                FileUpload::make('og_image')
-                                    ->image()
-                                    ->imageResizeMode('cover')
-                                    ->imageResizeTargetWidth('1200')
-                                    ->imageResizeTargetHeight('630')
-                                    ->maxSize(4096)
-                                    ->disk('public')
-                                    ->directory('posts/og')
-                                    ->helperText('Falls back to the cover image when left blank. Resized to 1200×630.'),
+                                Textarea::make('excerpt')
+                                    ->placeholder('A brief summary of the post...')
+                                    ->maxLength(500)
+                                    ->live(onBlur: true)
+                                    ->afterStateUpdated(function ($state, callable $set): void {
+                                        $set('meta_description', Str::limit((string) $state, 160));
+                                    })
+                                    ->columnSpanFull(),
                             ]),
+
                     ])->columnSpan(['sm' => 3, 'lg' => 1]),
                 ])->columnSpanFull(),
 
-                Section::make('Post Body')
-                    ->schema([
-                        RichEditor::make('body')
-                            ->required()
-                            ->toolbarButtons([
-                                'bold', 'italic', 'h2', 'h3', 'bulletList',
-                                'orderedList', 'link', 'blockquote', 'codeBlock',
-                            ])
-                            ->columnSpanFull(),
-                    ]),
             ]);
     }
 
@@ -200,6 +221,10 @@ class PostResource extends Resource
                 TextColumn::make('read_time')->suffix(' min')->sortable(),
                 TextColumn::make('published_at')->dateTime()->sortable(),
             ])
+            ->filters([
+                SelectFilter::make('status')
+                    ->options(PostStatus::class),
+            ])
             ->recordActions([
                 ViewAction::make(),
                 EditAction::make(),
@@ -209,7 +234,10 @@ class PostResource extends Resource
                 BulkActionGroup::make([
                     DeleteBulkAction::make(),
                 ]),
-            ]);
+            ])
+            ->emptyStateHeading('No posts yet')
+            ->emptyStateDescription('Get started by writing your first blog post.')
+            ->emptyStateIcon(Heroicon::OutlinedDocumentText);
     }
 
     /**

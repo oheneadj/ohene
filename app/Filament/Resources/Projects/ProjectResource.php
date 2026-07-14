@@ -25,6 +25,7 @@ use Filament\Infolists\Components\ImageEntry;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Resources\Pages\PageRegistration;
 use Filament\Resources\Resource;
+use Filament\Schemas\Components\Group;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
@@ -60,106 +61,109 @@ class ProjectResource extends Resource
     {
         return $schema
             ->components([
-                Section::make('Content')
+                Group::make()
                     ->schema([
-                        TextInput::make('title')
-                            ->placeholder('e.g. Acme E-commerce Rebuild')
-                            ->required()
-                            ->live(onBlur: true)
-                            ->afterStateUpdated(function ($state, callable $set): void {
-                                $set('slug', Str::slug((string) $state));
-                                $set('cover_image_alt', $state);
-                            }),
-                        TextInput::make('slug')
-                            ->placeholder('e.g. acme-ecommerce-rebuild')
-                            ->required()
-                            ->unique(ignoreRecord: true)
-                            ->helperText('Locked after publish to protect indexed URLs.'),
-                        TextInput::make('tagline')
-                            ->placeholder('e.g. A modern headless storefront')
-                            ->required()
-                            ->maxLength(255),
-                        Textarea::make('challenge')
-                            ->placeholder('e.g. The client was struggling with slow load times...')
-                            ->required()
-                            ->columnSpanFull(),
-                        Textarea::make('build')
-                            ->placeholder('e.g. We architected a Next.js frontend...')
-                            ->required()
-                            ->columnSpanFull(),
-                        Textarea::make('impact')
-                            ->placeholder('e.g. 40% increase in conversion rate.')
-                            ->required()
-                            ->helperText('State a quantified outcome wherever real data exists.')
-                            ->columnSpanFull(),
-                        TagsInput::make('tech_stack')
-                            ->placeholder('Laravel, MySQL, Vue.js')
-                            ->columnSpanFull(),
-                    ])->columns(2),
-
-                Section::make('Media & links')
+                        Section::make('SEO')
+                            ->schema([
+                                TextInput::make('meta_title')
+                                    ->placeholder('e.g. Acme E-commerce Case Study')
+                                    ->maxLength(255),
+                                TextInput::make('meta_description')
+                                    ->placeholder('e.g. Read how we rebuilt the Acme storefront...')
+                                    ->maxLength(255),
+                                FileUpload::make('og_image')
+                                    ->image()
+                                    ->imageResizeMode('cover')
+                                    ->imageResizeTargetWidth('1200')
+                                    ->imageResizeTargetHeight('630')
+                                    ->maxSize(4096)
+                                    ->disk('public')
+                                    ->directory('projects/og')
+                                    ->helperText('Falls back to the cover image when left blank. Resized to 1200×630 for social sharing.'),
+                            ])->columns(2)->collapsed(),
+                        Section::make('Content')
+                            ->schema([
+                                TextInput::make('title')
+                                    ->placeholder('e.g. Acme E-commerce Rebuild')
+                                    ->required()
+                                    ->live(onBlur: true)
+                                    ->afterStateUpdated(function ($state, callable $set): void {
+                                        $set('slug', Str::slug((string) $state));
+                                        $set('cover_image_alt', $state);
+                                    }),
+                                TextInput::make('slug')
+                                    ->placeholder('e.g. acme-ecommerce-rebuild')
+                                    ->required()
+                                    ->unique(ignoreRecord: true)
+                                    ->helperText('Locked after publish to protect indexed URLs.'),
+                                TextInput::make('tagline')
+                                    ->placeholder('e.g. A modern headless storefront')
+                                    ->required()
+                                    ->maxLength(255),
+                                Textarea::make('challenge')
+                                    ->placeholder('e.g. The client was struggling with slow load times...')
+                                    ->required()
+                                    ->columnSpanFull(),
+                                Textarea::make('build')
+                                    ->placeholder('e.g. We architected a Next.js frontend...')
+                                    ->required()
+                                    ->columnSpanFull(),
+                                Textarea::make('impact')
+                                    ->placeholder('e.g. 40% increase in conversion rate.')
+                                    ->required()
+                                    ->helperText('State a quantified outcome wherever real data exists.')
+                                    ->columnSpanFull(),
+                                TagsInput::make('tech_stack')
+                                    ->placeholder('Laravel, MySQL, Vue.js')
+                                    ->columnSpanFull(),
+                            ])->columns(2),
+                    ]),
+                Group::make()
                     ->schema([
-                        FileUpload::make('cover_image')
-                            ->image()
-                            ->imageEditor()
-                            // Auto-crop/resize to a fixed 16:9 on upload so the design can't
-                            // break, no matter the source file (FR10 / req 4.3).
-                            ->imageCropAspectRatio('16:9')
-                            ->imageResizeMode('cover')
-                            ->imageResizeTargetWidth('1200')
-                            ->imageResizeTargetHeight('675')
-                            ->maxSize(4096)
-                            ->disk('public')
-                            ->directory('projects'),
-                        TextInput::make('cover_image_alt')
-                            ->label('Cover image alt text')
-                            ->placeholder('e.g. Screenshot of the Acme homepage')
-                            ->maxLength(255)
-                            ->requiredWith('cover_image')
-                            ->helperText('Required whenever a cover image is set (accessibility, req 4.2).'),
-                        TextInput::make('live_url')->placeholder('e.g. https://acme.com')->url(),
-                        TextInput::make('repo_url')->placeholder('e.g. https://github.com/oheneadj/acme')->url(),
-                        FileUpload::make('gallery')
-                            ->multiple()
-                            ->reorderable()
-                            ->imageEditor()
-                            ->imageResizeMode('contain')
-                            ->imageResizeTargetWidth('1920')
-                            ->imageResizeTargetHeight('1080')
-                            ->maxSize(10240)
-                            ->disk('public')
-                            ->directory('projects/gallery')
-                            ->columnSpanFull(),
-                    ])->columns(2),
-
-                Section::make('Display')
-                    ->schema([
-                        Toggle::make('featured')
-                            ->helperText('Show this project in the Home page preview.'),
-                        TextInput::make('display_order')
-                            ->required()
-                            ->numeric()
-                            ->default(0),
-                    ])->columns(2),
-
-                Section::make('SEO')
-                    ->schema([
-                        TextInput::make('meta_title')
-                            ->placeholder('e.g. Acme E-commerce Case Study')
-                            ->maxLength(255),
-                        TextInput::make('meta_description')
-                            ->placeholder('e.g. Read how we rebuilt the Acme storefront...')
-                            ->maxLength(255),
-                        FileUpload::make('og_image')
-                            ->image()
-                            ->imageResizeMode('cover')
-                            ->imageResizeTargetWidth('1200')
-                            ->imageResizeTargetHeight('630')
-                            ->maxSize(4096)
-                            ->disk('public')
-                            ->directory('projects/og')
-                            ->helperText('Falls back to the cover image when left blank. Resized to 1200×630 for social sharing.'),
-                    ])->columns(2)->collapsed(),
+                        Section::make('Display')
+                            ->schema([
+                                Toggle::make('featured')
+                                    ->helperText('Show this project in the Home page preview.'),
+                                TextInput::make('display_order')
+                                    ->required()
+                                    ->numeric()
+                                    ->default(0),
+                            ])->columns(2),
+                        Section::make('Media & links')
+                            ->schema([
+                                FileUpload::make('cover_image')
+                                    ->image()
+                                    ->imageEditor()
+                                    // Auto-crop/resize to a fixed 16:9 on upload so the design can't
+                                    // break, no matter the source file (FR10 / req 4.3).
+                                    ->imageCropAspectRatio('16:9')
+                                    ->imageResizeMode('cover')
+                                    ->imageResizeTargetWidth('1200')
+                                    ->imageResizeTargetHeight('675')
+                                    ->maxSize(4096)
+                                    ->disk('public')
+                                    ->directory('projects'),
+                                TextInput::make('cover_image_alt')
+                                    ->label('Cover image alt text')
+                                    ->placeholder('e.g. Screenshot of the Acme homepage')
+                                    ->maxLength(255)
+                                    ->requiredWith('cover_image')
+                                    ->helperText('Required whenever a cover image is set (accessibility, req 4.2).'),
+                                TextInput::make('live_url')->placeholder('e.g. https://acme.com')->url(),
+                                TextInput::make('repo_url')->placeholder('e.g. https://github.com/oheneadj/acme')->url(),
+                                FileUpload::make('gallery')
+                                    ->multiple()
+                                    ->reorderable()
+                                    ->imageEditor()
+                                    ->imageResizeMode('contain')
+                                    ->imageResizeTargetWidth('1920')
+                                    ->imageResizeTargetHeight('1080')
+                                    ->maxSize(10240)
+                                    ->disk('public')
+                                    ->directory('projects/gallery')
+                                    ->columnSpanFull(),
+                            ])->columns(2),
+                    ]),
             ]);
     }
 
@@ -208,7 +212,10 @@ class ProjectResource extends Resource
                 BulkActionGroup::make([
                     DeleteBulkAction::make(),
                 ]),
-            ]);
+            ])
+            ->emptyStateHeading('No case studies yet')
+            ->emptyStateDescription('Get started by adding your first project case study.')
+            ->emptyStateIcon(Heroicon::OutlinedBriefcase);
     }
 
     /**

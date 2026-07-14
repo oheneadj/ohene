@@ -102,7 +102,10 @@ class VideoResource extends Resource
                 BulkActionGroup::make([
                     DeleteBulkAction::make(),
                 ]),
-            ]);
+            ])
+            ->emptyStateHeading('No videos yet')
+            ->emptyStateDescription('Add a YouTube video to feature it on your site.')
+            ->emptyStateIcon(Heroicon::OutlinedVideoCamera);
     }
 
     /**

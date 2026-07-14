@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'name' => 'Ohene Adjei Effah',
+    'name' => 'Ohene Adjei',
     'job_title' => 'Full-Stack Web Developer',
     'email' => 'oheneadjei.dev@gmail.com',
     'phone' => '+233206657172',
@@ -28,11 +28,18 @@ return [
         'traffic_lift' => '40%',
     ],
 
+    'social' => [
+        'linkedin' => 'https://linkedin.com/in/oheneadj',
+        'github' => 'https://github.com/oheneadj',
+        'twitter' => 'https://twitter.com/oheneadj',
+        'youtube' => 'https://youtube.com/@ohene-dev',
+    ],
+
     'same_as' => [
         'https://linkedin.com/in/oheneadj',
         'https://github.com/oheneadj',
         'https://twitter.com/oheneadj',
-        'https://youtube.com/@oheneadjei',
+        'https://youtube.com/@ohene-dev',
     ],
 
     'knows_about' => [

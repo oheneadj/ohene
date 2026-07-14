@@ -8,6 +8,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- Created `<x-social-pill>` component to ensure action links (Contact, Social, GitHub) are identically sized across the About, Contact, and Work pages following DRY principles.
+- Standardized hero section heights for secondary pages (About, Contact, Videos, Work, Blog, Privacy) using a uniform `min-h-[40vh]` flex layout, while preserving left-aligned text.
+- Centralized site configuration for social links, email, and phone number (`config/site.php`), replacing hardcoded values across the frontend (Footer, Contact, About, Videos, and Work pages).
+- Post status filter to the PostResource listing table.
+- Improved empty states (custom headings, descriptions, and icons) for all Filament resource tables (Posts, Projects, Categories, Leads, Testimonials, Videos, and FAQs).
+- Inline "Create Category" modal in the Post edit/create form.
+- Layout improvements to Filament admin dashboard widgets (4-column stats overview, side-by-side analytics line chart and popular pages table).
 - `app/Helpers/AssetHelper.php` to resolve local public storage paths and external URLs for images.
 - Social media sharing preview optimization using `$post->ogImage()` and `$project->ogImage()` on show pages instead of raw cover images.
 - `CHANGELOG.md` following the Keep a Changelog format (per CLAUDE.md Section 1).

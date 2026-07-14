@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * File: AnalyticsPageViewsWidget.php
+ * Description: Widget displaying Google Analytics page views chart.
+ */
+
 declare(strict_types=1);
 
 namespace App\Filament\Widgets;
@@ -10,13 +15,22 @@ use Illuminate\Support\Facades\Cache;
 use Spatie\Analytics\Analytics;
 use Spatie\Analytics\Period;
 
+/**
+ * Renders a line chart of daily page views for the past 30 days.
+ */
 class AnalyticsPageViewsWidget extends ChartWidget
 {
     protected ?string $heading = 'Page Views — Last 30 Days';
 
     protected static ?int $sort = 2;
 
-    protected int|string|array $columnSpan = 'full';
+    /**
+     * Column span of the widget on different screen sizes.
+     */
+    protected int|string|array $columnSpan = [
+        'md' => 6,
+        'xl' => 6,
+    ];
 
     protected function getData(): array
     {
