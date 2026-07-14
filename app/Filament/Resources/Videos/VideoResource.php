@@ -18,6 +18,9 @@ use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Resources\Pages\PageRegistration;
 use Filament\Resources\Resource;
+use Filament\Schemas\Components\Grid;
+use Filament\Schemas\Components\Group;
+use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\TextColumn;
@@ -47,18 +50,35 @@ class VideoResource extends Resource
     {
         return $schema
             ->components([
-                TextInput::make('title')
-                    ->placeholder('e.g. Building a Laravel App from Scratch')
-                    ->required(),
-                TextInput::make('youtube_video_id')
-                    ->placeholder('e.g. dQw4w9WgXcQ')
-                    ->required()
-                    ->label('YouTube video ID')
-                    ->helperText('The 11-character ID from the video URL, e.g. dQw4w9WgXcQ.'),
-                Textarea::make('description')
-                    ->placeholder('e.g. In this video, we cover...')
-                    ->columnSpanFull(),
-                DateTimePicker::make('published_at'),
+                Grid::make(3)->schema([
+                    Group::make()->schema([
+                        Section::make('Video Content')
+                            ->schema([
+                                TextInput::make('title')
+                                    ->placeholder('e.g. Building a Laravel App from Scratch')
+                                    ->required()
+                                    ->columnSpanFull(),
+                                Textarea::make('description')
+                                    ->placeholder('e.g. In this video, we cover...')
+                                    ->rows(8)
+                                    ->columnSpanFull(),
+                            ]),
+                    ])->columnSpan(['sm' => 3, 'lg' => 2]),
+
+                    Group::make()->schema([
+                        Section::make('Settings')
+                            ->schema([
+                                TextInput::make('youtube_video_id')
+                                    ->placeholder('e.g. dQw4w9WgXcQ')
+                                    ->required()
+                                    ->label('YouTube Video ID')
+                                    ->helperText('The 11-character ID from the video URL, e.g. dQw4w9WgXcQ.'),
+                                DateTimePicker::make('published_at')
+                                    ->label('Publish Date')
+                                    ->helperText('When this video should appear on the site.'),
+                            ]),
+                    ])->columnSpan(['sm' => 3, 'lg' => 1]),
+                ])->columnSpanFull(),
             ]);
     }
 

@@ -16,6 +16,7 @@ use Filament\Actions\EditAction;
 use Filament\Forms\Components\TextInput;
 use Filament\Resources\Pages\PageRegistration;
 use Filament\Resources\Resource;
+use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\TextColumn;
@@ -45,17 +46,20 @@ class CategoryResource extends Resource
     {
         return $schema
             ->components([
-                TextInput::make('name')
-                    ->placeholder('e.g. Laravel Tutorials')
-                    ->required()
-                    ->live(onBlur: true)
-                    ->afterStateUpdated(function ($state, callable $set): void {
-                        $set('slug', Str::slug((string) $state));
-                    }),
-                TextInput::make('slug')
-                    ->placeholder('e.g. laravel-tutorials')
-                    ->required()
-                    ->unique(ignoreRecord: true),
+                Section::make('Category Details')
+                    ->schema([
+                        TextInput::make('name')
+                            ->placeholder('e.g. Laravel Tutorials')
+                            ->required()
+                            ->live(onBlur: true)
+                            ->afterStateUpdated(function ($state, callable $set): void {
+                                $set('slug', Str::slug((string) $state));
+                            }),
+                        TextInput::make('slug')
+                            ->placeholder('e.g. laravel-tutorials')
+                            ->required()
+                            ->unique(ignoreRecord: true),
+                    ])->columns(2),
             ]);
     }
 
