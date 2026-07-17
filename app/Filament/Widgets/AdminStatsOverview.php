@@ -85,13 +85,13 @@ class AdminStatsOverview extends StatsOverviewWidget
                 ->chart([1, 0, 2, 1, 3, 2, 4])
                 ->color('warning'),
 
-            Stat::make('Total Post Views', number_format(Post::sum('views_count') ?? 0))
+            Stat::make('Total Post Views', number_format((int) Post::sum('views_count')))
                 ->description('Across all blog posts')
                 ->descriptionIcon('heroicon-m-eye')
                 ->chart([3, 5, 8, 12, 14, 18, 25])
                 ->color('success'),
 
-            Stat::make('Total Project Views', number_format(Project::sum('views_count') ?? 0))
+            Stat::make('Total Project Views', number_format((int) Project::sum('views_count')))
                 ->description('Across all case studies')
                 ->descriptionIcon('heroicon-m-eye')
                 ->chart([1, 2, 4, 7, 9, 12, 16])
