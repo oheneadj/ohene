@@ -11,11 +11,11 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::get('/work', [WorkController::class, 'index'])->name('work.index');
-Route::get('/work/{project}', [WorkController::class, 'show'])->name('work.show');
+Route::get('/work/{project:slug}', [WorkController::class, 'show'])->name('work.show');
 
 Route::get('/blog', [BlogController::class, 'index'])->name('blog.index');
-Route::get('/blog/{post}/preview', [BlogController::class, 'preview'])->name('blog.preview');
-Route::get('/blog/{post}', [BlogController::class, 'show'])->name('blog.show');
+Route::get('/blog/{post:slug}/preview', [BlogController::class, 'preview'])->name('blog.preview');
+Route::get('/blog/{post:slug}', [BlogController::class, 'show'])->name('blog.show');
 
 Route::get('/about', [PageController::class, 'about'])->name('about');
 Route::get('/videos', [PageController::class, 'videos'])->name('videos');

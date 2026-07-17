@@ -24,3 +24,7 @@ Artisan::command('inspire', function () {
 Schedule::command('queue:work --stop-when-empty --max-time=55 --tries=3 --queue=emails,sms,notifications,default')
     ->everyMinute()
     ->withoutOverlapping();
+
+Schedule::command('posts:publish-scheduled')
+    ->everyMinute()
+    ->withoutOverlapping();

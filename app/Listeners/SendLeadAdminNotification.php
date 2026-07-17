@@ -6,6 +6,8 @@ namespace App\Listeners;
 
 use App\Events\LeadSubmitted;
 use App\Mail\LeadAdminNotification;
+use App\Models\User;
+use Filament\Notifications\Notification;
 use Illuminate\Support\Facades\Mail;
 
 /**
@@ -21,5 +23,13 @@ class SendLeadAdminNotification
     {
         Mail::to(config('mail.lead_recipient'))
             ->send(new LeadAdminNotification($event->lead));
+
+        $users = User::all();
+        
+        Notification::make()
+            ->title('New Lead Received')
+            ->body("{$event->lead->name} just submitted an inquiry.")
+            ->success()
+            ->sendToDatabase($users);
     }
 }

@@ -13,4 +13,15 @@ use Filament\Resources\Pages\CreateRecord;
 class CreateProject extends CreateRecord
 {
     protected static string $resource = ProjectResource::class;
+
+    protected function afterCreate(): void
+    {
+        $users = \App\Models\User::all();
+        
+        \Filament\Notifications\Notification::make()
+            ->title('New Project Published')
+            ->body("A new case study '{$this->record->title}' has been published.")
+            ->success()
+            ->sendToDatabase($users);
+    }
 }

@@ -18,3 +18,6 @@ require __DIR__.'/../vendor/autoload.php';
 $app = require_once __DIR__.'/../bootstrap/app.php';
 
 $app->handleRequest(Request::capture());
+
+// Strip the X-Powered-By header to obscure the PHP version
+header_remove('X-Powered-By');

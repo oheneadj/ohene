@@ -31,6 +31,12 @@ class BlogController extends Controller
     {
         abort_unless($post->isPublic(), 404);
 
+        $sessionKey = 'viewed_post_' . $post->id;
+        if (! session()->has($sessionKey)) {
+            $post->increment('views_count');
+            session()->put($sessionKey, true);
+        }
+
         return $this->renderPost($post, preview: false);
     }
 

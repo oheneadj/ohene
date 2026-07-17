@@ -4,12 +4,15 @@ declare(strict_types=1);
 
 namespace App\Enums;
 
+use Filament\Support\Contracts\HasColor;
+use Filament\Support\Contracts\HasLabel;
+
 /**
  * Where a contact-form lead sits in Ohene's follow-up pipeline.
  *
  * Purely an internal CRM state; never shown to the person who submitted the form.
  */
-enum LeadStatus: string
+enum LeadStatus: string implements HasLabel, HasColor
 {
     case New = 'new';
     case Contacted = 'contacted';
@@ -29,6 +32,11 @@ enum LeadStatus: string
         };
     }
 
+    public function getLabel(): ?string
+    {
+        return $this->label();
+    }
+
     /**
      * Filament/Tailwind colour token for status badges.
      */
@@ -40,5 +48,10 @@ enum LeadStatus: string
             self::Won => 'success',
             self::Lost => 'danger',
         };
+    }
+
+    public function getColor(): string|array|null
+    {
+        return $this->color();
     }
 }

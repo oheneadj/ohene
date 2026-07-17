@@ -75,8 +75,8 @@ class CategoryResource extends Resource
                 TextColumn::make('posts_count')->counts('posts')->label('Posts'),
             ])
             ->recordActions([
-                EditAction::make(),
-                DeleteAction::make(),
+                EditAction::make()->button(),
+                DeleteAction::make()->button(),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([

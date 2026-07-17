@@ -20,7 +20,7 @@
         </nav>
 
         <a href="{{ route('contact') }}" class="hidden md:inline-flex font-mono text-sm bg-black text-white border border-black rounded-full px-4 py-2 hover:bg-transparent hover:text-black transition-premium hover:-translate-y-0.5">Start a project</a>
-        <button id="navToggle" class="md:hidden text-2xl leading-none" aria-label="Toggle menu" aria-expanded="false">☰</button>
+        <button id="navToggle" class="md:hidden text-2xl leading-none w-12 h-12 flex items-center justify-center -mr-3 rounded-full hover:bg-slate-100 transition-colors" aria-label="Toggle Navigation Menu" aria-expanded="false">☰</button>
     </div>
 
     <div id="mobileMenu" class="hidden md:hidden flex-col gap-1 bg-white border-b border-black/10 px-7 pb-4">

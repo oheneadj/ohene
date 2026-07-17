@@ -116,8 +116,8 @@ class VideoResource extends Resource
                 TextColumn::make('published_at')->dateTime()->sortable(),
             ])
             ->recordActions([
-                EditAction::make(),
-                DeleteAction::make(),
+                EditAction::make()->button(),
+                DeleteAction::make()->button(),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([

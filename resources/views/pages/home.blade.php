@@ -1,5 +1,6 @@
 <x-layouts.app title="Ohene Adjei Effah — Full-Stack Developer for Hire | Laravel, React, WordPress"
-    description="Hire Ohene Adjei Effah, a full-stack web developer in Cape Coast, Ghana. 7+ years building Laravel, React and WordPress solutions used by 20,000+ people.">
+    description="Freelance Full-Stack Developer in Accra, Ghana specializing in Laravel, React, and WordPress. Build scalable web apps and secure cloud infrastructure."
+    image="images/og-homepage.png">
 
     <x-slot:head>
         <x-json-ld :data="[
@@ -87,7 +88,8 @@
                         }
                     }
                 </style>
-                <h1 class="reveal font-display text-4xl md:text-5xl font-semibold leading-tight mb-5">
+                <h1 class="sr-only">Full-Stack Developer & Software Engineer | Laravel, React & WordPress</h1>
+                <div class="reveal font-display text-4xl md:text-5xl font-semibold leading-tight mb-5" aria-hidden="true">
                     I
                     <span class="inline-grid align-baseline">
                         <span class="col-start-1 row-start-1 text-forest hero-word-rotate">design,</span>
@@ -96,7 +98,7 @@
                         <span class="col-start-1 row-start-1 invisible" aria-hidden="true">develop,</span>
                     </span><br>
                     <span class="text-gray-400">software that works.</span>
-                </h1>
+                </div>
                 <p class="reveal text-slate-300 max-w-lg mb-6">Full-stack development from first line of code to
                     long-term support. Laravel, React and WordPress products built for businesses anywhere — from Accra,
                     Ghana.</p>

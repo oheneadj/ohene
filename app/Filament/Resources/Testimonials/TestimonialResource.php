@@ -123,8 +123,8 @@ class TestimonialResource extends Resource
                 TextColumn::make('status')->badge(),
             ])
             ->recordActions([
-                EditAction::make(),
-                DeleteAction::make(),
+                EditAction::make()->button(),
+                DeleteAction::make()->button(),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([

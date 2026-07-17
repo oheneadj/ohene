@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- **SEO & Accessibility improvements**: Generated a custom Open Graph preview image for the homepage, added an explicit `<h1>` tag to the homepage for keyword targeting, injected a dedicated technical stack section in the footer for long-tail keywords, added a descriptive `alt` attribute fallback for blog and video cards, and increased mobile menu and social link touch targets to 48x48 pixels with correct `aria-label`s.
 - Created `<x-social-pill>` component to ensure action links (Contact, Social, GitHub) are identically sized across the About, Contact, and Work pages following DRY principles.
 - Standardized hero section heights for secondary pages (About, Contact, Videos, Work, Blog, Privacy) using a uniform `min-h-[40vh]` flex layout, while preserving left-aligned text.
 - Improved WCAG contrast for inline links on the Privacy and Blog pages by replacing neon colors with black text and thick neon underlines (`decoration-forest decoration-2`).

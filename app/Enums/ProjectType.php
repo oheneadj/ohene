@@ -4,13 +4,15 @@ declare(strict_types=1);
 
 namespace App\Enums;
 
+use Filament\Support\Contracts\HasLabel;
+
 /**
  * The kind of work a lead is enquiring about (contact-form dropdown).
  *
  * Kept intentionally broad — this is a qualification hint for Ohene, not a
  * rigid taxonomy, so it maps to the services the site actually pitches.
  */
-enum ProjectType: string
+enum ProjectType: string implements HasLabel
 {
     case WebApp = 'web_app';
     case Website = 'website';
@@ -32,5 +34,10 @@ enum ProjectType: string
             self::Consulting => 'Consulting / audit',
             self::Other => 'Something else',
         };
+    }
+
+    public function getLabel(): ?string
+    {
+        return $this->label();
     }
 }

@@ -112,8 +112,8 @@ class LeadResource extends Resource
                 TextColumn::make('created_at')->dateTime()->label('Submitted')->sortable(),
             ])
             ->recordActions([
-                ViewAction::make(),
-                EditAction::make()->label('Update status'),
+                ViewAction::make()->button(),
+                EditAction::make()->label('Update status')->button(),
             ])
             ->emptyStateHeading('No leads yet')
             ->emptyStateDescription('When a potential client fills out the contact form, their lead will appear here.')

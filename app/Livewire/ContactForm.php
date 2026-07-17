@@ -43,6 +43,8 @@ class ContactForm extends Component
 
     public bool $submitted = false;
 
+    public ?string $turnstileToken = null;
+
     /**
      * Capture UTM parameters and referrer when the form first loads.
      */
@@ -67,6 +69,19 @@ class ContactForm extends Component
             'message' => ['required', 'string', 'min:10', 'max:5000'],
             'project_type' => ['nullable', new Enum(ProjectType::class)],
             'budget_range' => ['nullable', new Enum(BudgetRange::class)],
+            'turnstileToken' => ['required', 'string'],
+        ];
+    }
+
+    /**
+     * Custom error messages.
+     *
+     * @return array<string, string>
+     */
+    protected function messages(): array
+    {
+        return [
+            'turnstileToken.required' => 'Please complete the security check.',
         ];
     }
 
@@ -77,7 +92,7 @@ class ContactForm extends Component
     {
         // Silently drop honeypot hits — don't tell a bot it failed.
         if ($this->website !== '') {
-            $this->reset(['name', 'email', 'message', 'project_type', 'budget_range', 'website']);
+            $this->reset(['name', 'email', 'message', 'project_type', 'budget_range', 'website', 'turnstileToken']);
             $this->submitted = true;
 
             return;
@@ -91,7 +106,37 @@ class ContactForm extends Component
         }
 
         $validated = $this->validate();
+
+        // Verify Turnstile token via Cloudflare
+        $response = \Illuminate\Support\Facades\Http::asForm()->post('https://challenges.cloudflare.com/turnstile/v0/siteverify', [
+            'secret' => config('services.turnstile.secret'),
+            'response' => $this->turnstileToken,
+            'remoteip' => request()->ip(),
+        ]);
+
+        // Log the third-party API call (CLAUDE.md Section 21)
+        \App\Models\ApiCallLog::create([
+            'service' => 'cloudflare_turnstile',
+            'endpoint' => 'https://challenges.cloudflare.com/turnstile/v0/siteverify',
+            'request_payload' => [
+                'secret' => config('services.turnstile.secret'), // Encrypted by model cast
+                'response' => $this->turnstileToken,
+                'remoteip' => request()->ip(),
+            ],
+            'response_payload' => $response->json(), // Encrypted by model cast
+            'status_code' => $response->status(),
+            'ip_address' => request()->ip(),
+        ]);
+
+        if (! $response->successful() || ! ($response->json('success') ?? false)) {
+            $this->addError('turnstileToken', 'Security check failed. Please refresh the page and try again.');
+            return;
+        }
+
         RateLimiter::hit($this->throttleKey(), 3600); // 1 hour decay
+
+        // Remove turnstile token before passing to action
+        unset($validated['turnstileToken']);
 
         $createLead->execute([
             ...$validated,
@@ -101,7 +146,7 @@ class ContactForm extends Component
             'referrer' => $this->referrer,
         ]);
 
-        $this->reset(['name', 'email', 'message', 'project_type', 'budget_range']);
+        $this->reset(['name', 'email', 'message', 'project_type', 'budget_range', 'turnstileToken']);
         $this->submitted = true;
 
         // Let the frontend forward a conversion event to analytics (MR3).

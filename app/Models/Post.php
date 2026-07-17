@@ -69,16 +69,7 @@ class Post extends Model implements RedirectsOnSlugChange
 
     /**
      * Public URLs bind by slug for SEO and 1:1 parity with the old static site
-     * (requirements Section 3, MG2) — the ULID still identifies the record in
-     * the admin. Overrides the ULID key from HasPublicUlid for this model.
-     */
-    public function getRouteKeyName(): string
-    {
-        return 'slug';
-    }
-
-    /**
-     * Public posts live under /blog/{slug}.
+     * (requirements Section 3, MG2).
      */
     public function publicPathPrefix(): string
     {

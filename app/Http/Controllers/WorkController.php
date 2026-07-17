@@ -36,6 +36,12 @@ class WorkController extends Controller
      */
     public function show(Project $project): View
     {
+        $sessionKey = 'viewed_project_' . $project->id;
+        if (! session()->has($sessionKey)) {
+            $project->increment('views_count');
+            session()->put($sessionKey, true);
+        }
+
         $data = Cache::remember("work.show.{$project->slug}", now()->addDay(), function () use ($project) {
             $ordered = Project::query()->ordered()->get();
             $index = $ordered->search(fn (Project $item): bool => $item->is($project));

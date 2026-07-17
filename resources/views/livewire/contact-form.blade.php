@@ -54,12 +54,34 @@
                 @error('message') <p class="text-rust text-xs mt-1">{{ $message }}</p> @enderror
             </div>
 
-            <div class="pt-2">
+            <div class="pt-2" x-data="{
+                init() {
+                    let retries = 0;
+                    const checkAndRender = () => {
+                        if (typeof turnstile !== 'undefined') {
+                            turnstile.render(this.$refs.turnstile, {
+                                sitekey: '{{ config('services.turnstile.key') }}',
+                                callback: (token) => {
+                                    $wire.set('turnstileToken', token);
+                                }
+                            });
+                        } else if (retries < 20) {
+                            retries++;
+                            setTimeout(checkAndRender, 100);
+                        }
+                    };
+                    checkAndRender();
+                }
+            }">
+                <div x-ref="turnstile" wire:ignore class="mb-4 h-[65px]"></div>
+                @error('turnstileToken') <p class="text-rust text-xs mb-4 mt-1">{{ $message }}</p> @enderror
+
                 <button type="submit" class="inline-flex items-center justify-center w-full sm:w-auto gap-2 bg-black text-white border border-black font-semibold rounded-full px-8 py-3.5 hover:bg-transparent hover:text-black transition-premium disabled:opacity-60" wire:loading.attr="disabled" wire:target="submit">
                     <span wire:loading.remove wire:target="submit">Send message</span>
                     <span wire:loading wire:target="submit">Sending…</span>
                 </button>
             </div>
         </form>
+        <script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" async defer></script>
     @endif
 </div>

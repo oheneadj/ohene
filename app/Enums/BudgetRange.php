@@ -4,13 +4,15 @@ declare(strict_types=1);
 
 namespace App\Enums;
 
+use Filament\Support\Contracts\HasLabel;
+
 /**
  * Optional budget band a lead can pick on the contact form.
  *
  * Bands (not exact figures) keep the question low-friction while still helping
  * Ohene gauge fit before replying. Values are stored, labels are display-only.
  */
-enum BudgetRange: string
+enum BudgetRange: string implements HasLabel
 {
     case Under1k = 'under_1k';
     case From1kTo5k = '1k_5k';
@@ -30,5 +32,10 @@ enum BudgetRange: string
             self::Over10k => 'Over $10,000',
             self::NotSure => 'Not sure yet',
         };
+    }
+
+    public function getLabel(): ?string
+    {
+        return $this->label();
     }
 }

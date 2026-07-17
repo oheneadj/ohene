@@ -3,7 +3,7 @@
 <a href="https://www.youtube.com/watch?v={{ $video->youtube_video_id }}" target="_blank" rel="noopener" class="group block bg-white p-4 rounded-[2rem] border border-black/5 hover:border-black/10 hover:shadow-[0_8px_30px_rgba(0,0,0,0.06)] transition-all duration-300 relative flex flex-col h-full">
     {{-- Inset Image --}}
     <div class="w-full aspect-video relative overflow-hidden rounded-[1.5rem] bg-slate-50 mb-5 border border-black/5">
-        <img src="{{ $video->thumbnailUrl() }}" alt="{{ $video->title }}" loading="lazy" decoding="async" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+        <img src="{{ $video->thumbnailUrl() }}" alt="Video thumbnail for {{ $video->title }}" loading="lazy" decoding="async" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
         
         {{-- Floating Play Button Overlay --}}
         <div class="absolute inset-0 flex items-center justify-center bg-black/10 group-hover:bg-transparent transition-colors duration-300">

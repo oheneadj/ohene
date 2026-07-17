@@ -174,19 +174,31 @@ class ProjectResource extends Resource
     {
         return $schema
             ->components([
-                TextEntry::make('title'),
-                TextEntry::make('slug'),
-                TextEntry::make('tagline'),
-                TextEntry::make('challenge')->columnSpanFull(),
-                TextEntry::make('build')->columnSpanFull(),
-                TextEntry::make('impact')->columnSpanFull(),
-                TextEntry::make('tech_stack')->badge(),
-                ImageEntry::make('cover_image')->disk('public')->placeholder('-'),
-                TextEntry::make('live_url')->placeholder('-'),
-                TextEntry::make('repo_url')->placeholder('-'),
-                IconEntry::make('featured')->boolean(),
-                TextEntry::make('display_order')->numeric(),
-            ]);
+                Group::make([
+                    Section::make('Project Details')
+                        ->schema([
+                            TextEntry::make('title')->weight('bold')->size('lg'),
+                            TextEntry::make('tagline')->color('gray'),
+                            TextEntry::make('slug')->color('gray'),
+                            ImageEntry::make('cover_image')->disk('public')->hiddenLabel()->placeholder('-')->columnSpanFull(),
+                            TextEntry::make('challenge')->prose()->columnSpanFull(),
+                            TextEntry::make('build')->prose()->columnSpanFull(),
+                            TextEntry::make('impact')->prose()->columnSpanFull(),
+                        ])->columns(3),
+                ])->columnSpan(['sm' => 3, 'lg' => 2]),
+
+                Group::make([
+                    Section::make('Metadata')
+                        ->schema([
+                            TextEntry::make('views_count')->label('Total Views')->icon('heroicon-m-eye')->badge()->color('primary'),
+                            TextEntry::make('tech_stack')->badge(),
+                            IconEntry::make('featured')->boolean(),
+                            TextEntry::make('display_order')->numeric(),
+                            TextEntry::make('live_url')->placeholder('-')->url(fn ($state) => $state)->openUrlInNewTab(),
+                            TextEntry::make('repo_url')->placeholder('-')->url(fn ($state) => $state)->openUrlInNewTab(),
+                        ])->columns(1),
+                ])->columnSpan(['sm' => 3, 'lg' => 1]),
+            ])->columns(3);
     }
 
     /**
@@ -204,9 +216,9 @@ class ProjectResource extends Resource
                 TextColumn::make('updated_at')->dateTime()->sortable()->toggleable(isToggledHiddenByDefault: true),
             ])
             ->recordActions([
-                ViewAction::make(),
-                EditAction::make(),
-                DeleteAction::make(),
+                ViewAction::make()->button(),
+                EditAction::make()->button(),
+                DeleteAction::make()->button(),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([

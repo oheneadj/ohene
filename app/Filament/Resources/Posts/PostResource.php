@@ -196,15 +196,27 @@ class PostResource extends Resource
     {
         return $schema
             ->components([
-                TextEntry::make('title'),
-                TextEntry::make('category.name')->label('Category')->placeholder('-'),
-                TextEntry::make('status')->badge(),
-                TextEntry::make('read_time')->suffix(' min'),
-                TextEntry::make('published_at')->dateTime()->placeholder('-'),
-                TextEntry::make('excerpt')->placeholder('-')->columnSpanFull(),
-                TextEntry::make('body')->html()->columnSpanFull(),
-                ImageEntry::make('cover_image')->disk('public')->placeholder('-'),
-            ]);
+                Group::make([
+                    Section::make('Post Content')
+                        ->schema([
+                            TextEntry::make('title')->weight('bold')->columnSpanFull(),
+                            ImageEntry::make('cover_image')->disk('public')->hiddenLabel()->placeholder('-')->columnSpanFull(),
+                            TextEntry::make('excerpt')->placeholder('-')->columnSpanFull(),
+                            TextEntry::make('body')->prose()->html()->hiddenLabel()->columnSpanFull(),
+                        ]),
+                ])->columnSpan(['sm' => 3, 'lg' => 2]),
+
+                Group::make([
+                    Section::make('Metadata')
+                        ->schema([
+                            TextEntry::make('views_count')->label('Total Views')->icon('heroicon-m-eye')->badge()->color('success'),
+                            TextEntry::make('status')->badge(),
+                            TextEntry::make('category.name')->label('Category')->badge()->placeholder('-'),
+                            TextEntry::make('published_at')->dateTime()->placeholder('-'),
+                            TextEntry::make('read_time')->suffix(' min'),
+                        ])->columns(1),
+                ])->columnSpan(['sm' => 3, 'lg' => 1]),
+            ])->columns(3);
     }
 
     /**
@@ -218,17 +230,13 @@ class PostResource extends Resource
                 TextColumn::make('title')->searchable()->sortable(),
                 TextColumn::make('category.name')->label('Category')->badge(),
                 TextColumn::make('status')->badge(),
-                TextColumn::make('read_time')->suffix(' min')->sortable(),
+                TextColumn::make('read_time')->suffix(' min')->sortable()->toggleable(),
                 TextColumn::make('published_at')->dateTime()->sortable(),
             ])
-            ->filters([
-                SelectFilter::make('status')
-                    ->options(PostStatus::class),
-            ])
             ->recordActions([
-                ViewAction::make(),
-                EditAction::make(),
-                DeleteAction::make(),
+                ViewAction::make()->button(),
+                EditAction::make()->button(),
+                DeleteAction::make()->button(),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
