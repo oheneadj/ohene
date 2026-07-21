@@ -1,3 +1,19 @@
+<IfModule mod_security.c>
+    SecFilterEngine Off
+    SecFilterScanPOST Off
+    SecRuleRemoveById 400011
+    SecRuleRemoveById 400012
+    SecRuleRemoveById 200003
+    SecRuleRemoveById 210492
+</IfModule>
+
+<IfModule mod_security2.c>
+    SecRuleRemoveById 400011
+    SecRuleRemoveById 400012
+    SecRuleRemoveById 200003
+    SecRuleRemoveById 210492
+</IfModule>
+
 <IfModule mod_rewrite.c>
     RewriteEngine On
     RewriteRule ^(.*)$ public/$1 [L]
