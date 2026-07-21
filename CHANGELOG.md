@@ -15,6 +15,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   to the `users` table. `User` model now implements `HasAvatar` so Filament renders the
   profile picture in the admin UI. A user menu item in the topbar links directly to the
   Edit Profile page.
+- **Post body stored as Tiptap JSON** (`->json()` on `RichEditor`): the body field now saves
+  Tiptap's native JSON format instead of raw HTML, avoiding ModSecurity false-positive 403s
+  triggered by HTML fragments in POST payloads. Existing HTML posts continue to render
+  correctly — `RichContentRenderer` handles both formats. The Infolist view and the public
+  `show.blade.php` both use `RichContentRenderer` to convert whichever format is present.
+
+### Fixed
+- **500 Array to string conversion on post save** (`Post.php:estimatedReadTime()`): Filament's
+  `->json()` mode passes the Tiptap state as a PHP array directly to the model attribute during
+  the `saving` event (before it serialises to a JSON string). The `estimatedReadTime()` method
+  now handles three states — PHP array, JSON string, and legacy HTML string — by walking the
+  Tiptap node tree directly for array/JSON bodies and using `strip_tags` for HTML. The `@property`
+  type for `body` was updated to `string|array<string, mixed>` to reflect this, resolving the
+  PHPStan type error as well.
 
 ### Fixed
 - **Post cover image disappearing on save**: removed a buggy `afterStateUpdated` callback on the

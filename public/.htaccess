@@ -1,14 +1,21 @@
-# Disable ModSecurity for this directory (the Laravel public/ root).
-# Shared hosting does not allow <LocationMatch> in .htaccess, so this
-# must be applied globally here. The admin panel Livewire requests were
-# triggering false-positive 403s that cannot be resolved with rule IDs alone.
+# ModSecurity rule exclusions for the Filament admin panel + Livewire.
+# SecRuleEngine Off is NOT supported in .htaccess context on Hostinger —
+# only SecRuleRemoveById works here. Add any new rule IDs from the hPanel
+# error log when a new 403 appears.
 <IfModule mod_security.c>
     SecFilterEngine Off
     SecFilterScanPOST Off
+    SecRuleRemoveById 400011
+    SecRuleRemoveById 400012
+    SecRuleRemoveById 200003
+    SecRuleRemoveById 210492
 </IfModule>
 
 <IfModule mod_security2.c>
-    SecRuleEngine Off
+    SecRuleRemoveById 400011
+    SecRuleRemoveById 400012
+    SecRuleRemoveById 200003
+    SecRuleRemoveById 210492
 </IfModule>
 
 <IfModule mod_rewrite.c>
