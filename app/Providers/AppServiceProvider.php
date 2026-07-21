@@ -30,6 +30,10 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->configureDefaults();
+
+        if (app()->environment('production')) {
+            URL::forceScheme('https');
+        }
     }
 
     /**
@@ -38,9 +42,6 @@ class AppServiceProvider extends ServiceProvider
     protected function configureDefaults(): void
     {
         Date::use(CarbonImmutable::class);
-
-        // Generate https:// URLs in production (HSTS is added per-response, NFR4).
-        URL::forceHttps(app()->isProduction());
 
         DB::prohibitDestructiveCommands(
             app()->isProduction(),
