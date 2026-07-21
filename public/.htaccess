@@ -1,12 +1,15 @@
-<IfModule mod_security.c>
-    SecRuleRemoveById 400011
-    SecRuleRemoveById 400012
-</IfModule>
-
-<IfModule mod_security2.c>
-    SecRuleRemoveById 400011
-    SecRuleRemoveById 400012
-</IfModule>
+# Disable ModSecurity scanning inside the Filament admin panel and its
+# Livewire endpoints. All traffic here is authenticated-admin only, so the
+# firewall risk is minimal and the false-positive cost is high.
+<LocationMatch "^/(admin|livewire[^/]*/update|livewire[^/]*/upload-file)">
+    <IfModule mod_security.c>
+        SecFilterEngine Off
+        SecFilterScanPOST Off
+    </IfModule>
+    <IfModule mod_security2.c>
+        SecRuleEngine Off
+    </IfModule>
+</LocationMatch>
 
 <IfModule mod_rewrite.c>
     <IfModule mod_negotiation.c>
