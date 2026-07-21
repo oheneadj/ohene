@@ -52,6 +52,10 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->plugins([
                 FilamentEditProfilePlugin::make()
+                    ->setTitle('My Profile')
+                    ->setNavigationLabel('My Profile')
+                    ->setNavigationGroup('System')
+                    ->setIcon('heroicon-o-user')
                     ->shouldShowDeleteAccountForm(false)
                     ->shouldShowBrowserSessionsForm()
                     ->shouldShowAvatarForm(),
