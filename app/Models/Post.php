@@ -147,13 +147,45 @@ class Post extends Model implements RedirectsOnSlugChange
      * Estimate reading time in whole minutes from the body word count,
      * assuming ~200 words per minute (floor of one minute).
      *
+     * The body may be stored as Tiptap JSON (when the editor uses ->asJson())
+     * or as legacy HTML. We detect the format and extract plain text from
+     * whichever is present before counting words.
+     *
      * @return positive-int
      */
     public function estimatedReadTime(): int
     {
-        $words = str_word_count(strip_tags((string) $this->body));
+        $body = (string) $this->body;
+
+        $decoded = json_decode($body, true);
+
+        $text = (json_last_error() === JSON_ERROR_NONE && is_array($decoded))
+            ? $this->extractTextFromTiptap($decoded)
+            : strip_tags($body);
+
+        $words = str_word_count($text);
 
         return max(1, (int) ceil($words / 200));
+    }
+
+    /**
+     * Recursively walk a Tiptap node tree and collect all text leaf values.
+     * Used to extract readable text from JSON-encoded rich-text bodies.
+     *
+     * @param  array<string, mixed>  $node
+     */
+    private function extractTextFromTiptap(array $node): string
+    {
+        if (isset($node['text'])) {
+            return (string) $node['text'];
+        }
+
+        $text = '';
+        foreach ($node['content'] ?? [] as $child) {
+            $text .= ' '.$this->extractTextFromTiptap($child);
+        }
+
+        return $text;
     }
 
     /**

@@ -20,6 +20,7 @@ use Filament\Actions\ViewAction;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\RichEditor;
+use Filament\Forms\Components\RichEditor\RichContentRenderer;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
@@ -161,6 +162,7 @@ class PostResource extends Resource
                                     ->customBlocks([
                                         YouTubeEmbedBlock::class,
                                     ])
+                                    ->json()
                                     ->columnSpanFull(),
                             ]),
                     ])->columnSpan(['sm' => 3, 'lg' => 2]),
@@ -203,7 +205,15 @@ class PostResource extends Resource
                             TextEntry::make('title')->weight('bold')->columnSpanFull(),
                             ImageEntry::make('cover_image')->disk('public')->hiddenLabel()->placeholder('-')->columnSpanFull(),
                             TextEntry::make('excerpt')->placeholder('-')->columnSpanFull(),
-                            TextEntry::make('body')->prose()->html()->hiddenLabel()->columnSpanFull(),
+                            TextEntry::make('body')
+                                ->prose()
+                                ->html()
+                                ->hiddenLabel()
+                                ->columnSpanFull()
+                                ->state(fn (Post $record): string => RichContentRenderer::make((string) $record->body)
+                                    ->customBlocks([YouTubeEmbedBlock::class])
+                                    ->toUnsafeHtml()
+                                ),
                         ]),
                 ])->columnSpan(['sm' => 3, 'lg' => 2]),
 
