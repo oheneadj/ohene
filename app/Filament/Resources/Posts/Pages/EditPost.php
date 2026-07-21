@@ -23,6 +23,10 @@ class EditPost extends EditRecord
     protected function getHeaderActions(): array
     {
         return [
+            Action::make('save')
+                ->label('Save')
+                ->action('save')
+                ->keyBindings(['mod+s']),
             Action::make('preview')
                 ->icon('heroicon-o-eye')
                 ->color('gray')

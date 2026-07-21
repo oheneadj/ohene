@@ -7,7 +7,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+- **Post cover image disappearing on save**: removed a buggy `afterStateUpdated` callback on the
+  `cover_image` FileUpload that copied the Livewire temp file reference into the `og_image` field.
+  Both FileUpload components were racing to move the same temp file on save — the first won, the
+  second found nothing, and Filament silently saved `null` for `cover_image`. The `Post::ogImage()`
+  fallback (`og_image ?? cover_image`) already handles the OG image gracefully, so the callback
+  was redundant and harmful.
+
 ### Added
+- **Frontend Admin Bar**: A WordPress-style admin bar now appears at the top of all public pages when logged in, featuring quick links to the dashboard, creating new posts/projects, and context-aware "Edit" links when viewing individual blog posts or projects.
+- **Admin Public Site Link**: Added a "View Public Site" quick link to the Filament user menu dropdown to easily navigate from the admin dashboard back to the frontend.
+- **YouTube embed custom block** (`App\RichEditor\YouTubeEmbedBlock`): a Filament v5
+  `RichContentCustomBlock` that adds a "Custom Blocks" toolbar button to the Post body
+  `RichEditor`. Editors click the button, paste any YouTube URL (full, shortened `youtu.be`,
+  or embed), and a live preview appears in the editor. On the frontend, the `show.blade.php`
+  now renders the body through `RichContentRenderer::toUnsafeHtml()` (with the block
+  registered) so that block markers are resolved into responsive 16:9 `<iframe>` embeds.
+  `toUnsafeHtml()` is intentional — content is admin-authored via a restricted CMS editor,
+  not user-submitted.
+
 - **SEO & Accessibility improvements**: Generated a custom Open Graph preview image for the homepage, added an explicit `<h1>` tag to the homepage for keyword targeting, injected a dedicated technical stack section in the footer for long-tail keywords, added a descriptive `alt` attribute fallback for blog and video cards, and increased mobile menu and social link touch targets to 48x48 pixels with correct `aria-label`s.
 - Created `<x-social-pill>` component to ensure action links (Contact, Social, GitHub) are identically sized across the About, Contact, and Work pages following DRY principles.
 - Standardized hero section heights for secondary pages (About, Contact, Videos, Work, Blog, Privacy) using a uniform `min-h-[40vh]` flex layout, while preserving left-aligned text.

@@ -41,9 +41,15 @@ it('falls back to the cover image for the OG image', function () {
 it('routes publicly by slug while still carrying a ULID', function () {
     $post = Post::factory()->create();
 
-    expect($post->getRouteKeyName())->toBe('slug')
-        ->and($post->getRouteKey())->toBe($post->slug)
-        ->and($post->ulid)->toHaveLength(26);
+    // HasPublicUlid keeps the model's route key as 'ulid' for Filament admin routes.
+    // Public blog routes use explicit {post:slug} binding in web.php — a separate concern.
+    expect($post->getRouteKeyName())->toBe('ulid')
+        ->and($post->ulid)->toHaveLength(26)
+        ->and($post->slug)->not->toBeEmpty();
+
+    // The public blog.show route resolves by slug via explicit binding.
+    $response = $this->get(route('blog.show', $post));
+    $response->assertOk();
 });
 
 it('blocks publishing without a meta description', function () {

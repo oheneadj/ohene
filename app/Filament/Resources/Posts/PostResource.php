@@ -10,6 +10,7 @@ use App\Filament\Resources\Posts\Pages\EditPost;
 use App\Filament\Resources\Posts\Pages\ListPosts;
 use App\Filament\Resources\Posts\Pages\ViewPost;
 use App\Models\Post;
+use App\RichEditor\YouTubeEmbedBlock;
 use BackedEnum;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;
@@ -32,7 +33,6 @@ use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Support\Str;
 use UnitEnum;
@@ -141,10 +141,7 @@ class PostResource extends Resource
                                     ->maxSize(4096)
                                     ->disk('public')
                                     ->directory('posts')
-                                    ->live()
-                                    ->afterStateUpdated(function ($state, callable $set): void {
-                                        $set('og_image', $state);
-                                    })->columnSpanFull(),
+                                    ->columnSpanFull(),
                                 TextInput::make('cover_image_alt')
                                     ->label('Cover image alt text')
                                     ->placeholder('e.g. A laptop showing code')
@@ -159,6 +156,10 @@ class PostResource extends Resource
                                     ->toolbarButtons([
                                         'bold', 'italic', 'h2', 'h3', 'bulletList',
                                         'orderedList', 'link', 'blockquote', 'codeBlock',
+                                        'customBlocks',
+                                    ])
+                                    ->customBlocks([
+                                        YouTubeEmbedBlock::class,
                                     ])
                                     ->columnSpanFull(),
                             ]),
