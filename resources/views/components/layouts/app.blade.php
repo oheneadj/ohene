@@ -54,8 +54,6 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="bg-slate-100 text-black antialiased min-h-screen flex flex-col relative overflow-x-hidden">
-    <x-admin-bar />
-    
     <div class="bg-aurora-light" aria-hidden="true"></div>
     
     <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 bg-black text-white font-mono text-sm px-4 py-2 rounded">Skip to content</a>

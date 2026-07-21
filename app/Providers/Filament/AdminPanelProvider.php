@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Providers\Filament;
 
-use App\Filament\Pages\Dashboard;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -12,14 +11,12 @@ use Filament\Http\Middleware\DispatchServingFilamentEvent;
 use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
-use Filament\View\PanelsRenderHook;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Foundation\Http\Middleware\PreventRequestForgery;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
-use Illuminate\View\View;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -31,12 +28,12 @@ class AdminPanelProvider extends PanelProvider
             ->path('admin')
             ->login()
             ->colors([
-                'primary' => Color::hex('#a3e635'), // Forest
-                'warning' => Color::hex('#fbbf24'), // Gold
-                'info' => Color::hex('#38bdf8'),    // Rust
-                'success' => Color::Emerald,
-                'danger' => Color::Rose,
-                'gray' => Color::Slate,
+                'primary' => \Filament\Support\Colors\Color::hex('#a3e635'), // Forest
+                'warning' => \Filament\Support\Colors\Color::hex('#fbbf24'), // Gold
+                'info' => \Filament\Support\Colors\Color::hex('#38bdf8'),    // Rust
+                'success' => \Filament\Support\Colors\Color::Emerald,
+                'danger' => \Filament\Support\Colors\Color::Rose,
+                'gray' => \Filament\Support\Colors\Color::Slate,
             ])
             ->font('Outfit')
             ->favicon(asset('icon.svg'))
@@ -46,7 +43,7 @@ class AdminPanelProvider extends PanelProvider
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\Filament\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\Filament\Pages')
             ->pages([
-                Dashboard::class,
+                \App\Filament\Pages\Dashboard::class,
             ])
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\Filament\Widgets')
             ->widgets([
@@ -65,10 +62,6 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->authMiddleware([
                 Authenticate::class,
-            ])
-            ->renderHook(
-                PanelsRenderHook::TOPBAR_BEFORE,
-                fn (): View => view('filament.hooks.public-site-link'),
-            );
+            ]);
     }
 }

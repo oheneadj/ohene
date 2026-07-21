@@ -16,8 +16,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   was redundant and harmful.
 
 ### Added
-- **Frontend Admin Bar**: A WordPress-style admin bar now appears at the top of all public pages when logged in, featuring quick links to the dashboard, creating new posts/projects, and context-aware "Edit" links when viewing individual blog posts or projects.
-- **Admin Public Site Link**: Added a "View Public Site" quick link to the Filament user menu dropdown to easily navigate from the admin dashboard back to the frontend.
 - **YouTube embed custom block** (`App\RichEditor\YouTubeEmbedBlock`): a Filament v5
   `RichContentCustomBlock` that adds a "Custom Blocks" toolbar button to the Post body
   `RichEditor`. Editors click the button, paste any YouTube URL (full, shortened `youtu.be`,
