@@ -1,15 +1,15 @@
-# Disable ModSecurity scanning inside the Filament admin panel and its
-# Livewire endpoints. All traffic here is authenticated-admin only, so the
-# firewall risk is minimal and the false-positive cost is high.
-<LocationMatch "^/(admin|livewire[^/]*/update|livewire[^/]*/upload-file)">
-    <IfModule mod_security.c>
-        SecFilterEngine Off
-        SecFilterScanPOST Off
-    </IfModule>
-    <IfModule mod_security2.c>
-        SecRuleEngine Off
-    </IfModule>
-</LocationMatch>
+# Disable ModSecurity for this directory (the Laravel public/ root).
+# Shared hosting does not allow <LocationMatch> in .htaccess, so this
+# must be applied globally here. The admin panel Livewire requests were
+# triggering false-positive 403s that cannot be resolved with rule IDs alone.
+<IfModule mod_security.c>
+    SecFilterEngine Off
+    SecFilterScanPOST Off
+</IfModule>
+
+<IfModule mod_security2.c>
+    SecRuleEngine Off
+</IfModule>
 
 <IfModule mod_rewrite.c>
     <IfModule mod_negotiation.c>
