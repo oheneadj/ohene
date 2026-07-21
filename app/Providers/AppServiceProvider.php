@@ -33,6 +33,14 @@ class AppServiceProvider extends ServiceProvider
 
         if (app()->environment('production')) {
             URL::forceScheme('https');
+            
+            // Fix for shared hosting: prevent Laravel from including '/public' in generated URLs
+            if (str_contains(request()->server('SCRIPT_NAME'), '/public/')) {
+                request()->server->set(
+                    'SCRIPT_NAME', 
+                    str_replace('/public/', '/', request()->server('SCRIPT_NAME'))
+                );
+            }
         }
     }
 
