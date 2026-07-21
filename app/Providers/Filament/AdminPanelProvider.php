@@ -62,6 +62,10 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->authMiddleware([
                 Authenticate::class,
-            ]);
+            ])
+            ->renderHook(
+                \Filament\View\PanelsRenderHook::TOPBAR_BEFORE,
+                fn (): string => view('filament.hooks.public-site-link')->render(),
+            );
     }
 }

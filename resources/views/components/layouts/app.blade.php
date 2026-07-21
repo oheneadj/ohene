@@ -58,6 +58,10 @@
     
     <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 bg-black text-white font-mono text-sm px-4 py-2 rounded">Skip to content</a>
 
+    @auth
+        <x-admin-bar />
+    @endauth
+
     <x-nav />
 
     <main id="main" class="flex-grow">
