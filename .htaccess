@@ -1,6 +1,7 @@
 <IfModule mod_security.c>
-    SecFilterEngine Off
-    SecFilterScanPOST Off
+    # Whitelist only the specific rules that cause false positives with Livewire.
+    # SecFilterEngine Off is intentionally NOT used — it would disable all WAF
+    # content scanning site-wide, including the public-facing contact form.
     SecRuleRemoveById 400011
     SecRuleRemoveById 400012
     SecRuleRemoveById 200003
@@ -15,14 +16,24 @@
 </IfModule>
 
 <IfModule mod_rewrite.c>
+    Options -Indexes
     RewriteEngine On
-    
-    # Remove trailing slashes (so Apache doesn't redirect to /public/...)
+
+    # Block TRACE and TRACK HTTP methods (XST attack vector).
+    RewriteCond %{REQUEST_METHOD} ^(TRACE|TRACK)
+    RewriteRule .* - [F,L]
+
+    # Redirect any requests that already contain /public/ in the URL to the
+    # clean equivalent. This prevents the /public prefix from leaking into
+    # browser URLs and avoids the looping condition we previously needed.
+    RewriteCond %{THE_REQUEST} \s/public/(.+)\sHTTP [NC]
+    RewriteRule ^public/(.+)$ /$1 [R=301,L,NE]
+
+    # Remove trailing slashes from non-directory requests.
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_URI} (.+)/$
-    RewriteRule ^ %1 [L,R=301]
+    RewriteRule ^ %1 [L,R=301,NE]
 
-    # Rewrite all other requests to the public directory
-    RewriteCond %{REQUEST_URI} !^/public/
-    RewriteRule ^(.*)$ public/$1 [L,QSA]
+    # Internally rewrite everything else into the Laravel public/ directory.
+    RewriteRule ^(.*)$ public/$1 [L]
 </IfModule>

@@ -19,8 +19,10 @@
 </IfModule>
 
 <IfModule mod_rewrite.c>
+    Options -MultiViews -Indexes
+
     <IfModule mod_negotiation.c>
-        Options -MultiViews -Indexes
+        Options -MultiViews
     </IfModule>
 
     RewriteEngine On
