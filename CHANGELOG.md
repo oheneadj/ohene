@@ -29,6 +29,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   Tiptap node tree directly for array/JSON bodies and using `strip_tags` for HTML. The `@property`
   type for `body` was updated to `string|array<string, mixed>` to reflect this, resolving the
   PHPStan type error as well.
+- **`/public` leaking into browser URLs on shared hosting**: Hostinger routes requests
+  through the root `public_html/.htaccess` before the Laravel `public/` directory. A
+  looping `RewriteCond %{REQUEST_URI} !^/public/` bypass caused URLs like
+  `https://ohene.dev/public/work/lautos` to appear in the browser. Fixed by replacing
+  the bypass with a `THE_REQUEST`-based 301 redirect that cleanly strips the `/public/`
+  prefix before rewriting. `URL::forceScheme('https')` added to `AppServiceProvider`
+  to prevent Livewire mixed-content 403s on Hostinger's SSL proxy.
+- **`.htaccess` security hardening** (`public/.htaccess` and root `.htaccess`):
+  - Removed overly broad `SecFilterEngine Off` / `SecFilterScanPOST Off` which, if
+    honoured by Hostinger, would have disabled all WAF content-scanning site-wide
+    (including the public contact form). Scoped to `SecRuleRemoveById` for specific
+    rule IDs only.
+  - Fixed `Options -Indexes` being conditional on `mod_negotiation` being loaded in
+    `public/.htaccess` — moved it to an unconditional directive so directory listing
+    is always blocked regardless of loaded modules.
+  - Added `Options -Indexes` to root `.htaccess` (was missing entirely).
+  - Added `TRACE`/`TRACK` HTTP method blocking in root `.htaccess` (XST attack vector).
+  - Removed spurious nested `<IfModule mod_rewrite.c>` block in `public/.htaccess`
+    that was incorrectly rewriting requests to `public/public/something`.
 
 ### Fixed
 - **Post cover image disappearing on save**: removed a buggy `afterStateUpdated` callback on the
