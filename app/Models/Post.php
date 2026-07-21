@@ -24,6 +24,8 @@ use Illuminate\Support\Facades\Cache;
  *
  * @property PostStatus $status
  * @property CarbonImmutable|null $published_at
+ * @property string|array<string, mixed> $body Stored as a JSON string in the DB; Filament's ->json() mode
+ *                                             sets this to an array during the saving event before serialising.
  */
 class Post extends Model implements RedirectsOnSlugChange
 {
@@ -155,13 +157,21 @@ class Post extends Model implements RedirectsOnSlugChange
      */
     public function estimatedReadTime(): int
     {
-        $body = (string) $this->body;
+        $body = $this->body;
 
-        $decoded = json_decode($body, true);
-
-        $text = (json_last_error() === JSON_ERROR_NONE && is_array($decoded))
-            ? $this->extractTextFromTiptap($decoded)
-            : strip_tags($body);
+        // Filament's ->json() mode passes the Tiptap state as a PHP array
+        // directly to the model attribute before serialising and saving.
+        // After a database read, it arrives as a JSON string. Legacy posts
+        // are plain HTML strings.
+        if (is_array($body)) {
+            $text = $this->extractTextFromTiptap($body);
+        } else {
+            $body = (string) $body;
+            $decoded = json_decode($body, true);
+            $text = (json_last_error() === JSON_ERROR_NONE && is_array($decoded))
+                ? $this->extractTextFromTiptap($decoded)
+                : strip_tags($body);
+        }
 
         $words = str_word_count($text);
 
