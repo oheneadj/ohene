@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- **`joaopaulolndev/filament-edit-profile` plugin**: Installed v3.0.2, wired into
+  `AdminPanelProvider` with avatar upload, browser sessions, and password change enabled.
+  Delete-account form intentionally disabled (`shouldShowDeleteAccountForm(false)`).
+  Ran package migrations to add `avatar_url`, `custom_fields`, `locale`, and `theme_color`
+  to the `users` table. `User` model now implements `HasAvatar` so Filament renders the
+  profile picture in the admin UI. A user menu item in the topbar links directly to the
+  Edit Profile page.
+
 ### Fixed
 - **Post cover image disappearing on save**: removed a buggy `afterStateUpdated` callback on the
   `cover_image` FileUpload that copied the Livewire temp file reference into the `og_image` field.

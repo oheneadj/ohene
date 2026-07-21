@@ -19,6 +19,11 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 /**
+ * Represents the single authenticated admin user.
+ *
+ * Implements FilamentUser to gate panel access and HasAvatar so Filament can
+ * display the user's uploaded profile picture throughout the admin UI.
+ *
  * @property int $id
  * @property string $name
  * @property string $email
@@ -27,6 +32,10 @@ use Illuminate\Support\Str;
  * @property string|null $remember_token
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
+ * @property string|null $avatar_url
+ * @property array<string, mixed>|null $custom_fields
+ * @property string|null $locale
+ * @property string|null $theme_color
  */
 #[Fillable(['name', 'email', 'password', 'avatar_url', 'custom_fields', 'locale', 'theme_color'])]
 #[Hidden(['password', 'remember_token'])]
@@ -73,9 +82,16 @@ class User extends Authenticatable implements FilamentUser, HasAvatar
             : $initials;
     }
 
+    /**
+     * Returns the full public URL of the user's avatar, or null if none has been set.
+     *
+     * Reads the avatar column name from config so it stays in sync with the
+     * filament-edit-profile package's own setting rather than hardcoding 'avatar_url'.
+     */
     public function getFilamentAvatarUrl(): ?string
     {
         $avatarColumn = config('filament-edit-profile.avatar_column', 'avatar_url');
+
         return $this->$avatarColumn ? Storage::url($this->$avatarColumn) : null;
     }
 }
