@@ -66,6 +66,7 @@ class Post extends Model implements RedirectsOnSlugChange
             'status' => PostStatus::class,
             'published_at' => 'immutable_datetime',
             'read_time' => 'integer',
+            'body' => 'json',
         ];
     }
 
@@ -97,6 +98,7 @@ class Post extends Model implements RedirectsOnSlugChange
             if ($post->isDirty('body')) {
                 $post->read_time = $post->estimatedReadTime();
             }
+            
 
             if ($post->status === PostStatus::Published) {
                 $post->assertPublishable();
