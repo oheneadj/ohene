@@ -11,6 +11,7 @@ use App\Filament\Resources\Posts\Pages\ListPosts;
 use App\Filament\Resources\Posts\Pages\ViewPost;
 use App\Models\Post;
 use App\RichEditor\YouTubeEmbedBlock;
+use App\Support\RichText;
 use BackedEnum;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;
@@ -20,7 +21,6 @@ use Filament\Actions\ViewAction;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\RichEditor;
-use Filament\Forms\Components\RichEditor\RichContentRenderer;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
@@ -210,10 +210,7 @@ class PostResource extends Resource
                                 ->html()
                                 ->hiddenLabel()
                                 ->columnSpanFull()
-                                ->state(fn (Post $record): string => RichContentRenderer::make($record->body)
-                                    ->customBlocks([YouTubeEmbedBlock::class])
-                                    ->toUnsafeHtml()
-                                ),
+                                ->state(fn (Post $record): string => RichText::render($record->body)),
                         ]),
                 ])->columnSpan(['sm' => 3, 'lg' => 2]),
 

@@ -23,3 +23,13 @@ it('renders the admin post view page when the body is Tiptap JSON (array)', func
         ->assertSuccessful()
         ->assertSee('Hello from a real post.');
 });
+
+it('renders the admin post view for a legacy HTML-string body (not Tiptap JSON)', function () {
+    // Seeded/legacy posts store plain HTML, not the editor's JSON — must not crash.
+    $post = Post::factory()->create(['body' => '<p>Legacy <strong>HTML</strong> body.</p>']);
+
+    $this->actingAs(User::factory()->create())
+        ->get(PostResource::getUrl('view', ['record' => $post]))
+        ->assertSuccessful()
+        ->assertSee('Legacy');
+});

@@ -206,6 +206,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - 8 new tests (preview access, privacy page, lead badge, dashboard widget, project alt-text
   validation). Full suite: 84 tests green.
 
+### Fixed — post body rendering (production 500s)
+- Two production `500`s on the admin post view (and, with the same renderer, the public blog
+  post page) after the RichEditor switched to Tiptap JSON: an "Array to string conversion"
+  from a `(string)` cast of the now-array body, and a tiptap "read property type on null" on
+  a malformed/legacy body.
+- Introduced `App\Support\RichText::render()` — one resilient helper used by both the post
+  infolist and the public blog view. It renders Tiptap JSON, JSON strings, and legacy HTML
+  (resolving custom blocks like YouTube embeds in every case), and guards against a malformed
+  record so one bad body can't take a page down. Regression tests cover array, legacy-HTML,
+  and YouTube-embed bodies on both surfaces.
+
 ### Fixed — design polish pass (accessibility & FR1)
 - **Content no longer gated on JavaScript** (FR1 regression from earlier motion edits): the
   scroll-reveal is now scoped to a `.js` class set by `app.js`, so crawlers, no-JS, and

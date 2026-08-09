@@ -81,6 +81,18 @@ it('shows a published post and its related posts', function () {
         ->assertSee('Related Post');
 });
 
+it('renders a published post whose body is legacy HTML, not Tiptap JSON', function () {
+    $post = Post::factory()->create([
+        'slug' => 'legacy-html-post',
+        'body' => '<p>Legacy <strong>HTML</strong> content from the old CMS.</p>',
+        'published_at' => now()->subDay(),
+    ]);
+
+    $this->get(route('blog.show', $post))
+        ->assertOk()
+        ->assertSee('Legacy');
+});
+
 it('404s when viewing an unpublished post directly', function () {
     $draft = Post::factory()->draft()->create(['slug' => 'secret-draft']);
 

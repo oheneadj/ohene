@@ -186,14 +186,12 @@
         </button>
     </div>
 
-    {{-- Body is rendered through Filament's RichContentRenderer so that custom
-         blocks (e.g. YouTube embeds) are resolved into real HTML. toUnsafeHtml()
-         is intentional: content is admin-authored via a restricted CMS editor,
-         not user-submitted (req 4.3 / CLAUDE.md Section 12). --}}
+    {{-- Body rendered via App\Support\RichText, which resolves Tiptap JSON (with
+         custom blocks like YouTube embeds) and safely falls back for legacy HTML
+         bodies. Unescaped output is intentional: admin-authored via a restricted
+         CMS editor, not user-submitted (req 4.3 / CLAUDE.md Section 12). --}}
     <article class="max-w-3xl mx-auto px-7 py-10 prose prose-slate prose-headings:font-display prose-headings:text-black prose-a:font-medium prose-a:text-black prose-a:underline prose-a:decoration-forest prose-a:decoration-2 prose-a:underline-offset-2 hover:prose-a:bg-forest/10 prose-a:transition-colors prose-strong:text-black">
-        {!! \Filament\Forms\Components\RichEditor\RichContentRenderer::make($post->body)
-                ->customBlocks([\App\RichEditor\YouTubeEmbedBlock::class])
-                ->toUnsafeHtml() !!}
+        {!! \App\Support\RichText::render($post->body) !!}
     </article>
 
     <div class="max-w-3xl mx-auto px-7 pb-16">
