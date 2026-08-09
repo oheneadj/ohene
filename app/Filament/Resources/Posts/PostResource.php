@@ -210,7 +210,7 @@ class PostResource extends Resource
                                 ->html()
                                 ->hiddenLabel()
                                 ->columnSpanFull()
-                                ->state(fn (Post $record): string => RichContentRenderer::make((string) $record->body)
+                                ->state(fn (Post $record): string => RichContentRenderer::make($record->body)
                                     ->customBlocks([YouTubeEmbedBlock::class])
                                     ->toUnsafeHtml()
                                 ),
